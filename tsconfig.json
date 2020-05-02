@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "lib": ["es5", "es6", "es7", "es2017", "dom"],
-    "sourceMap": true,
-    "allowJs": false,
+    "outDir": "lib",
     "jsx": "react",
-    "moduleResolution": "node",
-    "rootDir": "src",
-    "baseUrl": "src",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "lib": ["es6"],
+    "skipLibCheck": true,
+    "module": "commonjs",
     "declaration": true
   },
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts"]
 }
