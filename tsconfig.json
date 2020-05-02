@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
-    "jsx": "react",
-    "esModuleInterop": true,
+    "target": "es5",
     "module": "commonjs",
+    "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": true,
-    "lib": ["es6"],
-    "skipLibCheck": true
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react"
   },
-  "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts"]
+  "exclude": ["node_modules", "dist", "test"]
 }
