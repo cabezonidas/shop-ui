@@ -8,7 +8,6 @@
   "scripts": {
     "build": "rm -rf ./lib && tsc",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
-    "graphql-gen": "graphql-codegen --config graphql.json",
     "storybook": "start-storybook",
     "test": "echo \"No tests to run\""
   },
