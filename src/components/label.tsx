@@ -1,14 +1,14 @@
 import Box from "./box";
 import styled from "@emotion/styled";
 
-export const Label = styled(Box.withComponent("label"))`
+export const Label = styled(Box)`
   box-sizing: border-box;
   font-family: inherit;
   cursor: pointer;
   &:first-letter {
     text-transform: uppercase;
   }
-`;
+`.withComponent("label");
 
 Label.defaultProps = {
   mb: 2,
