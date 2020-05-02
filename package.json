@@ -1,10 +1,11 @@
 {
   "name": "@cabezonidas/shop-ui",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Cabe <sebastian.scd@gmail.com>",
   "homepage": "https://github.com/cabezonidas/shop-utils#readme",
   "license": "MIT",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf ./lib && tsc",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
