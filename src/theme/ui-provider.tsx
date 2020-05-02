@@ -1,4 +1,5 @@
-import React, { FC, Suspense } from "react";
+import * as React from "react";
+import { FC, Suspense } from "react";
 import { ThemeProvider } from "emotion-theming";
 import { theme } from "./theme";
 import { globalStyle } from "./global-style";

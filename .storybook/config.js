@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { configure, addDecorator } from "@storybook/react";
 import { UiProvider } from "../src/theme/ui-provider";
 import { Global, css } from "@emotion/core";

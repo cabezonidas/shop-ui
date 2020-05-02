@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
+import * as React from "react";
 import { useTranslation as useTranslationNext } from "react-i18next";
 import { TFunction, i18n as i18nObject } from "i18next";
 

@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { Component } from "react";
 import { TFunction, i18n } from "i18next";
 import Box from "./box";
 
