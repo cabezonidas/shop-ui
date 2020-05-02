@@ -20,6 +20,10 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "@types/node": "^13.1.1",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.0",
+    "@types/styled-system": "^5.1.4",
     "@emotion/core": "^10.0.27",
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/styled": "^10.0.27",
@@ -33,10 +37,6 @@
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@storybook/react": "^5.2.8",
-    "@types/node": "^13.1.1",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.0",
-    "@types/styled-system": "^5.1.4",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.2",
     "node-sass": "^4.13.0",
