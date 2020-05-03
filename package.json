@@ -15,7 +15,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "tsc && tsc --build tsconfig.esm.json",
+    "build": "tsc && cp -v src/public/* lib/ && tsc --build tsconfig.esm.json && cp -v src/public/* lib-esm/",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
     "storybook": "start-storybook",
     "test": "echo \"No tests to run\""
