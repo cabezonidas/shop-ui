@@ -15,18 +15,21 @@ i18next.use(initReactI18next).init({
   lng: "en-US",
   fallbackLng: "en-US",
 });
-export const UiProvider: FC = props => {
-  const { children } = props;
-  return (
-    <Suspense fallback={<></>}>
-      <TranslationProvider>
-        <ThemeProvider theme={theme}>
-          {globalStyle}
-          {children}
-        </ThemeProvider>
-      </TranslationProvider>
-    </Suspense>
+export const UiProvider: FC<{ suspense?: boolean }> = props => {
+  const { children, suspense } = props;
+  const provider = (
+    <TranslationProvider>
+      <ThemeProvider theme={theme}>
+        {globalStyle}
+        {children}
+      </ThemeProvider>
+    </TranslationProvider>
   );
+
+  if (suspense === false) {
+    return provider;
+  }
+  return <Suspense fallback={<></>}>{provider}</Suspense>;
 };
 
 export default UiProvider;
