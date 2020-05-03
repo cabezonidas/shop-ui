@@ -14,11 +14,12 @@ i18next.use(initReactI18next).init({
   lng: "en-US",
   fallbackLng: "en-US",
 });
-export const UiProvider: FC<{ suspense?: boolean }> = props => {
-  const { children, suspense } = props;
+
+export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = props => {
+  const { children, suspense, mode } = props;
   const provider = (
     <TranslationProvider>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={{ ...theme, mode }}>{children}</ThemeProvider>
     </TranslationProvider>
   );
 

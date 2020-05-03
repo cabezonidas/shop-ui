@@ -1,6 +1,7 @@
 import { colors, IColors } from "./colors";
 
 export interface ITheme {
+  mode: "dark" | "light";
   colors: IColors;
   fontSizes: string[];
   space: string[];
@@ -9,6 +10,7 @@ export interface ITheme {
 }
 
 export const theme: ITheme = {
+  mode: "light",
   colors,
   fontSizes: ["0.75rem", "0.875rem", "1rem", "1.25rem", "1.5rem", "2rem", "3rem", "4rem", "5rem"],
   space: [
