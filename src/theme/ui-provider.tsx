@@ -2,7 +2,6 @@ import * as React from "react";
 import { FC, Suspense } from "react";
 import { ThemeProvider } from "emotion-theming";
 import { theme } from "./theme";
-import { globalStyle } from "./global-style";
 import { TranslationProvider } from "../internationalization/translation-provider";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -19,10 +18,7 @@ export const UiProvider: FC<{ suspense?: boolean }> = props => {
   const { children, suspense } = props;
   const provider = (
     <TranslationProvider>
-      <ThemeProvider theme={theme}>
-        {globalStyle}
-        {children}
-      </ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </TranslationProvider>
   );
 
