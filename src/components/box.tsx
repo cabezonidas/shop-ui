@@ -1,185 +1,167 @@
-import styled from "@emotion/styled";
+import { styled } from "../theme";
 import isPropValid from "@emotion/is-prop-valid";
-
 import {
-  background,
-  color,
-  space,
-  width,
-  maxWidth,
-  minWidth,
-  minHeight,
-  maxHeight,
-  borders,
-  justifySelf,
-  alignSelf,
-  order,
-  flex,
-  position,
-  bottom,
-  top,
-  left,
-  right,
-  height,
-  overflow,
-  display,
   compose,
-  gridArea,
-  verticalAlign,
-  fontSize,
-  fontFamily,
-  textAlign,
-  lineHeight,
-  fontWeight,
-  letterSpacing,
-  alignItems,
   alignContent,
-  justifyContent,
-  flexWrap,
+  alignItems,
+  alignSelf,
+  background,
+  borders,
+  bottom,
+  color,
+  display,
+  flex,
   flexBasis,
+  flexbox,
   flexDirection,
+  flexWrap,
+  fontFamily,
+  fontSize,
   fontStyle,
-  zIndex,
-  gridGap,
+  fontWeight,
+  gridArea,
+  gridAutoColumns,
+  gridAutoFlow,
+  gridAutoRows,
   gridColumn,
+  gridColumnGap,
+  gridGap,
   gridRow,
+  gridRowGap,
+  gridTemplateAreas,
   gridTemplateColumns,
   gridTemplateRows,
-  GridGapProps,
-  GridColumnProps,
-  GridRowProps,
-  GridTemplateColumnsProps,
-  GridTemplateRowsProps,
-  DisplayProps,
-  BackgroundProps,
-  MaxWidthProps,
-  MinWidthProps,
-  MinHeightProps,
-  MaxHeightProps,
-  WidthProps,
-  HeightProps,
-  SpaceProps,
-  BordersProps,
-  JustifySelfProps,
-  AlignSelfProps,
-  OrderProps,
-  OverflowProps,
-  TextAlignProps,
-  ZIndexProps,
-  PositionProps,
-  BackgroundColorProps,
-  FlexProps,
-  FontSizeProps,
-  FontFamilyProps,
-  FontWeightProps,
-  LineHeightProps,
-  FontStyleProps,
-  LetterSpacingProps,
-  AlignItemsProps,
+  height,
+  justifyContent,
+  justifySelf,
+  left,
+  letterSpacing,
+  lineHeight,
+  maxHeight,
+  maxWidth,
+  minHeight,
+  minWidth,
+  order,
+  overflow,
+  position,
+  right,
+  space,
+  textAlign,
+  top,
+  verticalAlign,
+  width,
+  zIndex,
+} from "styled-system";
+import {
   AlignContentProps,
-  JustifyContentProps,
-  FlexWrapProps,
+  AlignItemsProps,
+  AlignSelfProps,
+  BackgroundColorProps,
+  BackgroundProps,
+  BordersProps,
+  BottomProps,
+  DisplayProps,
   FlexBasisProps,
   FlexDirectionProps,
   FlexGrowProps,
+  FlexProps,
   FlexShrinkProps,
-  TopProps,
-  RightProps,
-  BottomProps,
+  FlexWrapProps,
+  FlexboxProps,
+  FontFamilyProps,
+  FontSizeProps,
+  FontStyleProps,
+  FontWeightProps,
+  GridAreaProps,
+  GridAutoColumnsProps,
+  GridAutoFlowProps,
+  GridAutoRowsProps,
+  GridColumnGapProps,
+  GridColumnProps,
+  GridGapProps,
+  GridRowGapProps,
+  GridRowProps,
+  GridTemplateAreasProps,
+  GridTemplateColumnsProps,
+  GridTemplateRowsProps,
+  HeightProps,
+  JustifyContentProps,
+  JustifySelfProps,
   LeftProps,
+  LetterSpacingProps,
+  LineHeightProps,
+  MaxHeightProps,
+  MaxWidthProps,
+  MinHeightProps,
+  MinWidthProps,
+  OrderProps,
+  OverflowProps,
+  PositionProps,
+  RightProps,
+  SpaceProps,
+  TextAlignProps,
+  TopProps,
+  VerticalAlignProps,
+  WidthProps,
+  ZIndexProps,
 } from "styled-system";
 
-export type StyleBoxProps = WidthProps &
-  MaxWidthProps &
-  MinWidthProps &
-  HeightProps &
-  MinHeightProps &
-  MaxHeightProps &
-  BackgroundProps &
-  BackgroundColorProps &
-  SpaceProps &
-  BordersProps &
-  JustifySelfProps &
-  AlignSelfProps &
-  OrderProps &
-  OverflowProps &
-  TextAlignProps &
-  ZIndexProps &
-  PositionProps &
-  FontSizeProps &
-  FontFamilyProps &
-  FontWeightProps &
-  LineHeightProps &
-  FontStyleProps &
-  LetterSpacingProps &
+type StyleBoxProps = AlignContentProps &
   AlignItemsProps &
-  AlignContentProps &
-  JustifyContentProps &
-  FlexWrapProps &
+  AlignSelfProps &
+  BackgroundColorProps &
+  BackgroundProps &
+  BordersProps &
+  BottomProps &
+  DisplayProps &
   FlexBasisProps &
+  FlexboxProps &
   FlexDirectionProps &
   FlexGrowProps &
-  FlexShrinkProps &
-  TopProps &
-  RightProps &
-  BottomProps &
-  LeftProps &
   FlexProps &
-  GridGapProps &
+  FlexShrinkProps &
+  FlexWrapProps &
+  FontFamilyProps &
+  FontSizeProps &
+  FontStyleProps &
+  FontWeightProps &
+  GridAreaProps &
+  GridAutoColumnsProps &
+  GridAutoFlowProps &
+  GridAutoRowsProps &
+  GridColumnGapProps &
   GridColumnProps &
+  GridGapProps &
+  GridRowGapProps &
   GridRowProps &
+  GridTemplateAreasProps &
   GridTemplateColumnsProps &
   GridTemplateRowsProps &
-  DisplayProps & {
-    as?: string;
+  HeightProps &
+  JustifyContentProps &
+  JustifySelfProps &
+  LeftProps &
+  LetterSpacingProps &
+  LineHeightProps &
+  MaxHeightProps &
+  MaxWidthProps &
+  MinHeightProps &
+  MinWidthProps &
+  OrderProps &
+  OverflowProps &
+  PositionProps &
+  RightProps &
+  SpaceProps &
+  TextAlignProps &
+  TopProps &
+  WidthProps &
+  VerticalAlignProps &
+  ZIndexProps & {
+    as?: any;
+    variant?: string;
   };
 
-const base = compose(
-  background,
-  color,
-  space,
-  width,
-  borders,
-  justifySelf,
-  alignSelf,
-  order,
-  flex,
-  position,
-  bottom,
-  top,
-  left,
-  right,
-  height,
-  gridArea,
-  maxWidth,
-  minWidth,
-  minHeight,
-  maxHeight,
-  verticalAlign,
-  overflow,
-  display,
-  fontSize,
-  fontFamily,
-  textAlign,
-  lineHeight,
-  fontWeight,
-  letterSpacing,
-  minHeight,
-  alignItems,
-  alignContent,
-  justifyContent,
-  flexWrap,
-  flexBasis,
-  flexDirection,
-  flex,
-  fontStyle,
-  zIndex,
-  gridGap,
-  gridColumn,
-  gridRow,
-  gridTemplateColumns,
-  gridTemplateRows
-);
+export type BoxProps = StyleBoxProps;
 
 export const Box = styled("div", {
   shouldForwardProp: prop => isPropValid(prop),
@@ -192,12 +174,64 @@ export const Box = styled("div", {
   }
 
   ::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colors.neutral.medium};
     border-radius: 0.3rem;
   }
 
   ::-webkit-scrollbar-track {
+    background: ${props => props.theme.colors.neutral.light};
   }
-  ${base};
+  ${compose(
+    alignContent,
+    alignItems,
+    alignSelf,
+    background,
+    borders,
+    bottom,
+    color,
+    display,
+    flex,
+    flexBasis,
+    flexbox,
+    flexDirection,
+    flexWrap,
+    fontFamily,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    gridArea,
+    gridAutoColumns,
+    gridAutoFlow,
+    gridAutoRows,
+    gridColumn,
+    gridColumnGap,
+    gridGap,
+    gridRow,
+    gridRowGap,
+    gridTemplateAreas,
+    gridTemplateColumns,
+    gridTemplateRows,
+    height,
+    justifyContent,
+    justifySelf,
+    left,
+    letterSpacing,
+    lineHeight,
+    maxHeight,
+    maxWidth,
+    minHeight,
+    minWidth,
+    order,
+    overflow,
+    position,
+    right,
+    space,
+    textAlign,
+    top,
+    verticalAlign,
+    width,
+    zIndex
+  )};
 `;
 
 export default Box;
