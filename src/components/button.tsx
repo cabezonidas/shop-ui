@@ -8,7 +8,7 @@ type ButtonVariant = "primary" | "secondary" | "default" | "info" | "warning" | 
 
 export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVariant }>(
   ({ theme, variant = "default" }) => {
-    const { colors } = theme;
+    const { colors, mode } = theme;
 
     const colorGrade =
       variant !== "default" ? (colors[variant] as IColorTheme) : invertColorTheme(colors.neutral);
@@ -55,6 +55,7 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
       userSelect: "none",
       WebkitTouchCallout: "none",
       transition: `border-color 0.25s ease-in-out, box-shadow 0.1s ease-in-out background-color 0.25s ease-in-out, color 0.25s ease-in-out;`,
+      boxShadow: `0 1px 2px ${shadowColor}88, 0 1px 1px ${shadowColor}74`,
     };
   }
 );
