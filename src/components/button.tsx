@@ -16,11 +16,13 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
     const textColor = (bg: string) =>
       contrast(bg) === "light" ? colors.neutral.lightest : colors.neutral.darkest;
 
+    const shadowColor = mode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
+
     return {
       backgroundColor: colorGrade.mediumDark,
       color: textColor(colorGrade.mediumDark),
-
       outlineColor: colorGrade.medium,
+      borderRadius: theme.space[0],
       "&:hover": {
         backgroundColor: colorGrade.dark,
         color: textColor(colorGrade.dark),
@@ -60,7 +62,6 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
 Button.defaultProps = {
   py: 2,
   px: 4,
-  borderRadius: 4,
   type: "button",
 };
 
