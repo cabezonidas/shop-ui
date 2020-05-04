@@ -1,27 +1,21 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Button, PrimaryButton } from "../button";
+import { Button } from "../button";
 import { Box } from "../box";
 import { useTheme } from "../../theme";
 
-storiesOf("Buttons", module)
-  .add("Default", () => (
-    <Button bg="green" width="250px">
-      <Box bg="green">{String("Test")}</Box>
-    </Button>
-  ))
-  .add("Primary", () => (
-    <PrimaryButton width="250px">
-      <Box bg="green">{String("Test")}</Box>
-    </PrimaryButton>
-  ))
-  .add("Mode", () => (
-    <PrimaryButton width="250px">
-      <MyStory />
-    </PrimaryButton>
-  ));
+storiesOf("Buttons", module).add("Variants", () => <MyStory />);
 
 const MyStory = () => {
   const { mode } = useTheme();
-  return <div>My current mode is: {mode}</div>;
+  const variants = ["default", "primary", "secondary", "info", "warning", "danger"] as any;
+  return (
+    <Box display="grid" gridTemplateColumns={`repeat(auto-fit, minmax(150px, 1fr))`} gridGap="2">
+      {variants.map(variant => (
+        <Button key={variant} {...{ variant }}>
+          {`${variant} (${mode})`}
+        </Button>
+      ))}
+    </Box>
+  );
 };
