@@ -7,7 +7,18 @@ export interface IColorTheme {
   light: string;
   lightest: string;
 }
+
 export const primary: IColorTheme = {
+  darkest: "#512020",
+  dark: "#632828",
+  mediumDark: "#762f2f",
+  medium: "#883636",
+  mediumLight: "#9a3d3d",
+  light: "#934a4a",
+  lightest: "#c39a9a",
+};
+
+export const secondary: IColorTheme = {
   darkest: "#003542",
   dark: "#004F62",
   mediumDark: "#266979",
@@ -52,15 +63,6 @@ export const danger: IColorTheme = {
   light: "#FBD3D3",
   lightest: "#FCE8E8",
 };
-export const highlight: IColorTheme = {
-  darkest: "#5C4813",
-  dark: "#8C6D1F",
-  mediumDark: "#CAA53D",
-  medium: "#F4CA64",
-  mediumLight: "#FAE29F",
-  light: "#FDF3D7",
-  lightest: "#FFFCF4",
-};
 export const success: IColorTheme = {
   darkest: "#135239",
   dark: "#177741",
@@ -73,20 +75,20 @@ export const success: IColorTheme = {
 
 export interface IColors {
   primary: IColorTheme;
+  secondary: IColorTheme;
   neutral: IColorTheme;
   info: IColorTheme;
   warning: IColorTheme;
   danger: IColorTheme;
-  highlight: IColorTheme;
   success: IColorTheme;
 }
 
 export const colors: IColors = {
   primary,
+  secondary,
   neutral,
   info,
   warning,
   danger,
-  highlight,
   success,
 };
