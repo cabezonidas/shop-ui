@@ -29,15 +29,15 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
         outlineColor: colorGrade.medium,
       },
       "&:focus": {
-        backgroundColor: colorGrade.light,
-        color: textColor(colorGrade.light),
+        backgroundColor: colorGrade.mediumDark,
+        color: textColor(colorGrade.mediumDark),
         outlineColor: colorGrade.medium,
         zIndex: 1,
       },
       "&:active": {
         backgroundColor: colorGrade.mediumDark,
         color: textColor(colorGrade.mediumDark),
-        outlineColor: colorGrade.dark,
+        outlineColor: colorGrade.medium,
       },
       "&:disabled": {
         backgroundColor: colorGrade.lightest,
