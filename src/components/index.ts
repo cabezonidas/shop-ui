@@ -6,3 +6,4 @@ export * from "./label";
 export * from "./error-boundary";
 export * from "./option";
 export * from "./select";
+export * from "./drop-area";
