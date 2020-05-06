@@ -5,6 +5,8 @@ import { theme } from "./theme";
 import { TranslationProvider } from "../internationalization/translation-provider";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
+import { Global, css } from "@emotion/core";
+import { useTheme } from "./use-theme";
 
 i18next.use(initReactI18next).init({
   resources: {
@@ -19,7 +21,10 @@ export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = p
   const { children, suspense, mode } = props;
   const provider = (
     <TranslationProvider>
-      <ThemeProvider theme={{ ...theme, mode }}>{children}</ThemeProvider>
+      <ThemeProvider theme={{ ...theme, mode }}>
+        <GlobalStyle />
+        {children}
+      </ThemeProvider>
     </TranslationProvider>
   );
 
@@ -30,3 +35,20 @@ export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = p
 };
 
 export default UiProvider;
+
+const GlobalStyle = () => {
+  const {
+    colors: { neutral },
+    mode,
+  } = useTheme();
+  return (
+    <Global
+      styles={css`
+        body {
+          color: ${mode === "dark" ? neutral.lightest : neutral.darkest};
+          background-color: ${mode === "dark" ? neutral.darkest : neutral.lightest};
+        }
+      `}
+    />
+  );
+};
