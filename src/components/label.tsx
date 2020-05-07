@@ -2,6 +2,8 @@ import Box from "./box";
 import styled from "@emotion/styled";
 
 export const Label = styled(Box)`
+  display: block;
+  margin: 0;
   box-sizing: border-box;
   font-family: inherit;
   cursor: pointer;
