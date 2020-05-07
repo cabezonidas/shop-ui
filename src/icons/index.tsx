@@ -1,4 +1,4 @@
-import { styled } from "../theme";
+import { styled } from "../theme/styled";
 import * as React from "react";
 const Svg = styled("svg")`
   width: 24px;

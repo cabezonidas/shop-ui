@@ -1,5 +1,5 @@
 import Box from "./box";
-import { styled } from "../theme";
+import styled from "../theme/styled";
 
 export const Input = styled(Box.withComponent("input"))(
   ({

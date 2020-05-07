@@ -1,5 +1,5 @@
 import Box from "./box";
-import styled from "@emotion/styled";
+import styled from "../theme/styled";
 
 export const Label = styled(Box.withComponent("label"))(({ theme }) => ({
   display: "block",

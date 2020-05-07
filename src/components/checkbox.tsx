@@ -1,5 +1,5 @@
 import Input from "./input";
-import { styled } from "../theme";
+import styled from "../theme/styled";
 
 export const Checkbox = styled(Input)(({ theme: { colors: { neutral, primary }, space } }) => ({
   "&:checked": {

@@ -1,13 +1,11 @@
 import Box from "./box";
-import { styled } from "../theme";
 
-export const Form = styled(Box.withComponent("form"))(() => ({
-  width: "100%",
-}));
+export const Form = Box.withComponent("form");
 
 Form.defaultProps = {
   noValidate: true,
   autoComplete: "off",
+  width: "100%",
 };
 
 Form.displayName = "Form";

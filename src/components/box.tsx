@@ -1,4 +1,4 @@
-import { styled } from "../theme";
+import styled from "../theme/styled";
 import isPropValid from "@emotion/is-prop-valid";
 import {
   compose,

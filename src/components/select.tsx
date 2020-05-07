@@ -1,5 +1,5 @@
 import Input from "./input";
-import { styled } from "../theme";
+import styled from "../theme/styled";
 
 export const Select = styled(Input)(({ theme: { colors: { neutral }, space } }) => ({
   backgroundImage: `url("data:image/svg+xml,${encodeURI(
