@@ -8,3 +8,5 @@ export * from "./option";
 export * from "./select";
 export * from "./drop-area";
 export * from "./shell";
+export * from "./file";
+export * from "./checkbox";
