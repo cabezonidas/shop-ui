@@ -11,3 +11,5 @@ export * from "./shell";
 export * from "./file";
 export * from "./checkbox";
 export * from "./toggle";
+export * from "./span";
+export * from "./nav";
