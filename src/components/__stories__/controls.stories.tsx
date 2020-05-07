@@ -1,7 +1,7 @@
 // tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Form, Label, Input, Box, File, Select, Option, Checkbox } from "..";
+import { Form, Label, Input, Box, File, Select, Option, Checkbox, Toggle } from "..";
 
 storiesOf("Controls", module).add("Form controls", () => <MyStory />);
 
@@ -26,6 +26,10 @@ const MyStory = () => {
       <Box>
         <Label htmlFor="file">File</Label>
         <File id="file" />
+      </Box>
+      <Box>
+        <Label htmlFor="toggle">Toggle</Label>
+        <Toggle id="toggle" />
       </Box>
     </Form>
   );
