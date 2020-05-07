@@ -5,4 +5,6 @@ export const Option = styled(Box.withComponent("option"))(({ theme }) => ({
   color: theme.colors.neutral.darkest,
 }));
 
+Option.displayName = "Option";
+
 export default Option;

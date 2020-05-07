@@ -100,6 +100,8 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
   }
 );
 
+Button.displayName = "Button";
+
 Button.defaultProps = {
   type: "button",
 };

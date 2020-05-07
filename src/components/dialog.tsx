@@ -115,3 +115,7 @@ const useFade = (isOpen: boolean) => {
 
   return { style, open };
 };
+
+Dialog.displayName = "Dialog";
+
+export default Dialog;

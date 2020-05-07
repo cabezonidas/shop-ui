@@ -47,6 +47,9 @@ export const Input = styled(Box.withComponent("input"))(
 Input.defaultProps = {
   maxLength: 255,
   type: "text",
+  autoComplete: "off",
 };
+
+Input.displayName = "Input";
 
 export default Input;

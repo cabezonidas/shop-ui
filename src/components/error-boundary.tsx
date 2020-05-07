@@ -36,3 +36,5 @@ export class ErrorBoundary extends Component<{ t: TFunction; i18n: i18n }> {
     return this.props.children;
   }
 }
+
+export default ErrorBoundary;
