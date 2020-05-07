@@ -168,19 +168,6 @@ export const Box = styled("div", {
 })<StyleBoxProps>`
   box-sizing: border-box;
   position: relative;
-  ::-webkit-scrollbar {
-    height: 0.6rem;
-    width: 0.6rem;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors.neutral.medium};
-    border-radius: 0.3rem;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: ${props => props.theme.colors.neutral.light};
-  }
   ${compose(
     alignContent,
     alignItems,
@@ -233,5 +220,7 @@ export const Box = styled("div", {
     zIndex
   )};
 `;
+
+Box.displayName = "Box";
 
 export default Box;
