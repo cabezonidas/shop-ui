@@ -4,47 +4,20 @@ import contrast from "../helpers/contrast";
 import { IColorTheme } from "../theme/colors";
 import invertColorTheme from "../helpers/invertColorTheme";
 
-type ButtonVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "default"
+  | "info"
+  | "warning"
+  | "danger"
+  | "transparent";
 
 export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVariant }>(
   ({ theme, variant = "default" }) => {
     const { colors, mode } = theme;
 
-    const colorGrade =
-      variant !== "default" ? (colors[variant] as IColorTheme) : invertColorTheme(colors.neutral);
-
-    const textColor = (bg: string) =>
-      contrast(bg) === "light" ? colors.neutral.lightest : colors.neutral.darkest;
-
-    const shadowColor = mode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
-
-    return {
-      backgroundColor: colorGrade.mediumDark,
-      color: textColor(colorGrade.mediumDark),
-      outlineColor: colorGrade.medium,
-      borderRadius: theme.space[0],
-      "&:hover": {
-        backgroundColor: colorGrade.dark,
-        color: textColor(colorGrade.dark),
-        outlineColor: colorGrade.medium,
-      },
-      "&:focus": {
-        backgroundColor: colorGrade.mediumDark,
-        color: textColor(colorGrade.mediumDark),
-        outlineColor: colorGrade.medium,
-        zIndex: 1,
-      },
-      "&:active": {
-        backgroundColor: colorGrade.mediumDark,
-        color: textColor(colorGrade.mediumDark),
-        outlineColor: colorGrade.medium,
-      },
-      "&:disabled": {
-        backgroundColor: colorGrade.lightest,
-        color: textColor(colorGrade.lightest),
-        outlineColor: colorGrade.medium,
-        cursor: "not-allowed",
-      },
+    const shared = {
       appearance: "none",
       cursor: "pointer",
       display: "inline-block",
@@ -55,14 +28,79 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
       userSelect: "none",
       WebkitTouchCallout: "none",
       transition: `border-color 0.25s ease-in-out, box-shadow 0.1s ease-in-out background-color 0.25s ease-in-out, color 0.25s ease-in-out;`,
-      boxShadow: `0 1px 2px ${shadowColor}88, 0 1px 1px ${shadowColor}74`,
     };
+
+    const textColor = (bg: string) =>
+      contrast(bg) === "light" ? colors.neutral.lightest : colors.neutral.darkest;
+
+    const shadowColor = mode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
+
+    if (variant === "transparent") {
+      return {
+        ...shared,
+        display: "flex",
+        flexWrap: "wrap",
+        color: mode === "light" ? colors.neutral.darkest : colors.neutral.lightest,
+        p: 0,
+        "&:hover": {
+          color: "light" ? colors.neutral.dark : colors.neutral.light,
+          outlineColor: colors.neutral.medium,
+        },
+        "&:focus": {
+          color: "light" ? colors.neutral.dark : colors.neutral.light,
+          outlineColor: colors.neutral.medium,
+          zIndex: 1,
+        },
+        "&:active": {
+          color: "light" ? colors.neutral.dark : colors.neutral.light,
+          outlineColor: colors.neutral.medium,
+        },
+        "&:disabled": {
+          color: "light" ? colors.neutral.dark : colors.neutral.light,
+          outlineColor: colors.neutral.medium,
+          cursor: "not-allowed",
+        },
+      } as any;
+    } else {
+      const colorGrade =
+        variant !== "default" ? (colors[variant] as IColorTheme) : invertColorTheme(colors.neutral);
+
+      return {
+        ...shared,
+        padding: `${theme.space[2]} ${theme.space[4]}`,
+        backgroundColor: colorGrade.mediumDark,
+        color: textColor(colorGrade.mediumDark),
+        outlineColor: colorGrade.medium,
+        borderRadius: theme.space[0],
+        "&:hover": {
+          backgroundColor: colorGrade.dark,
+          color: textColor(colorGrade.dark),
+          outlineColor: colorGrade.medium,
+        },
+        "&:focus": {
+          backgroundColor: colorGrade.mediumDark,
+          color: textColor(colorGrade.mediumDark),
+          outlineColor: colorGrade.medium,
+          zIndex: 1,
+        },
+        "&:active": {
+          backgroundColor: colorGrade.mediumDark,
+          color: textColor(colorGrade.mediumDark),
+          outlineColor: colorGrade.medium,
+        },
+        "&:disabled": {
+          backgroundColor: colorGrade.lightest,
+          color: textColor(colorGrade.lightest),
+          outlineColor: colorGrade.medium,
+          cursor: "not-allowed",
+        },
+        boxShadow: `0 1px 2px ${shadowColor}88, 0 1px 1px ${shadowColor}74`,
+      };
+    }
   }
 );
 
 Button.defaultProps = {
-  py: 2,
-  px: 4,
   type: "button",
 };
 
