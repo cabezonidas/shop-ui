@@ -1,7 +1,6 @@
 import { IColorTheme } from "../theme/colors";
 
 export default function invertColorTheme(colorGrade: IColorTheme): IColorTheme {
-  console.log({ colorGrade, keys: Object.keys(colorGrade) });
   const grades: Array<{ grade: string; value: string }> = Object.keys(colorGrade).map(
     (grade: string) => ({
       grade,
