@@ -1,9 +1,9 @@
 import Box from "./box";
 import { styled } from "../theme";
 
-export const Form = styled(Box)(() => ({
+export const Form = styled(Box.withComponent("form"))(() => ({
   width: "100%",
-})).withComponent("form");
+}));
 
 Form.defaultProps = {
   noValidate: true,

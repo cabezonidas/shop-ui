@@ -1,7 +1,7 @@
 import Box from "./box";
 import styled from "@emotion/styled";
 
-export const Label = styled(Box)(({ theme }) => ({
+export const Label = styled(Box.withComponent("label"))(({ theme }) => ({
   display: "block",
   width: "100%",
   fontWeight: 600,
@@ -12,7 +12,7 @@ export const Label = styled(Box)(({ theme }) => ({
   "&:first-letter": {
     textTransform: "uppercase",
   },
-})).withComponent("label");
+}));
 
 Label.displayName = "Label";
 
