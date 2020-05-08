@@ -68,8 +68,9 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
       return {
         ...shared,
         padding: `${theme.space[2]} ${theme.space[4]}`,
-        backgroundColor: colorGrade.mediumDark,
-        color: textColor(colorGrade.mediumDark),
+        backgroundColor: variant !== "default" ? colorGrade.mediumDark : colorGrade.darkest,
+        color:
+          variant !== "default" ? textColor(colorGrade.mediumDark) : textColor(colorGrade.darkest),
         outlineColor: colorGrade.medium,
         borderRadius: theme.space[0],
         "&:hover": {

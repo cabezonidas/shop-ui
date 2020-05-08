@@ -8,7 +8,16 @@ storiesOf("Buttons", module).add("Variants", () => <MyStory />);
 
 const MyStory = () => {
   const { mode } = useTheme();
-  const variants = ["default", "primary", "secondary", "info", "warning", "danger"] as any;
+  const variants = [
+    "default",
+    "primary",
+    "secondary",
+    "info",
+    "warning",
+    "danger",
+    "success",
+    "transparent",
+  ] as any;
   return (
     <Box display="grid" gridTemplateColumns={`repeat(auto-fit, minmax(150px, 1fr))`} gridGap="2">
       {variants.map(variant => (
