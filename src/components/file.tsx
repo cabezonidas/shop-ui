@@ -1,7 +1,7 @@
 import Input from "./input";
 import styled from "../theme/styled";
 
-export const File = styled(Input)(({ theme }) => ({
+export const File = styled(Input)<{}>(({ theme }) => ({
   paddingTop: theme.space[1],
 }));
 
