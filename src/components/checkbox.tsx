@@ -1,7 +1,7 @@
 import Input from "./input";
 import styled from "../theme/styled";
 
-export const Checkbox = styled(Input)<{}>(({ theme: { colors: { neutral, primary }, space } }) => ({
+export const Checkbox = styled(Input)(({ theme: { colors: { neutral, primary }, space } }) => ({
   "&:checked": {
     backgroundColor: primary.medium,
     backgroundImage: `url("data:image/svg+xml,${encodeURI(
