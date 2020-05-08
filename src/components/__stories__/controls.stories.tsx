@@ -10,7 +10,7 @@ const MyStory = () => {
     <Form margin="2" width="350px" display="grid" gridGap="2">
       <Box>
         <Label htmlFor="input">Input</Label>
-        <Input id="input" />
+        <Input id="input" onChange={e => console.log(e)} />
       </Box>
       <Box>
         <Label htmlFor="select">Select</Label>
@@ -21,15 +21,19 @@ const MyStory = () => {
       </Box>
       <Box>
         <Label htmlFor="checkbox">Checkbox</Label>
-        <Checkbox id="checkbox" />
+        <Checkbox id="checkbox" onChange={e => console.log(e)} />
       </Box>
       <Box>
         <Label htmlFor="file">File</Label>
-        <File id="file" />
+        <File id="file" onChange={e => console.log(e)} />
       </Box>
       <Box>
         <Label htmlFor="toggle">Toggle</Label>
-        <Toggle id="toggle" />
+        <Toggle id="toggle" onChange={e => console.log(e)} />
+      </Box>
+      <Box>
+        <Label htmlFor="select">Select</Label>
+        <Select id="select" onChange={e => console.log(e)} />
       </Box>
     </Form>
   );
