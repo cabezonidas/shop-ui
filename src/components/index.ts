@@ -13,3 +13,4 @@ export * from "./checkbox";
 export * from "./toggle";
 export * from "./span";
 export * from "./nav";
+export * from "./paragraph";
