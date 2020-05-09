@@ -18,11 +18,12 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
     const { colors, mode } = theme;
 
     const shared = {
+      textOverflow: "ellipsis",
       appearance: "none",
       cursor: "pointer",
       display: "inline-block",
       verticalAlign: "middle",
-      textOverflow: "ellipsis",
+      overflow: "hidden",
       whiteSpace: "nowrap",
       WebkitFontSmoothing: "subpixel-antialiased",
       userSelect: "none",
