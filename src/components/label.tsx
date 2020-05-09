@@ -4,9 +4,7 @@ import styled from "../theme/styled";
 export const Label = styled(Box.withComponent("label"))(({ theme }) => ({
   display: "block",
   width: "100%",
-  fontWeight: 600,
   margin: 0,
-  fontFamily: "inherit",
   cursor: "pointer",
   padding: `${theme.space[1]} 0`,
   "&:first-letter": {
