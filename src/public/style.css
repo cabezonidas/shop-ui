@@ -30,10 +30,10 @@ button {
   background: transparent;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Noto+Serif:300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans&display=swap");
 html {
   font-size: 0.875rem;
-  font-family: "Noto Serif";
+  font-family: "Noto Sans";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
