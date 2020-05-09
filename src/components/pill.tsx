@@ -3,6 +3,7 @@ import styled from "../theme/styled";
 import { Button, Box } from ".";
 import { useTheme } from "../theme";
 import { Close } from "..";
+import { useTranslation } from "../internationalization";
 
 const StyledPill = styled(Button)<{}>(({ theme: { space } }) => ({
   padding: `${space[1]} ${space[4]}`,
@@ -14,11 +15,17 @@ interface IColosablePill extends Omit<React.ComponentProps<typeof PillButton>, "
   variant: "primary" | "secondary" | "default" | "info" | "warning" | "danger";
 }
 
+const enUsPill = { ui: { pill: { close: "Close" } } };
+const esArPill = { ui: { pill: { close: "Cerrar" } } };
+
 export const Pill = React.forwardRef<HTMLButtonElement, IColosablePill>((props, ref) => {
   const { children, onClose, variant, ...otherProps } = props;
   const { colors, space, mode } = useTheme();
   const shadowColor = mode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
   const boxShadow = `0 1px 2px ${shadowColor}88, 0 1px 1px ${shadowColor}74`;
+  const { t, i18n } = useTranslation();
+  i18n.addResourceBundle("en-US", "translation", enUsPill, true, true);
+  i18n.addResourceBundle("es-AR", "translation", esArPill, true, true);
 
   if (!onClose) {
     return (
@@ -50,6 +57,8 @@ export const Pill = React.forwardRef<HTMLButtonElement, IColosablePill>((props, 
         borderRightWidth={0}
         borderRadius={space[3]}
         onClick={onClose}
+        aria-label={t("ui.pill.close")}
+        aria-describedby={otherProps.id}
       >
         <Close width="6" height="6" />
       </StyledPill>

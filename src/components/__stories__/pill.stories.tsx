@@ -1,3 +1,4 @@
+// tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Pill } from "../pill";
