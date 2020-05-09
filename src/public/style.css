@@ -30,11 +30,10 @@ button {
   background: transparent;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Noto+Serif:300,400,700");
 html {
   font-size: 0.875rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Noto Serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
