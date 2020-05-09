@@ -14,3 +14,4 @@ export * from "./toggle";
 export * from "./span";
 export * from "./nav";
 export * from "./paragraph";
+export * from "./pill";
