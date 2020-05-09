@@ -60,10 +60,11 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
 
   const toast = React.useCallback(
     (notification: ToastChildren, options?: IToastOptions) => {
-      setToasts(t => [...t, { id: key.current, notification, options }]);
+      const newToast = { id: key.current, notification, options };
+      setToasts(t => takeLast([...t, newToast], stack));
       key.current++;
     },
-    [setToasts, key]
+    [setToasts, key.current, stack]
   );
 
   return (
