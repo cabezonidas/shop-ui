@@ -2,6 +2,7 @@ import * as React from "react";
 import { styled } from "..";
 import { createPortal } from "react-dom";
 import { Box } from "../components";
+import { isArray } from "util";
 
 interface IToast {
   id: number;
@@ -37,9 +38,22 @@ const timeout = (defaultTimeout: number, options?: IToastOptions) =>
     ? undefined
     : options.timeout;
 
-export const ToastState: React.FC<{ defaultTimeout?: number }> = ({
+function takeLast<T>(arr: T, elements: number): T {
+  if (!isArray(arr)) {
+    return arr;
+  }
+  const res = new Array(Math.min(elements, arr.length))
+    .fill(undefined)
+    .map((_, i) => i)
+    .map(i => arr[arr.length - 1 - i])
+    .reverse();
+  return (res as unknown) as T;
+}
+
+export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> = ({
   children,
   defaultTimeout = 3000,
+  stack = 4,
 }) => {
   const [toasts, setToasts] = React.useState<IToast[]>([]);
   const key = React.useRef(0);
@@ -56,7 +70,7 @@ export const ToastState: React.FC<{ defaultTimeout?: number }> = ({
     <ToastContext.Provider value={{ toast }}>
       {createPortal(
         <Wrapper top={0} right={0}>
-          {toasts.map(t => (
+          {takeLast(toasts, stack).map(t => (
             <Toast
               key={t.id}
               removeToast={() => setToasts(ts => ts.filter(n => n.id !== t.id))}
