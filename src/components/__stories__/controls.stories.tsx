@@ -31,10 +31,6 @@ const MyStory = () => {
         <Label htmlFor="toggle">Toggle</Label>
         <Toggle id="toggle" onChange={e => console.log(e)} />
       </Box>
-      <Box>
-        <Label htmlFor="select">Select</Label>
-        <Select id="select" onChange={e => console.log(e)} />
-      </Box>
     </Form>
   );
 };
