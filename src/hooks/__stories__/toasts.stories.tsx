@@ -73,7 +73,7 @@ const Custom = () => {
 
 const Variant = () => {
   const { notify } = useToast();
-  const [variant, setVariant] = React.useState<string>("danger");
+  const [variant, setVariant] = React.useState<string>("info");
   const [position, setPosition] = React.useState<string>("top-center");
 
   const variants = ["primary", "secondary", "default", "info", "warning", "danger"];
