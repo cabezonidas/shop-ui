@@ -3,6 +3,7 @@ import { styled } from "..";
 import { createPortal } from "react-dom";
 import { Box } from "../components";
 import { isArray } from "util";
+import { useTransition, animated } from "react-spring";
 
 interface IToast {
   id: number;
@@ -25,6 +26,9 @@ const ToastContainer = styled(Box)(() => ({
   zIndex: 1,
   bottom: 0,
   right: 0,
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
 }));
 
 const timeout = (defaultTimeout: number, options?: IToastOptions) =>
@@ -63,22 +67,31 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
     [setToasts, key.current, stack]
   );
 
+  const transitions = useTransition(toasts, {
+    from: { right: "-100%" },
+    enter: { right: "0%" },
+    leave: { right: "-100%" },
+  });
+
+  console.log(transitions);
+
   return (
     <ToastContext.Provider value={{ toast }}>
       {createPortal(
         <ToastContainer>
-          {toasts.map(t => (
-            <Toast
-              key={t.id}
-              removeToast={() => setToasts(ts => ts.filter(n => n.id !== t.id))}
-              expiry={timeout(defaultTimeout, t.options)}
-            >
-              {typeof t.notification === "function"
-                ? t.notification({
-                    close: () => setToasts(tts => tts.filter(tt => tt.id !== t.id)),
-                  })
-                : t.notification}
-            </Toast>
+          {transitions((style, t) => (
+            <AnimatedToast key={t.id} style={style} ml="auto">
+              <Toast
+                removeToast={() => setToasts(ts => ts.filter(n => n.id !== t.id))}
+                expiry={timeout(defaultTimeout, t.options)}
+              >
+                {typeof t.notification === "function"
+                  ? t.notification({
+                      close: () => setToasts(tts => tts.filter(tt => tt.id !== t.id)),
+                    })
+                  : t.notification}
+              </Toast>
+            </AnimatedToast>
           ))}
         </ToastContainer>,
         document.body
@@ -90,11 +103,12 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
 
 ToastState.displayName = "ToastState";
 
-const Toast: React.FC<{ removeToast: () => void; expiry?: number }> = ({
-  children,
-  removeToast,
-  expiry,
-}) => {
+interface IToastProps {
+  removeToast: () => void;
+  expiry?: number;
+}
+const Toast: React.FC<IToastProps> = props => {
+  const { removeToast, expiry, children } = props;
   React.useEffect(() => {
     if (expiry !== undefined) {
       const timer = setTimeout(() => {
@@ -106,7 +120,8 @@ const Toast: React.FC<{ removeToast: () => void; expiry?: number }> = ({
     }
   }, [expiry, removeToast]);
 
-  return <Box>{children}</Box>;
+  return <>{children}</>;
 };
-
 Toast.displayName = "Toast";
+
+const AnimatedToast = animated(Box);
