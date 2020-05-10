@@ -87,11 +87,20 @@ const reduceToasts = (toasts: IToast[]) =>
     }
   );
 
-const transition = (place: "left" | "right" | "top" | "bottom") => ({
-  from: { [place]: "-100%" },
-  enter: { [place]: "0%" },
-  leave: { [place]: "-100%" },
-});
+const transition = (place: "left" | "right" | "top" | "bottom") => {
+  if (place === "top" || place === "bottom") {
+    return {
+      from: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)` },
+      enter: { transform: `translate3d(0,0px,0)` },
+      leave: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)` },
+    };
+  }
+  return {
+    from: { [place]: "-100%" },
+    enter: { [place]: "0%" },
+    leave: { [place]: "-100%" },
+  };
+};
 
 export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> = ({
   children,
