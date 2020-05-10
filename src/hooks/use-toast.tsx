@@ -13,7 +13,6 @@ const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
   marginBottom: theme.space[5],
   padding: theme.space[5],
   borderRadius: theme.space[2],
-  // boxShadow: `0px 4px 10px 0px ${theme.colors.neutral.dark} !important`,
 }));
 
 type ToastVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
