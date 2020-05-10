@@ -91,15 +91,15 @@ const reduceToasts = (toasts: IToast[]) =>
 const transition = (place: "left" | "right" | "top" | "bottom") => {
   if (place === "top" || place === "bottom") {
     return {
-      from: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)` },
-      enter: { transform: `translate3d(0,0px,0)` },
-      leave: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)` },
+      from: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)`, opacity: 0 },
+      enter: { transform: `translate3d(0,0px,0)`, opacity: 1 },
+      leave: { transform: `translate3d(0,${place === "top" ? "-" : ""}100%,0)`, opacity: 0 },
     };
   }
   return {
-    from: { [place]: "-100%" },
-    enter: { [place]: "0%" },
-    leave: { [place]: "-100%" },
+    from: { [place]: "-100%", opacity: 0 },
+    enter: { [place]: "0%", opacity: 1 },
+    leave: { [place]: "-100%", opacity: 0 },
   };
 };
 
@@ -251,7 +251,7 @@ interface INotifyOptions {
 export const useToast = () => {
   const { toast } = React.useContext(ToastContext);
 
-  const notify = (message: string, options: INotifyOptions) => {
+  const notify = (message: string, options?: INotifyOptions) => {
     const variant = options?.variant ?? "primary";
     const position = options?.position ?? "bottom-right";
     if (variant !== "danger") {
