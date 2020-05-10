@@ -5,7 +5,9 @@ import { Form, Label, Input, Box, Button, Shell, Toggle } from "../../components
 import { useToast } from "..";
 import { styled } from "../..";
 
-storiesOf("Toasts", module).add("Toasts", () => <MyStory />);
+storiesOf("Toasts", module)
+  .add("Variants", () => <Variant />)
+  .add("Custom", () => <Custom />);
 
 const Toast = styled(Box)`
   margin-right: 16px;
@@ -22,7 +24,7 @@ const Toast = styled(Box)`
   color: #494e5c;
 `;
 
-const MyStory = () => {
+const Custom = () => {
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,6 +63,43 @@ const MyStory = () => {
           <Label htmlFor="persist">Persist</Label>
           <Toggle id="persist" defaultChecked={true} onChange={e => setPersist(e.target.checked)} />
         </Box>
+        <Button variant="primary" type="submit">
+          Toast!
+        </Button>
+      </Form>
+    </Shell>
+  );
+};
+
+const Variant = () => {
+  const { notify } = useToast();
+  const [variant, setVariant] = React.useState<string>("primary");
+
+  const variants = ["primary", "secondary", "default", "info", "warning", "danger"];
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    notify(e.currentTarget.content.value, variant as any);
+  };
+
+  return (
+    <Shell>
+      <Form margin="2" width="350px" display="grid" gridGap="2" onSubmit={handleSubmit}>
+        <Box>
+          <Label htmlFor="content">Content</Label>
+          <Input id="content" defaultValue={"Some toast content"} />
+        </Box>
+        {variants.map(v => (
+          <Box key={v}>
+            <Label htmlFor={v}>{v}</Label>
+            <Toggle
+              id={v}
+              variant={v as any}
+              checked={v === variant}
+              onChange={() => setVariant(v)}
+            />
+          </Box>
+        ))}
         <Button variant="primary" type="submit">
           Toast!
         </Button>
