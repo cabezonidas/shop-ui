@@ -21,7 +21,7 @@ export const ToastContext = React.createContext<{
   toast: (toastChildren: ToastChildren, options?: IToastOptions) => void;
 }>(undefined as any);
 
-const ToastContainer = styled(Box)(() => ({
+const ToastContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
   zIndex: 1,
   bottom: 0,
@@ -29,6 +29,7 @@ const ToastContainer = styled(Box)(() => ({
   overflow: "hidden",
   display: "flex",
   flexDirection: "column",
+  padding: theme.space[1],
 }));
 
 const timeout = (defaultTimeout: number, options?: IToastOptions) =>
