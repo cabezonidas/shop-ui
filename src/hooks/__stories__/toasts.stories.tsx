@@ -10,10 +10,10 @@ storiesOf("Toasts", module).add("Toasts", () => <MyStory />);
 const Toast = styled(Box)`
   margin-right: 16px;
   margin-top: 16px;
-  width: 400px;
   position: relative;
-  justify-content: space-between;
+  width: 350px;
   display: flex;
+  justify-content: space-between;
   padding: 16px;
   border: 1px solid #d7d7d7;
   border-radius: 3px;
@@ -40,7 +40,7 @@ const MyStory = () => {
         { timeout }
       );
     } else {
-      toast(<Toast>{content}</Toast>, { timeout });
+      toast(<>{content}</>, { timeout });
     }
   };
 
