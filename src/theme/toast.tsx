@@ -1,9 +1,10 @@
 import * as React from "react";
 import { styled } from "..";
 import { createPortal } from "react-dom";
-import { Box } from "../components";
 import { isArray } from "util";
 import { useTransition, animated } from "react-spring";
+import { Button, Box } from "..";
+import { Close } from "../icons";
 
 interface IToast {
   id: number;
@@ -11,7 +12,7 @@ interface IToast {
   options?: IToastOptions;
 }
 
-export type IPosition =
+type IPosition =
   | "top-left"
   | "top-center"
   | "top-right"
@@ -19,7 +20,7 @@ export type IPosition =
   | "bottom-center"
   | "bottom-right";
 
-export interface IToastOptions {
+interface IToastOptions {
   timeout?: number | "persist";
   position?: IPosition;
 }
@@ -102,7 +103,7 @@ const transition = (place: "left" | "right" | "top" | "bottom") => {
   };
 };
 
-export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> = ({
+export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }> = ({
   children,
   defaultTimeout = 3000,
   stack = 4,
@@ -182,7 +183,7 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
   );
 };
 
-ToastState.displayName = "ToastState";
+ToastProvider.displayName = "ToastProvider";
 
 const InnerToast: React.FC<{
   t: IToast;
@@ -226,3 +227,56 @@ const ToastTimeout: React.FC<IToastProps> = props => {
 ToastTimeout.displayName = "ToastTimeout";
 
 const AnimatedToast = animated(Box);
+
+const StyledToast = styled(Button.withComponent("div"))(({ theme }) => ({
+  width: 300,
+  maxWidth: "90%",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "inherit",
+  marginBottom: theme.space[2],
+  padding: theme.space[5],
+  borderRadius: theme.space[2],
+}));
+
+type ToastVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+
+interface INotifyOptions {
+  variant?: ToastVariant;
+  position?: IPosition;
+}
+
+export const useToast = () => {
+  const { toast } = React.useContext(ToastContext);
+
+  const notify = (message: string, options: INotifyOptions) => {
+    const variant = options?.variant ?? "primary";
+    const position = options?.position ?? "bottom-right";
+    if (variant !== "danger") {
+      toast(
+        e => (
+          <StyledToast variant={variant} onClick={() => e.close()}>
+            {message}
+          </StyledToast>
+        ),
+        { timeout: 3000, position }
+      );
+    } else {
+      toast(
+        e => (
+          <StyledToast variant={variant} onClick={() => e.close()}>
+            <Box>{message}</Box>
+            <Button variant="transparent" color="inherit !important">
+              <Close width="12" height="12" />
+            </Button>
+          </StyledToast>
+        ),
+        { timeout: "persist", position }
+      );
+    }
+  };
+
+  return { toast, notify };
+};

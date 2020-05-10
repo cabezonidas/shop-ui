@@ -2,8 +2,8 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Form, Label, Input, Box, Button, Shell, Toggle, Checkbox } from "../../components";
-import { useToast } from "..";
 import { styled } from "../..";
+import { useToast } from "../toast";
 
 storiesOf("Toasts", module)
   .add("Variants", () => <Variant />)
