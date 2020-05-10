@@ -1,7 +1,7 @@
 // tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Form, Label, Input, Box, Button, Shell, Toggle } from "../../components";
+import { Form, Label, Input, Box, Button, Shell, Toggle, Checkbox } from "../../components";
 import { useToast } from "..";
 import { styled } from "../..";
 
@@ -73,13 +73,22 @@ const Custom = () => {
 
 const Variant = () => {
   const { notify } = useToast();
-  const [variant, setVariant] = React.useState<string>("primary");
+  const [variant, setVariant] = React.useState<string>("danger");
+  const [position, setPosition] = React.useState<string>("top-center");
 
   const variants = ["primary", "secondary", "default", "info", "warning", "danger"];
+  const positions = [
+    "top-left",
+    "top-center",
+    "top-right",
+    "bottom-left",
+    "bottom-center",
+    "bottom-right",
+  ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    notify(e.currentTarget.content.value, variant as any);
+    notify(e.currentTarget.content.value, { variant, position } as any);
   };
 
   return (
@@ -89,18 +98,28 @@ const Variant = () => {
           <Label htmlFor="content">Content</Label>
           <Input id="content" defaultValue={"Some toast content"} />
         </Box>
-        {variants.map(v => (
-          <Box key={v}>
-            <Label htmlFor={v}>{v}</Label>
-            <Toggle
-              id={v}
-              variant={v as any}
-              checked={v === variant}
-              onChange={() => setVariant(v)}
-            />
-          </Box>
-        ))}
-        <Button variant="primary" type="submit">
+        <Box display="grid" gridTemplateColumns={`repeat(${variants.length}, 8rem)`} gridGap="1">
+          {variants.map(v => (
+            <Box key={v}>
+              <Label htmlFor={v}>{v}</Label>
+              <Checkbox
+                id={v}
+                variant={v as any}
+                checked={v === variant}
+                onChange={() => setVariant(v)}
+              />
+            </Box>
+          ))}
+        </Box>
+        <Box display="grid" gridTemplateColumns={`repeat(${positions.length}, 8rem)`} gridGap="1">
+          {positions.map(p => (
+            <Box key={p}>
+              <Label htmlFor={p}>{p}</Label>
+              <Checkbox id={p} checked={p === position} onChange={() => setPosition(p)} />
+            </Box>
+          ))}
+        </Box>
+        <Button variant="primary" type="submit" mt="4">
           Toast!
         </Button>
       </Form>
