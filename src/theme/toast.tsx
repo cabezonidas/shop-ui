@@ -269,7 +269,7 @@ export const useToast = () => {
           <StyledToast variant={variant} onClick={() => e.close()}>
             <Box>{message}</Box>
             <Button variant="transparent" color="inherit !important">
-              <Close width="12" height="12" />
+              <Close width="12" height="12" style={{ alignSelf: "center" }} />
             </Button>
           </StyledToast>
         ),
