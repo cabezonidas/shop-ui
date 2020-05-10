@@ -1,1 +1,1 @@
-export { useToast } from "../theme/toast";
+export * from "./use-toast";

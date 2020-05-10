@@ -7,7 +7,7 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import { Global, css } from "@emotion/core";
 import { useTheme } from "./use-theme";
-import { ToastProvider } from "./toast";
+import { ToastProvider } from "./toast/toast";
 
 i18next.use(initReactI18next).init({
   resources: {

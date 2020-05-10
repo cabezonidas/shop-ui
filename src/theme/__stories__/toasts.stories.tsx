@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Form, Label, Input, Box, Button, Shell, Toggle, Checkbox } from "../../components";
 import { styled } from "../..";
-import { useToast } from "../toast";
+import { useToast } from "../../hooks";
 
 storiesOf("Toasts", module)
   .add("Variants", () => <Variant />)

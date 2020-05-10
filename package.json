@@ -13,7 +13,6 @@
   },
   "files": [
     "lib",
-    "lib-esm",
     "assets"
   ],
   "scripts": {
