@@ -10,17 +10,8 @@ interface IToast {
   options?: IToastOptions;
 }
 
-type IPosition =
-  | "up-left"
-  | "up-center"
-  | "up-right"
-  | "bottom-left"
-  | "bottom-center"
-  | "bottom-right";
-
 export interface IToastOptions {
   timeout?: number | "persist";
-  position?: IPosition;
 }
 
 type ToastChildren = React.ReactNode | ((e: { close: () => void }) => React.ReactNode);
@@ -29,7 +20,12 @@ export const ToastContext = React.createContext<{
   toast: (toastChildren: ToastChildren, options?: IToastOptions) => void;
 }>(undefined as any);
 
-const Wrapper = styled(Box)(() => ({ position: "absolute", zIndex: 1 }));
+const ToastContainer = styled(Box)(() => ({
+  position: "absolute",
+  zIndex: 1,
+  bottom: 0,
+  right: 0,
+}));
 
 const timeout = (defaultTimeout: number, options?: IToastOptions) =>
   options === undefined || options.timeout === undefined
@@ -70,8 +66,8 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
   return (
     <ToastContext.Provider value={{ toast }}>
       {createPortal(
-        <Wrapper top={0} right={0}>
-          {takeLast(toasts, stack).map(t => (
+        <ToastContainer>
+          {toasts.map(t => (
             <Toast
               key={t.id}
               removeToast={() => setToasts(ts => ts.filter(n => n.id !== t.id))}
@@ -84,13 +80,15 @@ export const ToastState: React.FC<{ defaultTimeout?: number; stack?: number }> =
                 : t.notification}
             </Toast>
           ))}
-        </Wrapper>,
+        </ToastContainer>,
         document.body
       )}
       {children}
     </ToastContext.Provider>
   );
 };
+
+ToastState.displayName = "ToastState";
 
 const Toast: React.FC<{ removeToast: () => void; expiry?: number }> = ({
   children,
@@ -108,7 +106,7 @@ const Toast: React.FC<{ removeToast: () => void; expiry?: number }> = ({
     }
   }, [expiry, removeToast]);
 
-  return <>{children}</>;
+  return <Box>{children}</Box>;
 };
 
 Toast.displayName = "Toast";
