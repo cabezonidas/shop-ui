@@ -13,9 +13,9 @@ const timeout = (defaultTimeout: number, options?: IToastOptions) =>
     : options.timeout;
 
 export const ToastContainer = styled(Box)(({ theme }) => ({
+  overflow: "hidden",
   position: "absolute",
   zIndex: 1,
-  overflow: "hidden",
   padding: theme.space[3],
   display: "flex",
   flexDirection: "column",
@@ -73,6 +73,8 @@ export const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "inherit",
   marginBottom: theme.space[2],
+  marginLeft: "auto",
+  marginRight: "auto",
   padding: theme.space[5],
   borderRadius: theme.space[2],
 }));

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
-import { ToastContainer, InnerToast, Toast, AnimatedToast } from "./toast-components";
+import { ToastContainer, InnerToast, AnimatedToast } from "./toast-components";
 
 export interface IToast {
   id: number;
@@ -121,7 +121,7 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
               </AnimatedToast>
             ))}
           </ToastContainer>
-          <ToastContainer top={0} left={0} right={0}>
+          <ToastContainer top={0} left={"50%"} right={"50%"} overflow="unset !important">
             {topCenter((style, t) => (
               <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
                 <InnerToast {...{ t, setToasts, defaultTimeout }} />
@@ -142,7 +142,7 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
               </AnimatedToast>
             ))}
           </ToastContainer>
-          <ToastContainer bottom={0} right={0} left={0}>
+          <ToastContainer bottom={0} left={"50%"} right={"50%"} overflow="unset !important">
             {bottomCenter((style, t) => (
               <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
                 <InnerToast {...{ t, setToasts, defaultTimeout }} />
