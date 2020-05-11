@@ -1,6 +1,6 @@
 {
   "name": "@cabezonidas/shop-ui",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "author": "Cabe <sebastian.scd@gmail.com>",
   "homepage": "https://github.com/cabezonidas/shop-utils#readme",
   "license": "MIT",
@@ -28,7 +28,10 @@
   "bugs": {
     "url": "https://github.com/cabezonidas/shop-utils/issues"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
   "dependencies": {
     "@emotion/core": "^10.0.27",
     "@emotion/is-prop-valid": "^0.8.6",
@@ -40,8 +43,6 @@
     "@types/styled-system": "^5.1.4",
     "emotion-theming": "^10.0.27",
     "i18next": "^19.0.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
     "react-i18next": "^11.2.7",
     "react-spring": "^9.0.0-rc.2",
     "styled-system": "^5.1.4"
@@ -54,7 +55,9 @@
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.3",
     "prettier": "^1.19.1",
+    "react": "^16.12.0",
     "react-docgen-typescript-loader": "^3.6.0",
+    "react-dom": "^16.12.0",
     "sass-loader": "^8.0.0",
     "source-map-loader": "^0.2.4",
     "storybook-dark-mode": "^0.4.1",
