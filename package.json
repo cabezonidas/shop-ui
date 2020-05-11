@@ -1,6 +1,6 @@
 {
   "name": "@cabezonidas/shop-ui",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Cabe <sebastian.scd@gmail.com>",
   "homepage": "https://github.com/cabezonidas/shop-utils#readme",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "assets"
   ],
   "scripts": {
-    "build": "tsc && tsc --build tsconfig.esm.json",
+    "build": "tsc",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
     "storybook": "start-storybook",
     "test": "echo \"No tests to run\""
@@ -28,8 +28,7 @@
   "bugs": {
     "url": "https://github.com/cabezonidas/shop-utils/issues"
   },
-  "peerDependencies": {},
-  "dependencies": {
+  "peerDependencies": {
     "@emotion/core": "^10.0.27",
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/styled": "^10.0.27",
@@ -48,17 +47,32 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
+    "@emotion/core": "^10.0.27",
+    "@emotion/is-prop-valid": "^0.8.6",
+    "@emotion/styled": "^10.0.27",
+    "@reach/dialog": "^0.10.1",
     "@storybook/react": "^5.2.8",
+    "@types/node": "^13.1.1",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.0",
+    "@types/styled-system": "^5.1.4",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.2",
+    "emotion-theming": "^10.0.27",
+    "i18next": "^19.0.2",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.3",
     "prettier": "^1.19.1",
+    "react": "^16.12.0",
     "react-docgen-typescript-loader": "^3.6.0",
+    "react-dom": "^16.12.0",
+    "react-i18next": "^11.2.7",
+    "react-spring": "^9.0.0-rc.2",
     "sass-loader": "^8.0.0",
     "source-map-loader": "^0.2.4",
     "storybook-dark-mode": "^0.4.1",
     "style-loader": "^1.1.2",
+    "styled-system": "^5.1.4",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
