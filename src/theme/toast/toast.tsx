@@ -121,9 +121,12 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
               </AnimatedToast>
             ))}
           </ToastContainer>
-          <ToastContainer top={0} left={"50%"} right={"50%"} overflow="unset !important">
+          <ToastContainer top={0} left={0} right={0} style={{ pointerEvents: "none" }}>
             {topCenter((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
+              <AnimatedToast
+                key={t.id}
+                style={{ ...style, alignSelf: "center", pointerEvents: "all" }}
+              >
                 <InnerToast {...{ t, setToasts, defaultTimeout }} />
               </AnimatedToast>
             ))}
@@ -142,9 +145,12 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
               </AnimatedToast>
             ))}
           </ToastContainer>
-          <ToastContainer bottom={0} left={"50%"} right={"50%"} overflow="unset !important">
+          <ToastContainer bottom={0} left={0} right={0} style={{ pointerEvents: "none" }}>
             {bottomCenter((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
+              <AnimatedToast
+                key={t.id}
+                style={{ ...style, alignSelf: "center", pointerEvents: "all" }}
+              >
                 <InnerToast {...{ t, setToasts, defaultTimeout }} />
               </AnimatedToast>
             ))}
