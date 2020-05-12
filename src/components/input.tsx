@@ -9,6 +9,7 @@ export const Input = styled(Box.withComponent("input"))(
       mode,
     },
   }) => ({
+    display: "block",
     appearance: "none",
     height: space[6],
     paddingLeft: space[3],
