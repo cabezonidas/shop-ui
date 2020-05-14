@@ -2,7 +2,7 @@ import * as React from "react";
 import { Input, Calendar, Box } from "..";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
-import { DateTime } from "luxon";
+import { DateTime, Interval } from "luxon";
 import FocusLock from "react-focus-lock";
 import { createPortal } from "react-dom";
 
@@ -10,10 +10,11 @@ interface IDatePicker extends React.ComponentProps<typeof Input> {
   day?: DateTime;
   onDaySelect: (d: DateTime) => void;
   placeholderDay?: DateTime;
+  allowedIntervals?: Interval[];
 }
 
 export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props, forwardedRef) => {
-  const { day, onDaySelect, placeholderDay, ...inputProps } = props;
+  const { day, onDaySelect, placeholderDay, allowedIntervals, ...inputProps } = props;
   const localRef = React.useRef<HTMLInputElement>(null);
   const ref = useForkedRef(forwardedRef, localRef);
   const [popover, setPopover] = React.useState(false);
@@ -88,6 +89,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
                       setPopover(false);
                     }}
                     initialFocusRef={initialFocusRef}
+                    allowedIntervals={allowedIntervals}
                   />
                 </FocusLock>
               </Popover>
