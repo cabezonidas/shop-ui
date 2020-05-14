@@ -275,6 +275,12 @@ const DayButton = styled(Button)<{
     color: "unset",
     borderBottom: `1px solid ${theme.colors.neutral.medium}`,
   },
+  "&:disabled": {
+    cursor: "not-allowed",
+    color:
+      theme.mode === "dark" ? theme.colors.neutral.mediumDark : theme.colors.neutral.mediumLight,
+    borderBottom: `1px solid transparent`,
+  },
 }));
 DayButton.defaultProps = {
   variant: "transparent",
