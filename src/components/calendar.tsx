@@ -56,21 +56,60 @@ interface ICalendar extends React.ComponentProps<typeof Box> {
   day: DateTime;
   onDaySelect: (d: DateTime) => void;
   allowedIntervals?: Interval[];
+  initialFocusRef?: React.MutableRefObject<HTMLButtonElement>;
 }
 
+const isDayDisabled = (day: DateTime, allowedIntervals?: Interval[]) => {
+  if (!allowedIntervals) {
+    return false;
+  } else {
+    const dayInterval = Interval.fromDateTimes(day.startOf("day"), day.endOf("day"));
+    return !allowedIntervals.some(i => i.overlaps(dayInterval));
+  }
+};
+
 export const Calendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref) => {
-  const { day, onDaySelect, allowedIntervals, ...boxProps } = props;
-  const [viewDate, setViewDate] = React.useState(DateTime.local());
+  const { day, onDaySelect, allowedIntervals, initialFocusRef, ...boxProps } = props;
+  const [viewDate, setViewDate] = React.useState(day);
   const [transition, setTransition] = React.useState(initial);
   const months = useTransition(viewDate, transition);
   const days = React.useMemo(() => calendarDays(viewDate), [viewDate]);
+  const leftArrowRef = React.useRef<HTMLButtonElement>(null);
+  const rightArrowRef = React.useRef<HTMLButtonElement>(null);
+  const daysRef = React.useRef<HTMLDivElement>(null);
+
   return (
-    <Box my="2" bg="hotpink" {...boxProps} ref={ref}>
-      <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" my="2">
+    <StyledCalendar my="2" p="3" {...boxProps} ref={ref}>
+      <Box display="grid" gridTemplateColumns="repeat(7, 1fr)">
         <ArrowButton
           onClick={() => {
             setViewDate(vd => vd.minus({ month: 1 }));
             setTransition(backwards);
+          }}
+          ref={leftArrowRef}
+          onKeyDown={e => {
+            const { key } = e;
+            const daysChildren = daysRef.current?.children as any;
+            switch (key) {
+              case "ArrowRight": {
+                rightArrowRef.current?.focus();
+                break;
+              }
+              case "ArrowLeft": {
+                daysChildren[days.length - 1]?.focus();
+                break;
+              }
+              case "ArrowUp": {
+                daysChildren[days.length - 7]?.focus();
+                break;
+              }
+              case "ArrowDown": {
+                daysChildren[0]?.focus();
+                break;
+              }
+              default:
+                return;
+            }
           }}
         >
           <ArrowPrevious />
@@ -83,11 +122,36 @@ export const Calendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref)
             setViewDate(vd => vd.plus({ month: 1 }));
             setTransition(forward);
           }}
+          ref={rightArrowRef}
+          onKeyDown={e => {
+            const { key } = e;
+            const daysChildren = daysRef.current?.children as any;
+            switch (key) {
+              case "ArrowLeft": {
+                leftArrowRef.current?.focus();
+                break;
+              }
+              case "ArrowUp": {
+                daysChildren[days.length - 1]?.focus();
+                break;
+              }
+              case "ArrowDown": {
+                daysChildren[6]?.focus();
+                break;
+              }
+              case "ArrowRight": {
+                daysChildren[0]?.focus();
+                break;
+              }
+              default:
+                return;
+            }
+          }}
         >
           <ArrowNext />
         </ArrowButton>
       </Box>
-      <WeekGrid>
+      <WeekGrid mt="4" mb="2">
         {Info.weekdays("short").map(d => (
           <Box key={d} textAlign="center">
             {d}
@@ -96,10 +160,11 @@ export const Calendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref)
       </WeekGrid>
       <Box overflow="hidden">
         {months(style => (
-          <MonthDays style={style as any}>
+          <MonthDays style={style as any} ref={daysRef}>
             {days.map((d, i) => (
               <DayButton
                 key={i}
+                disabled={isDayDisabled(d, allowedIntervals)}
                 isToday={d.hasSame(DateTime.local(), "day")}
                 isSelected={d.hasSame(day, "day")}
                 isCurrentMonth={d.hasSame(viewDate, "month")}
@@ -108,6 +173,55 @@ export const Calendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref)
                   setViewDate(d);
                   onDaySelect(d);
                 }}
+                ref={d.hasSame(day, "day") ? initialFocusRef : undefined}
+                onKeyDown={e => {
+                  const { key } = e;
+                  const siblings = daysRef.current?.children as any;
+                  switch (key) {
+                    case "ArrowRight": {
+                      siblings[i + 1]?.focus();
+                      if (i === days.length - 1) {
+                        leftArrowRef.current?.focus();
+                      }
+                      break;
+                    }
+                    case "ArrowLeft": {
+                      siblings[i - 1]?.focus();
+                      if (i === 0) {
+                        rightArrowRef.current?.focus();
+                      }
+                      break;
+                    }
+                    case "ArrowUp": {
+                      siblings[i - 7]?.focus();
+                      if (i === 0) {
+                        leftArrowRef.current?.focus();
+                      }
+                      if (i === 6) {
+                        rightArrowRef.current?.focus();
+                      }
+                      if (i < 6 && i > 0) {
+                        siblings[days.length - 7 + i]?.focus();
+                      }
+                      break;
+                    }
+                    case "ArrowDown": {
+                      siblings[i + 7]?.focus();
+                      if (i === days.length - 1) {
+                        rightArrowRef.current?.focus();
+                      }
+                      if (i === days.length - 7) {
+                        leftArrowRef.current?.focus();
+                      }
+                      if (i < days.length - 1 && i > days.length - 7) {
+                        siblings[7 - days.length + i]?.focus();
+                      }
+                      break;
+                    }
+                    default:
+                      return;
+                  }
+                }}
               >
                 {d.day}
               </DayButton>
@@ -115,14 +229,24 @@ export const Calendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref)
           </MonthDays>
         ))}
       </Box>
-    </Box>
+    </StyledCalendar>
   );
 });
 
-const WeekGrid = styled(Box)(() => ({
+const StyledCalendar = styled(Box)(({ theme: { colors, mode } }) => {
+  const bg = mode === "dark" ? colors.neutral.darkest : colors.neutral.lightest;
+  const shadow = mode === "dark" ? colors.neutral.medium : colors.neutral.medium;
+  return {
+    background: bg,
+    boxShadow: `0 1px 2px ${shadow}88, 0 1px 1px ${shadow}74`,
+  };
+});
+
+const WeekGrid = styled(Box)(({ theme }) => ({
   width: "100%",
   display: "grid",
   gridTemplateColumns: "repeat(7, 1fr)",
+  gridGap: theme.space[1],
 }));
 
 const MonthDays = animated(WeekGrid);
@@ -147,6 +271,10 @@ const DayButton = styled(Button)<{
   fontWeight: isToday || isSelected ? "bold" : undefined,
   borderBottom: `1px solid ${isSelected ? theme.colors.neutral.medium : "transparent"}`,
   color: !isCurrentMonth ? theme.colors.neutral.medium : undefined,
+  "&:hover, &:focus": {
+    color: "unset",
+    borderBottom: `1px solid ${theme.colors.neutral.medium}`,
+  },
 }));
 DayButton.defaultProps = {
   variant: "transparent",
