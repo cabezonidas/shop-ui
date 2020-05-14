@@ -1,25 +1,33 @@
 import * as React from "react";
-import { Input } from "..";
+import { Input, Form, Calendar } from "..";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
+import { DateTime } from "luxon";
 
-interface IDateTime extends React.ComponentProps<typeof Input> {
-  time?: boolean;
-  value?: string;
+interface IDatePicker extends React.ComponentProps<typeof Input> {
+  day?: DateTime;
+  onDaySelect: (d: DateTime) => void;
+  placeholderDay?: DateTime;
 }
 
-export const DateTime = React.forwardRef<HTMLInputElement, IDateTime>((props, forwardedRef) => {
-  const { time = true, value = "", ...inputProps } = props;
+export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props, forwardedRef) => {
+  const { day, onDaySelect, placeholderDay, ...inputProps } = props;
   const localRef = React.useRef<HTMLInputElement>(null);
   const ref = useForkedRef(forwardedRef, localRef);
   const [popover, setPopover] = React.useState(false);
+
+  const value = React.useMemo(() => day || placeholderDay || DateTime.local(), [
+    day,
+    placeholderDay,
+  ]);
+
   return (
     <>
       <Input
         {...inputProps}
         type={"text"}
         ref={ref}
-        value={value}
+        value={day?.toLocaleString(DateTime.DATE_MED) ?? ""}
         role="button"
         onClick={() => setPopover(true)}
         onFocus={() => setPopover(true)}
@@ -42,14 +50,24 @@ export const DateTime = React.forwardRef<HTMLInputElement, IDateTime>((props, fo
               setPopover(false);
               break;
             }
+            case "Backspace": {
+              setPopover(true);
+              onDaySelect(undefined);
+            }
           }
         }}
       />
       {popover && (
         <Popover targetRef={localRef} position={positionDefault}>
-          <div>
-            <p>Whoa! Look at me!</p>
-          </div>
+          <Form>
+            <Calendar
+              day={value}
+              onDaySelect={d => {
+                onDaySelect(d);
+                setPopover(false);
+              }}
+            />
+          </Form>
         </Popover>
       )}
     </>
