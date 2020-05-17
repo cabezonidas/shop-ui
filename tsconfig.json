@@ -13,7 +13,8 @@
     "lib": ["es6", "dom"],
     "skipLibCheck": true,
     "module": "commonjs",
-    "declaration": true
+    "declaration": true,
+    "strictNullChecks": true
   },
   "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts"]
 }

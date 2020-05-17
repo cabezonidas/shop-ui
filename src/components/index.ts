@@ -22,3 +22,4 @@ export * from "./h1";
 export * from "./h2";
 export * from "./h3";
 export * from "./alert";
+export * from "./date-picker";
