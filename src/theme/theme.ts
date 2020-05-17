@@ -30,5 +30,5 @@ export const theme: ITheme = {
     "16rem",
   ],
   lineHeight: 1.5,
-  breakpoints: ["40em", "52em", "64em", "76em"],
+  breakpoints: ["24rem", "40em", "52em", "64em", "76em"],
 };
