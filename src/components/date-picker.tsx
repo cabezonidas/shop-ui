@@ -37,6 +37,16 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
 
   const initialFocusRef = React.useRef<HTMLButtonElement>(null);
 
+  const popoverProps = {
+    day: value,
+    onDaySelect: (d?: DateTime) => {
+      onDaySelect(d);
+      setPopover(false);
+    },
+    initialFocusRef,
+    allowedIntervals,
+  };
+
   return (
     <>
       <Input
@@ -99,43 +109,13 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
                     {(() => {
                       switch (mode) {
                         case "day": {
-                          return (
-                            <DayCalendar
-                              day={value}
-                              onDaySelect={d => {
-                                onDaySelect(d);
-                                setPopover(false);
-                              }}
-                              initialFocusRef={initialFocusRef}
-                              allowedIntervals={allowedIntervals}
-                            />
-                          );
+                          return <DayCalendar {...popoverProps} />;
                         }
                         case "date-time": {
-                          return (
-                            <DateTimeCalendar
-                              day={value}
-                              onDaySelect={d => {
-                                onDaySelect(d);
-                                setPopover(false);
-                              }}
-                              allowedIntervals={allowedIntervals}
-                              minutesInterval={minutesInterval}
-                            />
-                          );
+                          return <DateTimeCalendar {...popoverProps} />;
                         }
                         case "time": {
-                          return (
-                            <TimeCalendar
-                              day={value}
-                              onDaySelect={d => {
-                                onDaySelect(d);
-                                setPopover(false);
-                              }}
-                              allowedIntervals={allowedIntervals}
-                              minutesInterval={minutesInterval}
-                            />
-                          );
+                          return <TimeCalendar {...popoverProps} />;
                         }
                       }
                     })()}

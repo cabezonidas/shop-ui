@@ -70,6 +70,7 @@ interface ICalendar extends React.ComponentProps<typeof Box> {
   onDaySelect: (d: DateTime) => void;
   allowedIntervals?: Interval[];
   initialFocusRef?: React.RefObject<HTMLButtonElement>;
+  minutesInterval?: MinutesInterval;
 }
 
 const isDayDisabled = (day: DateTime, allowedIntervals?: Interval[]) => {
@@ -105,7 +106,14 @@ const esArCalendar = {
 };
 
 export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref) => {
-  const { day, onDaySelect, allowedIntervals, initialFocusRef, ...boxProps } = props;
+  const {
+    day,
+    onDaySelect,
+    allowedIntervals,
+    initialFocusRef,
+    minutesInterval,
+    ...boxProps
+  } = props;
   const [viewDate, setViewDate] = React.useState(day);
   const [transition, setTransition] = React.useState(initial);
   const months = useTransition(viewDate, transition);
@@ -203,72 +211,75 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
       <Box overflow="hidden">
         {months(style => (
           <MonthDays style={style as any} ref={daysRef}>
-            {days.map((d, i) => (
-              <GridButton
-                key={i}
-                aria-label={d.toLocaleString(DateTime.DATE_SHORT)}
-                disabled={isDayDisabled(d, allowedIntervals)}
-                isToday={d.hasSame(DateTime.local(), "day")}
-                isSelected={d.hasSame(day, "day")}
-                isCurrentMonth={d.hasSame(viewDate, "month")}
-                onClick={() => {
-                  setTransition(getTransition(d, viewDate));
-                  setViewDate(d);
-                  onDaySelect(d);
-                }}
-                ref={d.hasSame(day, "day") ? initialFocusRef : undefined}
-                onKeyDown={e => {
-                  const { key } = e;
-                  const siblings = daysRef.current?.children as any;
-                  switch (key) {
-                    case "ArrowRight": {
-                      siblings[i + 1]?.focus();
-                      if (i === days.length - 1) {
-                        leftArrowRef.current?.focus();
+            {days.map((d, i) => {
+              const isSelected = d.hasSame(day, "day");
+              return (
+                <GridButton
+                  key={i}
+                  aria-label={d.toLocaleString(DateTime.DATE_SHORT)}
+                  disabled={isDayDisabled(d, allowedIntervals)}
+                  isToday={d.hasSame(DateTime.local(), "day")}
+                  isSelected={isSelected}
+                  isCurrentMonth={d.hasSame(viewDate, "month")}
+                  onClick={() => {
+                    setTransition(getTransition(d, viewDate));
+                    setViewDate(d);
+                    onDaySelect(d);
+                  }}
+                  ref={isSelected ? initialFocusRef : undefined}
+                  onKeyDown={e => {
+                    const { key } = e;
+                    const siblings = daysRef.current?.children as any;
+                    switch (key) {
+                      case "ArrowRight": {
+                        siblings[i + 1]?.focus();
+                        if (i === days.length - 1) {
+                          leftArrowRef.current?.focus();
+                        }
+                        break;
                       }
-                      break;
+                      case "ArrowLeft": {
+                        siblings[i - 1]?.focus();
+                        if (i === 0) {
+                          rightArrowRef.current?.focus();
+                        }
+                        break;
+                      }
+                      case "ArrowUp": {
+                        siblings[i - 7]?.focus();
+                        if (i === 0) {
+                          leftArrowRef.current?.focus();
+                        }
+                        if (i === 6) {
+                          rightArrowRef.current?.focus();
+                        }
+                        if (i < 6 && i > 0) {
+                          siblings[days.length - 7 + i]?.focus();
+                        }
+                        break;
+                      }
+                      case "ArrowDown": {
+                        siblings[i + 7]?.focus();
+                        if (i === days.length - 1) {
+                          rightArrowRef.current?.focus();
+                        }
+                        if (i === days.length - 7) {
+                          leftArrowRef.current?.focus();
+                        }
+                        if (i < days.length - 1 && i > days.length - 7) {
+                          siblings[7 - days.length + i]?.focus();
+                        }
+                        break;
+                      }
+                      default:
+                        return;
                     }
-                    case "ArrowLeft": {
-                      siblings[i - 1]?.focus();
-                      if (i === 0) {
-                        rightArrowRef.current?.focus();
-                      }
-                      break;
-                    }
-                    case "ArrowUp": {
-                      siblings[i - 7]?.focus();
-                      if (i === 0) {
-                        leftArrowRef.current?.focus();
-                      }
-                      if (i === 6) {
-                        rightArrowRef.current?.focus();
-                      }
-                      if (i < 6 && i > 0) {
-                        siblings[days.length - 7 + i]?.focus();
-                      }
-                      break;
-                    }
-                    case "ArrowDown": {
-                      siblings[i + 7]?.focus();
-                      if (i === days.length - 1) {
-                        rightArrowRef.current?.focus();
-                      }
-                      if (i === days.length - 7) {
-                        leftArrowRef.current?.focus();
-                      }
-                      if (i < days.length - 1 && i > days.length - 7) {
-                        siblings[7 - days.length + i]?.focus();
-                      }
-                      break;
-                    }
-                    default:
-                      return;
-                  }
-                }}
-              >
-                {d.day}
-              </GridButton>
-            ))}
+                  }}
+                >
+                  {d.day}
+                </GridButton>
+              );
+            })}
           </MonthDays>
         ))}
       </Box>
@@ -337,11 +348,7 @@ const ArrowNext = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>
 
 export type MinutesInterval = 1 | 5 | 10 | 15 | 20 | 30 | 60 | 90 | 120;
 
-interface ITimeGrid extends React.ComponentProps<typeof StyledTimeGrid> {
-  day?: DateTime;
-  onDaySelect: (d: DateTime) => void;
-  allowedIntervals?: Interval[];
-  minutesInterval?: MinutesInterval;
+interface ITimeGrid extends ICalendar {
   showSelection?: boolean;
 }
 
@@ -354,6 +361,7 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref)
     day,
     onDaySelect,
     showSelection = true,
+    initialFocusRef,
     ...boxProps
   } = props;
 
@@ -390,18 +398,22 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref)
     >
       {grid.map((column, columnIndex) => (
         <Box key={columnIndex} display="grid" gridTemplateRows={`repeat(${rows}, 1fr)`} gridGap="1">
-          {column.map((row, rowIndex) => (
-            <GridButton
-              key={rowIndex}
-              disabled={isDisabled(row)}
-              isSelected={showSelection && !!(day && row.hasSame(day, "minute"))}
-              isToday={false}
-              isCurrentMonth={true}
-              onClick={() => onDaySelect(row)}
-            >
-              {row.toFormat("HH:mm")}
-            </GridButton>
-          ))}
+          {column.map((row, rowIndex) => {
+            const isSelected = showSelection && !!(day && row.hasSame(day, "minute"));
+            return (
+              <GridButton
+                key={rowIndex}
+                disabled={isDisabled(row)}
+                isSelected={isSelected}
+                isToday={false}
+                isCurrentMonth={true}
+                onClick={() => onDaySelect(row)}
+                ref={isSelected ? initialFocusRef : undefined}
+              >
+                {row.toFormat("HH:mm")}
+              </GridButton>
+            );
+          })}
         </Box>
       ))}
       {grid.length === 0 && (
@@ -419,16 +431,7 @@ const StyledTimeGrid = styled(Box)(({ theme: { colors, mode } }) => ({
   marginRight: "auto",
 }));
 
-const TimeButton = styled(Button)(() => ({}));
-
-TimeButton.defaultProps = {
-  variant: "transparent",
-};
-
-export const DateTimeCalendar = React.forwardRef<
-  HTMLDivElement,
-  ICalendar & { minutesInterval?: MinutesInterval }
->((props, ref) => {
+export const DateTimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref) => {
   const {
     day: dayProp,
     onDaySelect,
@@ -485,6 +488,7 @@ export const DateTimeCalendar = React.forwardRef<
                 }}
                 allowedIntervals={allowedIntervals}
                 minutesInterval={minutesInterval}
+                initialFocusRef={initialFocusRef}
               />
             </AnimatedTimes>
           ))}
@@ -496,10 +500,7 @@ export const DateTimeCalendar = React.forwardRef<
 
 const AnimatedTimes = animated(styled(Box)(() => ({ width: "100%" })));
 
-export const TimeCalendar = React.forwardRef<
-  HTMLDivElement,
-  ICalendar & { minutesInterval?: MinutesInterval }
->((props, ref) => {
+export const TimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, ref) => {
   const {
     day: dayProp,
     onDaySelect,
@@ -555,6 +556,7 @@ export const TimeCalendar = React.forwardRef<
         }}
         allowedIntervals={allowedIntervals}
         minutesInterval={minutesInterval}
+        initialFocusRef={initialFocusRef}
       />
     </Box>
   );
