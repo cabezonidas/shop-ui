@@ -43,7 +43,7 @@ const takeLast = (arr: IToast[], elements: number) =>
 const reduceToasts = (toasts: IToast[]) =>
   toasts.reduce(
     (res, item) => {
-      const position = item?.options.position ?? "bottom-right";
+      const position = item?.options?.position ?? "bottom-right";
       switch (position) {
         case "top-left":
           return { ...res, topLeft: [...res.topLeft, item] };
