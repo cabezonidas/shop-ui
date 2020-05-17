@@ -118,9 +118,7 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
   const [transition, setTransition] = React.useState(initial);
   const months = useTransition(viewDate, transition);
   const days = React.useMemo(() => calendarDays(viewDate), [viewDate]);
-  const leftArrowRef = React.useRef<HTMLButtonElement>(null);
-  const rightArrowRef = React.useRef<HTMLButtonElement>(null);
-  const daysRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
 
   const { t, i18n } = useTranslation();
   i18n.addResourceBundle("en-US", "translation", enUsCalendar, true, true);
@@ -135,31 +133,6 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
             setViewDate(vd => vd.minus({ month: 1 }));
             setTransition(backwards);
           }}
-          ref={leftArrowRef}
-          onKeyDown={e => {
-            const { key } = e;
-            const daysChildren = daysRef.current?.children as any;
-            switch (key) {
-              case "ArrowRight": {
-                rightArrowRef.current?.focus();
-                break;
-              }
-              case "ArrowLeft": {
-                daysChildren[days.length - 1]?.focus();
-                break;
-              }
-              case "ArrowUp": {
-                daysChildren[days.length - 7]?.focus();
-                break;
-              }
-              case "ArrowDown": {
-                daysChildren[0]?.focus();
-                break;
-              }
-              default:
-                return;
-            }
-          }}
         >
           <ArrowPrevious />
         </ArrowButton>
@@ -171,31 +144,6 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
           onClick={() => {
             setViewDate(vd => vd.plus({ month: 1 }));
             setTransition(forward);
-          }}
-          ref={rightArrowRef}
-          onKeyDown={e => {
-            const { key } = e;
-            const daysChildren = daysRef.current?.children as any;
-            switch (key) {
-              case "ArrowLeft": {
-                leftArrowRef.current?.focus();
-                break;
-              }
-              case "ArrowUp": {
-                daysChildren[days.length - 1]?.focus();
-                break;
-              }
-              case "ArrowDown": {
-                daysChildren[6]?.focus();
-                break;
-              }
-              case "ArrowRight": {
-                daysChildren[0]?.focus();
-                break;
-              }
-              default:
-                return;
-            }
           }}
         >
           <ArrowNext />
@@ -210,7 +158,7 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
       </WeekGrid>
       <Box overflow="hidden">
         {months(style => (
-          <MonthDays style={style as any} ref={daysRef}>
+          <MonthDays style={style as any} ref={gridRef}>
             {days.map((d, i) => {
               const isSelected = d.hasSame(day, "day");
               return (
@@ -227,54 +175,7 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
                     onDaySelect(d);
                   }}
                   ref={isSelected ? initialFocusRef : undefined}
-                  onKeyDown={e => {
-                    const { key } = e;
-                    const siblings = daysRef.current?.children as any;
-                    switch (key) {
-                      case "ArrowRight": {
-                        siblings[i + 1]?.focus();
-                        if (i === days.length - 1) {
-                          leftArrowRef.current?.focus();
-                        }
-                        break;
-                      }
-                      case "ArrowLeft": {
-                        siblings[i - 1]?.focus();
-                        if (i === 0) {
-                          rightArrowRef.current?.focus();
-                        }
-                        break;
-                      }
-                      case "ArrowUp": {
-                        siblings[i - 7]?.focus();
-                        if (i === 0) {
-                          leftArrowRef.current?.focus();
-                        }
-                        if (i === 6) {
-                          rightArrowRef.current?.focus();
-                        }
-                        if (i < 6 && i > 0) {
-                          siblings[days.length - 7 + i]?.focus();
-                        }
-                        break;
-                      }
-                      case "ArrowDown": {
-                        siblings[i + 7]?.focus();
-                        if (i === days.length - 1) {
-                          rightArrowRef.current?.focus();
-                        }
-                        if (i === days.length - 7) {
-                          leftArrowRef.current?.focus();
-                        }
-                        if (i < days.length - 1 && i > days.length - 7) {
-                          siblings[7 - days.length + i]?.focus();
-                        }
-                        break;
-                      }
-                      default:
-                        return;
-                    }
-                  }}
+                  onKeyDown={e => onCalendarKeyDown(e, gridRef, i, 7)}
                 >
                   {d.day}
                 </GridButton>
@@ -286,6 +187,66 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
     </Box>
   );
 });
+
+const onCalendarKeyDown = (
+  e: React.KeyboardEvent<HTMLButtonElement>,
+  gridRef: React.RefObject<HTMLDivElement>,
+  i: number,
+  columns: number
+) => {
+  const { key } = e;
+  const children = gridRef.current?.children as any;
+  const siblingsCount = children?.length ?? 0;
+
+  const siblings = [...Array(siblingsCount)].map(
+    (_, index) => children[index] as HTMLButtonElement
+  );
+
+  switch (key) {
+    case "ArrowRight": {
+      if (i < siblingsCount - 1) {
+        siblings
+          .slice(i + 1)
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowLeft": {
+      if (i > 0) {
+        siblings
+          .slice(0, i)
+          .reverse()
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowUp": {
+      if (i >= columns) {
+        siblings
+          .slice(0, i)
+          .filter((_, index) => index % columns === i % columns)
+          .reverse()
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowDown": {
+      if (i < siblingsCount - 1) {
+        siblings
+          .slice(i + columns)
+          .filter((_, index) => index % columns === 0)
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    default:
+      return;
+  }
+};
 
 const WeekGrid = styled(Box)(({ theme }) => ({
   width: "100%",
