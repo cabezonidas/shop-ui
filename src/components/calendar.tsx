@@ -4,6 +4,7 @@ import { useTransition, animated } from "react-spring";
 import { styled, useTheme } from "../theme";
 import { Box, Button } from ".";
 import { useTranslation, timeslots } from "..";
+import { useForkedRef } from "@reach/utils";
 
 const current = (date: DateTime) =>
   [...Array(date.daysInMonth)].map((_, i) => date.set({ day: i + 1 }));
@@ -315,7 +316,7 @@ interface ITimeGrid extends ICalendar {
 
 const rows = 6;
 
-export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref) => {
+export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, forwardedRef) => {
   const {
     allowedIntervals,
     minutesInterval = 60,
@@ -349,6 +350,8 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref)
   }, [selectedDay, minutesInterval]);
 
   const theme = useTheme();
+  const gridRef = React.useRef<HTMLDivElement>(null);
+  const ref = useForkedRef(forwardedRef, gridRef);
 
   return (
     <StyledTimeGrid
@@ -370,6 +373,12 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref)
                 isCurrentMonth={true}
                 onClick={() => onDaySelect(row)}
                 ref={isSelected ? initialFocusRef : undefined}
+                onKeyDown={e =>
+                  onTimeKeyDown(e, gridRef, columnIndex * rows + rowIndex, {
+                    columns: grid.length,
+                    rows: column.length,
+                  })
+                }
               >
                 {row.toFormat("HH:mm")}
               </GridButton>
@@ -385,6 +394,71 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref)
     </StyledTimeGrid>
   );
 });
+
+const onTimeKeyDown = (
+  e: React.KeyboardEvent<HTMLButtonElement>,
+  gridRef: React.RefObject<HTMLDivElement>,
+  i: number,
+  size: { columns: number; rows: number }
+) => {
+  const { key } = e;
+  const children = gridRef.current?.children as any;
+  const siblingsCount = size.columns * size.rows;
+
+  const siblings: HTMLButtonElement[] = [];
+  [...Array(size.columns)].map((_, column) =>
+    ((children[column] as HTMLDivElement).children as any).forEach((child: HTMLButtonElement) =>
+      siblings.push(child)
+    )
+  );
+
+  console.log({ siblings });
+
+  switch (key) {
+    case "ArrowDown": {
+      if (i < siblingsCount - 1) {
+        siblings
+          .slice(i + 1)
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowUp": {
+      if (i > 0) {
+        siblings
+          .slice(0, i)
+          .reverse()
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowLeft": {
+      if (i >= size.rows) {
+        siblings
+          .slice(0, i)
+          .filter((_, index) => index % size.rows === i % size.rows)
+          .reverse()
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    case "ArrowRight": {
+      if (i < siblingsCount - 1) {
+        siblings
+          .slice(i + size.rows)
+          .filter((_, index) => index % size.rows === 0)
+          .find(b => !b.disabled)
+          ?.focus();
+      }
+      break;
+    }
+    default:
+      return;
+  }
+};
 
 const StyledTimeGrid = styled(Box)(({ theme: { colors, mode } }) => ({
   display: "grid",
