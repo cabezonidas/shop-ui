@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Input, Calendar, Box } from "..";
+import { Input, DayCalendar, Box, styled, DateTimeCalendar, TimeCalendar } from "..";
+import { MinutesInterval } from "./calendar";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
 import { DateTime, Interval } from "luxon";
@@ -8,13 +9,23 @@ import { createPortal } from "react-dom";
 
 interface IDatePicker extends React.ComponentProps<typeof Input> {
   day?: DateTime;
-  onDaySelect: (d: DateTime) => void;
+  onDaySelect: (d?: DateTime) => void;
   placeholderDay?: DateTime;
   allowedIntervals?: Interval[];
+  mode?: "day" | "date-time" | "time";
+  minutesInterval?: MinutesInterval;
 }
 
 export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props, forwardedRef) => {
-  const { day, onDaySelect, placeholderDay, allowedIntervals, ...inputProps } = props;
+  const {
+    day,
+    onDaySelect,
+    placeholderDay,
+    allowedIntervals,
+    mode = "day",
+    minutesInterval = 60,
+    ...inputProps
+  } = props;
   const localRef = React.useRef<HTMLInputElement>(null);
   const ref = useForkedRef(forwardedRef, localRef);
   const [popover, setPopover] = React.useState(false);
@@ -32,7 +43,9 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
         {...inputProps}
         type={"text"}
         ref={ref}
-        value={day?.toLocaleString(DateTime.DATE_MED) ?? ""}
+        value={
+          day?.toLocaleString(mode === "day" ? DateTime.DATE_MED : DateTime.DATETIME_MED) ?? ""
+        }
         onChange={() => ({})}
         role="button"
         onClick={() => setPopover(true)}
@@ -82,15 +95,51 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
                   returnFocus={true}
                   onActivation={() => initialFocusRef.current?.focus()}
                 >
-                  <Calendar
-                    day={value}
-                    onDaySelect={d => {
-                      onDaySelect(d);
-                      setPopover(false);
-                    }}
-                    initialFocusRef={initialFocusRef}
-                    allowedIntervals={allowedIntervals}
-                  />
+                  <Popup my="2" p="3">
+                    {(() => {
+                      switch (mode) {
+                        case "day": {
+                          return (
+                            <DayCalendar
+                              day={value}
+                              onDaySelect={d => {
+                                onDaySelect(d);
+                                setPopover(false);
+                              }}
+                              initialFocusRef={initialFocusRef}
+                              allowedIntervals={allowedIntervals}
+                            />
+                          );
+                        }
+                        case "date-time": {
+                          return (
+                            <DateTimeCalendar
+                              day={value}
+                              onDaySelect={d => {
+                                onDaySelect(d);
+                                setPopover(false);
+                              }}
+                              allowedIntervals={allowedIntervals}
+                              minutesInterval={minutesInterval}
+                            />
+                          );
+                        }
+                        case "time": {
+                          return (
+                            <TimeCalendar
+                              day={value}
+                              onDaySelect={d => {
+                                onDaySelect(d);
+                                setPopover(false);
+                              }}
+                              allowedIntervals={allowedIntervals}
+                              minutesInterval={minutesInterval}
+                            />
+                          );
+                        }
+                      }
+                    })()}
+                  </Popup>
                 </FocusLock>
               </Popover>
             </Box>,
@@ -100,4 +149,13 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
       )}
     </>
   );
+});
+
+const Popup = styled(Box)(({ theme: { colors, mode } }) => {
+  const bg = mode === "dark" ? colors.neutral.darkest : colors.neutral.lightest;
+  const shadow = mode === "dark" ? colors.neutral.medium : colors.neutral.medium;
+  return {
+    background: bg,
+    boxShadow: `0 1px 2px ${shadow}88, 0 1px 1px ${shadow}74`,
+  };
 });
