@@ -12,8 +12,6 @@ export const Loading = () => {
   i18n.addResourceBundle("en-US", "translation", enUsLoading, true, true);
   i18n.addResourceBundle("es-AR", "translation", esArLoading, true, true);
 
-  const text = `${t("ui.loading")}...`;
-
   return (
     <Box display="grid" gridTemplateColumns={`repeat(4, auto)`} gridGap="0">
       <Box>{t("ui.loading")}</Box>
