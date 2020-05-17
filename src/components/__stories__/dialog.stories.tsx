@@ -7,9 +7,9 @@ import Button from "../button";
 storiesOf("Dialog", module).add("Dialog content", () => <Example />);
 
 function Example() {
-  const [showDialog, setShowDialog] = React.useState<"body" | "header" | "footer" | "all">(
-    undefined
-  );
+  const [showDialog, setShowDialog] = React.useState<
+    "body" | "header" | "footer" | "all" | undefined
+  >(undefined);
   const close = () => setShowDialog(undefined);
 
   return (
