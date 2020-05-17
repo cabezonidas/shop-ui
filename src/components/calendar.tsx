@@ -500,7 +500,7 @@ export const DateTimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((pro
             setTimeChangedBySideEffect(true);
             const { year, month, day } = d;
             setTransition(d > selectedDay ? upwards : downwards);
-            setSelectedDay(d => d.set({ year, month, day }));
+            setSelectedDay(selectedDay.set({ year, month, day }));
           }
         }}
         allowedIntervals={allowedIntervals}
