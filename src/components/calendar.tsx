@@ -53,6 +53,18 @@ const backwards = {
   leave: { opacity: 0, transform: "translate3d(50%,0,0)", position: "absolute" },
 };
 
+const upwards = {
+  from: { opacity: 0, transform: "translate3d(0,100%,0)", position: "absolute" },
+  enter: { opacity: 1, transform: "translate3d(0,0%,0)", position: "relative" },
+  leave: { opacity: 0, transform: "translate3d(0,-50%,0)", position: "absolute" },
+};
+
+const downwards = {
+  from: { opacity: 0, transform: "translate3d(0,-100%,0)", position: "absolute" },
+  enter: { opacity: 1, transform: "translate3d(0,0%,0)", position: "relative" },
+  leave: { opacity: 0, transform: "translate3d(0,50%,0)", position: "absolute" },
+};
+
 interface ICalendar extends React.ComponentProps<typeof Box> {
   day: DateTime;
   onDaySelect: (d: DateTime) => void;
@@ -432,14 +444,24 @@ export const DateTimeCalendar = React.forwardRef<
     setSelectedDay(dayProp);
   }, [dayProp]);
 
+  const [transition, setTransition] = React.useState(initial);
+  const times = useTransition(selectedDay, transition);
+
   return (
-    <Box display="grid" gridTemplateColumns={["", "1fr 1fr"]} gridGap="4" {...boxProps} ref={ref}>
+    <Box
+      display="grid"
+      gridTemplateColumns={["", "auto minmax(240px, 1fr)"]}
+      gridGap="4"
+      {...boxProps}
+      ref={ref}
+    >
       <DayCalendar
         day={selectedDay}
         onDaySelect={d => {
           if (!selectedDay.hasSame(d, "day")) {
             setTimeChangedBySideEffect(true);
             const { year, month, day } = d;
+            setTransition(d > selectedDay ? upwards : downwards);
             setSelectedDay(d => d.set({ year, month, day }));
           }
         }}
@@ -450,21 +472,29 @@ export const DateTimeCalendar = React.forwardRef<
         <Box mt="4" mb="2" textAlign="center">
           {selectedDay.toLocaleString(DateTime.DATE_MED)}
         </Box>
-        <TimeGrid
-          day={selectedDay}
-          showSelection={!timeChangedBySideEffect}
-          onDaySelect={({ hour, minute }) => {
-            const newValue = selectedDay.set({ hour, minute }).startOf("second");
-            setTimeChangedBySideEffect(false);
-            onDaySelect(newValue);
-          }}
-          allowedIntervals={allowedIntervals}
-          minutesInterval={minutesInterval}
-        />
+        <Box overflow="hidden" style={{ transition: "width 0.2s ease" }}>
+          {times(style => (
+            <AnimatedTimes style={style as any}>
+              <TimeGrid
+                day={selectedDay}
+                showSelection={!timeChangedBySideEffect}
+                onDaySelect={({ hour, minute }) => {
+                  const newValue = selectedDay.set({ hour, minute }).startOf("second");
+                  setTimeChangedBySideEffect(false);
+                  onDaySelect(newValue);
+                }}
+                allowedIntervals={allowedIntervals}
+                minutesInterval={minutesInterval}
+              />
+            </AnimatedTimes>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
 });
+
+const AnimatedTimes = animated(styled(Box)(() => ({ width: "100%" })));
 
 export const TimeCalendar = React.forwardRef<
   HTMLDivElement,
@@ -489,31 +519,29 @@ export const TimeCalendar = React.forwardRef<
   i18n.addResourceBundle("es-AR", "translation", esArCalendar, true, true);
 
   return (
-    <Box minWidth="240px" {...boxProps} ref={ref}>
-      <Box display="grid" gridTemplateColumns="auto 1fr auto" gridGap="2">
+    <Box {...boxProps} ref={ref}>
+      <Box display="grid" gridTemplateColumns="auto auto 1fr" gridGap="2">
         <ArrowButton
           aria-label={t("ui.calendar.previous_day")}
           onClick={() => {
             setTimeChangedBySideEffect(true);
             setSelectedDay(d => d.minus({ days: 1 }));
           }}
-          ml="6"
-          style={{ transform: "rotate(90deg)" }}
+          ml="3"
         >
           <ArrowPrevious />
         </ArrowButton>
-        <Box textAlign="center">{selectedDay.toLocaleString(DateTime.DATE_MED)}</Box>
         <ArrowButton
           aria-label={t("ui.calendar.next_day")}
           onClick={() => {
             setTimeChangedBySideEffect(true);
             setSelectedDay(d => d.plus({ days: 1 }));
           }}
-          mr="6"
-          style={{ transform: "rotate(90deg)" }}
+          mr="3"
         >
           <ArrowNext />
         </ArrowButton>
+        <Box textAlign="left">{selectedDay.toLocaleString(DateTime.DATE_MED)}</Box>
       </Box>
 
       <TimeGrid
