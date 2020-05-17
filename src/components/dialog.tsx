@@ -18,7 +18,7 @@ const esArDialog = { ui: { dialog: { close: "Cerrar diálogo" } } };
 export const Dialog = React.forwardRef<HTMLDivElement, IDialogProps>((props, ref) => {
   const { isOpen, header, footer, children, containerProps, ...otherProps } = props;
   const { onDismiss } = props;
-  const { open, style } = useFade(isOpen);
+  const { open, style } = useFade(!!isOpen);
   const gridTemplateRows =
     header && footer ? "auto 1fr auto" : header ? "auto 1fr" : footer ? "1fr auto" : "1fr";
 
