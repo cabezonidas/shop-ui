@@ -45,6 +45,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
     },
     initialFocusRef,
     allowedIntervals,
+    minutesInterval,
   };
 
   return (
