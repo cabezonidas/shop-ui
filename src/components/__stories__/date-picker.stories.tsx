@@ -2,8 +2,8 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Form, Label, Box, DatePicker, Checkbox, Select, Option } from "..";
-import { soonestAvailable } from "../calendar";
 import { DateTime, Interval } from "luxon";
+import { soonestAvailable } from "../..";
 
 storiesOf("DatePicker", module).add("Variants", () => <MyStory />);
 

@@ -3,7 +3,7 @@ import { DateTime, Info, Interval } from "luxon";
 import { useTransition, animated } from "react-spring";
 import { styled, useTheme } from "../theme";
 import { Box, Button } from ".";
-import { useTranslation } from "..";
+import { useTranslation, timeslots } from "..";
 
 const current = (date: DateTime) =>
   [...Array(date.daysInMonth)].map((_, i) => date.set({ day: i + 1 }));
@@ -334,12 +334,7 @@ interface ITimeGrid extends React.ComponentProps<typeof StyledTimeGrid> {
 }
 
 const rows = 6;
-const timeslots = (day: DateTime, minutesInterval: MinutesInterval) => {
-  const startOfDay = day.startOf("day");
-  return [...Array(1440 / minutesInterval)].map((_, cell) =>
-    startOfDay.plus({ minutes: minutesInterval * cell })
-  );
-};
+
 export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, ref) => {
   const {
     allowedIntervals,
@@ -416,14 +411,6 @@ const TimeButton = styled(Button)(() => ({}));
 
 TimeButton.defaultProps = {
   variant: "transparent",
-};
-
-const isDateTimeDisabled = (day: DateTime, allowedIntervals?: Interval[]) => {
-  if (!allowedIntervals) {
-    return false;
-  } else {
-    return !allowedIntervals.some(i => i.contains(day));
-  }
 };
 
 export const DateTimeCalendar = React.forwardRef<
@@ -544,36 +531,3 @@ export const TimeCalendar = React.forwardRef<
     </Box>
   );
 });
-
-export const soonestAvailable = (
-  fromNow: boolean,
-  minutesInterval: MinutesInterval,
-  allowedIntervals?: Interval[]
-) => {
-  const now = DateTime.local();
-  if (!allowedIntervals) {
-    const newAllowedTime = DateTime.local().startOf("minute");
-    const offset = newAllowedTime.minute % minutesInterval;
-    return offset ? newAllowedTime.plus({ minutes: minutesInterval - offset }) : newAllowedTime;
-  }
-
-  const minDate = allowedIntervals.sort((a, b) => (a.start > b.start ? 1 : -1))[0]?.start;
-  const maxDate = allowedIntervals.sort((a, b) => (a.end < b.end ? 1 : -1))[0]?.end;
-
-  if (minDate && maxDate) {
-    const days = Math.ceil(maxDate.diff(minDate, "days").toObject().days ?? 1);
-    const daysIntervals = [...Array(days)].map((_, d) =>
-      timeslots(minDate.startOf("day").plus({ days: d }), minutesInterval)
-    );
-    let soonest: DateTime | undefined;
-    for (const daysInt of daysIntervals) {
-      soonest = daysInt
-        .filter(t => (fromNow ? t > now : true))
-        .find(t => allowedIntervals.find(ai => ai.contains(t)));
-      if (soonest) {
-        break;
-      }
-    }
-    return soonest;
-  }
-};

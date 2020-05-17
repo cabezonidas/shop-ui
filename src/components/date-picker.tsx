@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Input, DayCalendar, Box, styled, DateTimeCalendar, TimeCalendar } from "..";
-import { MinutesInterval } from "./calendar";
+import { Input, Box, styled } from "..";
+import { MinutesInterval, DayCalendar, DateTimeCalendar, TimeCalendar } from "./calendar";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
 import { DateTime, Interval } from "luxon";
