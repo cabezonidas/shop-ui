@@ -7,11 +7,13 @@ import { soonestAvailable } from "../..";
 
 storiesOf("DatePicker", module).add("Variants", () => <MyStory />);
 
-const day1 = DateTime.local().startOf("day");
+const day1 = DateTime.local()
+  .startOf("day")
+  .minus({ days: 1 });
 const day2 = day1.plus({ days: 1 }).set({ hour: 9 });
-const day3 = day2.plus({ days: 1 }).set({ hour: 6 });
-const day4 = day3.plus({ days: 2 }).set({ hour: 12 });
-const day5 = day4.plus({ days: 1 }).set({ hour: 7 });
+const day3 = day2.plus({ days: 2 }).set({ hour: 6 });
+const day4 = day3.plus({ days: 3 }).set({ hour: 12 });
+const day5 = day4.plus({ days: 8 }).set({ hour: 7 });
 
 const allowedIntervals = [
   Interval.after(day1.plus({ hours: 8 }), { hours: 2 }),
