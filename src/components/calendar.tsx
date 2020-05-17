@@ -553,15 +553,19 @@ export const TimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, 
   const { t, i18n } = useTranslation();
   i18n.addResourceBundle("en-US", "translation", enUsCalendar, true, true);
   i18n.addResourceBundle("es-AR", "translation", esArCalendar, true, true);
+  const [transition, setTransition] = React.useState(initial);
+  const transitionCondition = React.useMemo(() => selectedDay.toFormat("yyyyLLdd"), [selectedDay]);
+  const animation = useTransition(transitionCondition, transition);
 
   return (
-    <Box {...boxProps} ref={ref}>
+    <Box minWidth="200px" {...boxProps} ref={ref}>
       <Box display="grid" gridTemplateColumns="auto auto 1fr" gridGap="2">
         <ArrowButton
           aria-label={t("ui.calendar.previous_day")}
           onClick={() => {
             setTimeChangedBySideEffect(true);
             setSelectedDay(d => d.minus({ days: 1 }));
+            setTransition(backwards);
           }}
           ml="3"
         >
@@ -572,6 +576,7 @@ export const TimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, 
           onClick={() => {
             setTimeChangedBySideEffect(true);
             setSelectedDay(d => d.plus({ days: 1 }));
+            setTransition(forward);
           }}
           mr="3"
         >
@@ -579,20 +584,26 @@ export const TimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, 
         </ArrowButton>
         <Box textAlign="left">{selectedDay.toLocaleString(DateTime.DATE_MED)}</Box>
       </Box>
-
-      <TimeGrid
-        pt="4"
-        day={selectedDay}
-        showSelection={!timeChangedBySideEffect}
-        onDaySelect={({ hour, minute }) => {
-          const newValue = selectedDay.set({ hour, minute }).startOf("second");
-          setTimeChangedBySideEffect(false);
-          onDaySelect(newValue);
-        }}
-        allowedIntervals={allowedIntervals}
-        minutesInterval={minutesInterval}
-        initialFocusRef={initialFocusRef}
-      />
+      <Box overflow="hidden">
+        {animation(style => (
+          <animated.div style={style as any}>
+            <TimeGrid
+              pt="4"
+              day={selectedDay}
+              showSelection={!timeChangedBySideEffect}
+              onDaySelect={({ hour, minute }) => {
+                const newValue = selectedDay.set({ hour, minute }).startOf("second");
+                setTimeChangedBySideEffect(false);
+                onDaySelect(newValue);
+              }}
+              allowedIntervals={allowedIntervals}
+              minutesInterval={minutesInterval}
+              initialFocusRef={initialFocusRef}
+              width="max-content"
+            />
+          </animated.div>
+        ))}
+      </Box>
     </Box>
   );
 });
