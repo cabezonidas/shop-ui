@@ -7,20 +7,29 @@ import { useTranslation } from "react-i18next";
 const enUsLoading = { ui: { loading: "Loading" } };
 const esArLoading = { ui: { loading: "Cargando" } };
 
-export const Loading = () => {
-  const { t, i18n } = useTranslation();
-  i18n.addResourceBundle("en-US", "translation", enUsLoading, true, true);
-  i18n.addResourceBundle("es-AR", "translation", esArLoading, true, true);
+export const Loading = React.forwardRef<HTMLDivElement, React.ComponentProps<typeof Box>>(
+  (props, ref) => {
+    const { t, i18n } = useTranslation();
+    i18n.addResourceBundle("en-US", "translation", enUsLoading, true, true);
+    i18n.addResourceBundle("es-AR", "translation", esArLoading, true, true);
 
-  return (
-    <Box display="grid" gridTemplateColumns={`repeat(4, auto)`} gridGap="0">
-      <Box>{t("ui.loading")}</Box>
-      <Dot index={0}>.</Dot>
-      <Dot index={1}>.</Dot>
-      <Dot index={2}>.</Dot>
-    </Box>
-  );
-};
+    return (
+      <Box
+        width="min-content"
+        display="grid"
+        gridTemplateColumns={`repeat(4, auto)`}
+        gridGap="0"
+        {...props}
+        ref={ref}
+      >
+        <Box>{t("ui.loading")}</Box>
+        <Dot index={0}>.</Dot>
+        <Dot index={1}>.</Dot>
+        <Dot index={2}>.</Dot>
+      </Box>
+    );
+  }
+);
 
 const Dot = styled(Box)<{ index: number }>(({ index }) => ({
   borderRadius: "50%",
