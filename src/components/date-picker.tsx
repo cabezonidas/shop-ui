@@ -57,7 +57,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
   return (
     <>
       <Input
-        {...inputProps}
+        readOnly={true}
         type={"text"}
         ref={ref}
         value={
@@ -84,6 +84,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
             }
           }
         }}
+        {...inputProps}
       />
       {popover && (
         <>
