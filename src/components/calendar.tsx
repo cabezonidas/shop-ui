@@ -413,8 +413,6 @@ const onTimeKeyDown = (
     )
   );
 
-  console.log({ siblings });
-
   switch (key) {
     case "ArrowDown": {
       if (i < siblingsCount - 1) {
