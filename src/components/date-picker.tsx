@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Input, Box } from "..";
-import styled from "../theme/styled";
 import { MinutesInterval, DayCalendar, DateTimeCalendar, TimeCalendar } from "./calendar";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
 import { DateTime, Interval } from "luxon";
 import FocusLock from "react-focus-lock";
 import { createPortal } from "react-dom";
+import { useTheme } from "../theme";
 
 interface IDatePicker extends React.ComponentProps<typeof Input> {
   day?: DateTime;
@@ -37,6 +37,11 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
   ]);
 
   const initialFocusRef = React.useRef<HTMLButtonElement>(null);
+
+  const { colors, mode: uiMode } = useTheme();
+  const shadow = uiMode === "dark" ? colors.neutral.medium : colors.neutral.medium;
+  const background = uiMode === "dark" ? colors.neutral.darkest : colors.neutral.lightest;
+  const boxShadow = `0 1px 2px ${shadow}88, 0 1px 1px ${shadow}74`;
 
   const popoverProps = {
     day: value,
@@ -107,7 +112,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
                   returnFocus={true}
                   onActivation={() => initialFocusRef.current?.focus()}
                 >
-                  <Popup my="2" p="3">
+                  <Box my="2" p="3" style={{ background, boxShadow }}>
                     {(() => {
                       switch (mode) {
                         case "day": {
@@ -121,7 +126,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
                         }
                       }
                     })()}
-                  </Popup>
+                  </Box>
                 </FocusLock>
               </Popover>
             </Box>,
@@ -131,13 +136,4 @@ export const DatePicker = React.forwardRef<HTMLInputElement, IDatePicker>((props
       )}
     </>
   );
-});
-
-const Popup = styled(Box)(({ theme: { colors, mode } }) => {
-  const bg = mode === "dark" ? colors.neutral.darkest : colors.neutral.lightest;
-  const shadow = mode === "dark" ? colors.neutral.medium : colors.neutral.medium;
-  return {
-    background: bg,
-    boxShadow: `0 1px 2px ${shadow}88, 0 1px 1px ${shadow}74`,
-  };
 });

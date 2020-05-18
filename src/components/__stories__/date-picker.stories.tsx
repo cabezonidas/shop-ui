@@ -1,9 +1,10 @@
 // tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Form, Label, Box, DatePicker, Checkbox, Select, Option } from "..";
+import { Form, Label, Box, Checkbox, Select, Option } from "..";
 import { DateTime, Interval } from "luxon";
 import { soonestAvailable } from "../..";
+import { DatePicker } from "../date-picker";
 
 storiesOf("DatePicker", module).add("Variants", () => <MyStory />);
 
