@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled } from "../theme";
+import styled from "../theme/styled";
 import { Box } from ".";
 import { keyframes } from "@emotion/core";
 import { useTranslation } from "react-i18next";

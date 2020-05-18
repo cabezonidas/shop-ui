@@ -1,4 +1,4 @@
-import { styled } from "../theme/styled";
+import styled from "../theme/styled";
 import * as React from "react";
 const Svg = styled("svg")`
   fill: currentColor;

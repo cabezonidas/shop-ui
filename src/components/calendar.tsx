@@ -1,7 +1,8 @@
 import * as React from "react";
 import { DateTime, Info, Interval } from "luxon";
 import { useTransition, animated } from "react-spring";
-import { styled, useTheme } from "../theme";
+import { useTheme } from "../theme";
+import styled from "../theme/styled";
 import { Box, Button } from ".";
 import { useTranslation, timeslots } from "..";
 import { useForkedRef } from "@reach/utils";

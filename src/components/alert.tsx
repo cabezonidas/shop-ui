@@ -1,7 +1,7 @@
 import { Alert as ReachAlert } from "@reach/alert";
 import { Box } from ".";
 import { IColorTheme } from "../theme/colors";
-import { styled } from "../theme";
+import styled from "../theme/styled";
 
 type AlertVariant = "primary" | "info" | "warning" | "danger" | "default";
 

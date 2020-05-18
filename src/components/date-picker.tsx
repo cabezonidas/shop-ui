@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Input, Box, styled } from "..";
+import { Input, Box } from "..";
+import styled from "../theme/styled";
 import { MinutesInterval, DayCalendar, DateTimeCalendar, TimeCalendar } from "./calendar";
 import Popover, { positionDefault } from "@reach/popover";
 import { useForkedRef } from "@reach/utils";
