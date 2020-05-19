@@ -3,11 +3,13 @@ import { useEffect, useState, forwardRef, ComponentProps } from "react";
 import { Box } from ".";
 
 const useHeight = () => {
-  const [height, setHeight] = useState(window.innerHeight);
+  const [height, setHeight] = useState(
+    window.innerHeight * ((window as any).visualViewport?.scale || 1)
+  );
 
   useEffect(() => {
     const onResize = () => {
-      setHeight(window.innerHeight);
+      setHeight(window.innerHeight * ((window as any).visualViewport?.scale || 1));
     };
 
     window.addEventListener("resize", onResize);
