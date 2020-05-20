@@ -1,7 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 // tslint:disable: jsx-use-translation-function
-import { DropArea } from "..";
 import Button from "../button";
 import { Loading } from "../loading";
 
