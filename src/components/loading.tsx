@@ -42,3 +42,5 @@ to {
   opacity: 0.6;
 }
 `;
+
+Loading.displayName = "Loading";

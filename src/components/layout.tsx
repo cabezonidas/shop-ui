@@ -150,6 +150,8 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
   );
 };
 
+ResponsiveLayout.displayName = "ResponsiveLayout";
+
 const MenuButton = styled(Button)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",

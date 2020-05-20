@@ -190,6 +190,8 @@ export const DayCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, r
   );
 });
 
+DayCalendar.displayName = "DayCalendar";
+
 const onCalendarKeyDown = (
   e: React.KeyboardEvent<HTMLButtonElement>,
   gridRef: React.RefObject<HTMLDivElement>,
@@ -396,6 +398,8 @@ export const TimeGrid = React.forwardRef<HTMLDivElement, ITimeGrid>((props, forw
   );
 });
 
+TimeGrid.displayName = "TimeCalendar";
+
 const onTimeKeyDown = (
   e: React.KeyboardEvent<HTMLButtonElement>,
   gridRef: React.RefObject<HTMLDivElement>,
@@ -531,6 +535,7 @@ export const DateTimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((pro
     </Box>
   );
 });
+DateTimeCalendar.displayName = "DateTimeCalendar";
 
 const AnimatedTimes = animated(styled(Box)(() => ({ width: "100%" })));
 
@@ -606,3 +611,4 @@ export const TimeCalendar = React.forwardRef<HTMLDivElement, ICalendar>((props, 
     </Box>
   );
 });
+TimeCalendar.displayName = "TimeCalendar";
