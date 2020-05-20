@@ -32,5 +32,6 @@ export const useBreakpoint = () => {
   const isLarge = useMedia("(min-width: 1024px)");
   const isMediumLarge = useMedia("(min-width: 880px)");
   const isMedium = useMedia("(min-width: 640px)");
-  return { isLarge, isMediumLarge, isMedium };
+  const isMediumSmall = useMedia("(min-width: 420px)");
+  return { isLarge, isMediumLarge, isMedium, isMediumSmall };
 };

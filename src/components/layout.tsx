@@ -11,6 +11,7 @@ interface ILayout {
   aside?: React.ReactNode;
   footer?: React.ReactNode;
   mode?: LayoutMode;
+  shouldCloseNav?: () => void;
 }
 
 export const Layout: React.FC<ILayout> = ({
@@ -20,6 +21,7 @@ export const Layout: React.FC<ILayout> = ({
   aside,
   footer,
   children,
+  shouldCloseNav,
 }) => {
   const transition = "width 0.3s ease";
   const { colors, mode: darkMode } = useTheme();
@@ -45,6 +47,11 @@ export const Layout: React.FC<ILayout> = ({
           maxWidth={mode === "nav" ? "100%" : "max-content"}
           style={{ transition, boxShadow, whiteSpace: "nowrap", textOverflow: "ellipsis" }}
           zIndex={1}
+          onClick={() => {
+            if (mode === "nav" && shouldCloseNav) {
+              shouldCloseNav();
+            }
+          }}
         >
           {nav}
         </Nav>
@@ -84,7 +91,7 @@ const setNavState = (state: string) => {
   }
 };
 
-export const ResponsiveLayout: React.FC<Omit<ILayout, "mode">> = ({
+export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">> = ({
   header,
   nav,
   aside,
@@ -93,17 +100,17 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode">> = ({
 }) => {
   const [mode, setMode] = React.useState<LayoutMode>(getNavState() ?? "main-aside");
 
-  const { isMedium } = useBreakpoint();
+  const { isMediumSmall } = useBreakpoint();
 
   React.useEffect(() => {
-    if (!isMedium) {
+    if (!isMediumSmall) {
       setMode("main-aside");
     } else {
       if (mode === "nav") {
         setMode("nav-main-aside");
       }
     }
-  }, [isMedium]);
+  }, [isMediumSmall]);
 
   React.useEffect(() => {
     setNavState(mode);
@@ -114,7 +121,7 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode">> = ({
       <MenuButton
         variant="transparent"
         onClick={() => {
-          if (!isMedium) {
+          if (!isMediumSmall) {
             setMode(m => (m === "nav" ? "main-aside" : "nav"));
           } else {
             setMode(m => (m === "main-aside" ? "nav-main-aside" : "main-aside"));
@@ -130,7 +137,14 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode">> = ({
   );
 
   return (
-    <Layout header={headerWithBurgerMenu} footer={footer} nav={nav} aside={aside} mode={mode}>
+    <Layout
+      header={headerWithBurgerMenu}
+      footer={footer}
+      nav={nav}
+      aside={aside}
+      mode={mode}
+      shouldCloseNav={() => setMode("main-aside")}
+    >
       {children}
     </Layout>
   );
