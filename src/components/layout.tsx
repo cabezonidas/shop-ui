@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Shell, Header, Main, Aside, Footer, Nav, Box, Button, useTheme } from "..";
+import { Shell, Header, Main, Aside, Footer, Nav, Box, Button } from ".";
 import { useBreakpoint } from "../hooks";
 import styled from "../theme/styled";
+import { useTheme } from "../theme/use-theme";
 
 type LayoutMode = "nav" | "nav-main-aside" | "main-aside";
 interface ILayout {
