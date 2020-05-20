@@ -1,18 +1,26 @@
 // tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Layout, Box, Label, Select, Option, Button } from "..";
+import { Layout, ResponsiveLayout, Box, Label, Select, Option, Button } from "..";
+import styled from "../../theme/styled";
 
-storiesOf("Layout", module).add("Variants", () => <MyStory />);
+storiesOf("Layout", module)
+  .add("Manual", () => <Manual />)
+  .add("Responsive", () => <Responsive />);
 
-const MyStory = () => {
+const Area = styled(Box)(() => ({
+  width: "100%",
+  height: "100%",
+}));
+
+const Manual = () => {
   const [mode, setMode] = React.useState<"nav" | "nav-main-aside" | "main-aside">("nav-main-aside");
   return (
     <Layout
       header={<>This is a header</>}
       footer={<>This is a footer</>}
       nav={
-        <Box>
+        <>
           <Box>This is a navs</Box>
           {mode === "nav" && (
             <>
@@ -20,9 +28,9 @@ const MyStory = () => {
               <Button onClick={() => setMode("main-aside")}>Main Aside</Button>
             </>
           )}
-        </Box>
+        </>
       }
-      aside={<>This is a aside</>}
+      aside={<>This is aside</>}
       mode={mode}
     >
       <Box display="grid" width="max-content" minWidth="200px" height="100%" m="auto">
@@ -36,5 +44,18 @@ const MyStory = () => {
         </Box>
       </Box>
     </Layout>
+  );
+};
+
+const Responsive = () => {
+  return (
+    <ResponsiveLayout
+      header={<>This is a header</>}
+      footer={<>This is a footer</>}
+      nav={<>This is a navs</>}
+      aside={<>This is aside</>}
+    >
+      <>Try me on small devices</>
+    </ResponsiveLayout>
   );
 };
