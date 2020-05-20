@@ -4,7 +4,7 @@ import { Dialog } from "../dialog";
 import Button from "../button";
 
 // tslint:disable: jsx-use-translation-function
-storiesOf("Dialog", module).add("Dialog content", () => <Example />);
+storiesOf("Dialog", module).add("Variants", () => <Example />);
 
 function Example() {
   const [showDialog, setShowDialog] = React.useState<
