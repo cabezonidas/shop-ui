@@ -76,7 +76,7 @@ const Variant = () => {
   const [variant, setVariant] = React.useState<string>("info");
   const [position, setPosition] = React.useState<string>("top-center");
 
-  const variants = ["primary", "secondary", "default", "info", "warning", "danger"];
+  const variants = ["primary", "secondary", "success", "default", "info", "warning", "danger"];
   const positions = [
     "top-left",
     "top-center",

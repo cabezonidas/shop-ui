@@ -79,7 +79,7 @@ export const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
   borderRadius: theme.space[2],
 }));
 
-type ToastVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+type ToastVariant = "primary" | "secondary" | "success" | "default" | "info" | "warning" | "danger";
 
 export interface INotifyOptions {
   variant?: ToastVariant;

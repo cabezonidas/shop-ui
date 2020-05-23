@@ -8,6 +8,7 @@ type ButtonVariant =
   | "primary"
   | "secondary"
   | "default"
+  | "success"
   | "info"
   | "warning"
   | "danger"
