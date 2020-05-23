@@ -21,9 +21,9 @@ This project is part of the e-commerce suit of repos.
 - [shop-public](https://github.com/cabezonidas/shop-public "e-commerce public")
 - [shop-server](https://github.com/cabezonidas/shop-server "e-commerce server")
 
-This package isn't necessarily lightweight because it uses many other dependencies to enforce same treatment of date manipulation, i18n, a11y, styling and animations in a consistent manner. The React apps that use this package see it as a framework that provides all that.
+This package isn't necessarily lightweight because it uses many other dependencies to enforce the same treatment of date manipulation, i18n, a11y, styling, and animations in a consistent manner. The React apps that use this package see it as a framework that provides all that.
 
-These can be found at the public websites of **shop-admin** and **shop-public** repos:
+These can be found at the public websites of **shop-admin** and **shop-public** repos
 
 - [https://admin.javascript.kiwi](https://admin.javascript.kiwi)
 - [https://javascript.kiwi](https://javascript.kiwi)
