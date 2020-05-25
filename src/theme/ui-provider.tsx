@@ -8,6 +8,7 @@ import { initReactI18next } from "react-i18next";
 import { Global, css } from "@emotion/core";
 import { useTheme } from "./use-theme";
 import { ToastProvider } from "./toast/toast";
+import { DarkModeState, DarkModeContext } from "./dark-mode";
 
 i18next.use(initReactI18next).init({
   resources: {
@@ -22,10 +23,16 @@ export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = p
   const { children, suspense, mode } = props;
   const provider = (
     <TranslationProvider>
-      <ThemeProvider theme={{ ...theme, mode }}>
-        <GlobalStyle />
-        <ToastProvider>{children}</ToastProvider>
-      </ThemeProvider>
+      <DarkModeState mode={mode}>
+        <DarkModeContext.Consumer>
+          {({ themeMode }) => (
+            <ThemeProvider theme={{ ...theme, mode: themeMode }}>
+              <GlobalStyle />
+              <ToastProvider>{children}</ToastProvider>
+            </ThemeProvider>
+          )}
+        </DarkModeContext.Consumer>
+      </DarkModeState>
     </TranslationProvider>
   );
 
