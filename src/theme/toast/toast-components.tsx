@@ -20,6 +20,7 @@ export const ToastContainer = styled(Box)(({ theme }) => ({
   padding: theme.space[3],
   display: "flex",
   flexDirection: "column",
+  maxWidth: "100%",
 }));
 ToastContainer.displayName = "ToastContainer";
 
@@ -65,15 +66,21 @@ const ToastTimeout: React.FC<IToastProps> = props => {
 };
 ToastTimeout.displayName = "ToastTimeout";
 
-export const AnimatedToast = animated(styled(Box)(() => ({ pointerEvents: "all" })));
+export const AnimatedToast = animated(
+  styled(Box)(() => ({
+    pointerEvents: "all",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    maxWidth: "100%",
+  }))
+);
 AnimatedToast.displayName = "AnimatedToast";
 
 export const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
-  width: 300,
-  maxWidth: "90%",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
+  minWidth: 300,
+  maxWidth: 300,
+  whiteSpace: "normal",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "inherit",
@@ -103,7 +110,9 @@ export const safeToast = (variant: ToastVariant, message: string) => ({
 export const dangerToast = (variant: ToastVariant, message: string) => ({
   toastChildren: (e: IToastChildrenCallback) => (
     <Toast variant={variant} onClick={() => e.close()}>
-      <Box>{message}</Box>
+      <Box overflow="hidden" style={{ textOverflow: "ellipsis" }}>
+        {message}
+      </Box>
       <Button variant="transparent" color="inherit !important">
         <Close width="12" height="12" style={{ alignSelf: "center" }} />
       </Button>
