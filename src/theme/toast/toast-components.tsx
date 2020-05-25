@@ -13,6 +13,7 @@ const timeout = (defaultTimeout: number, options?: IToastOptions) =>
     : options.timeout;
 
 export const ToastContainer = styled(Box)(({ theme }) => ({
+  pointerEvents: "none",
   overflow: "hidden",
   position: "absolute",
   zIndex: 1,
@@ -20,6 +21,7 @@ export const ToastContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
 }));
+ToastContainer.displayName = "ToastContainer";
 
 export const InnerToast: React.FC<{
   t: IToast;
@@ -40,6 +42,7 @@ export const InnerToast: React.FC<{
     </ToastTimeout>
   );
 };
+InnerToast.displayName = "InnerToast";
 
 interface IToastProps {
   removeToast: () => void;
@@ -62,13 +65,15 @@ const ToastTimeout: React.FC<IToastProps> = props => {
 };
 ToastTimeout.displayName = "ToastTimeout";
 
-export const AnimatedToast = animated(Box);
+export const AnimatedToast = animated(styled(Box)(() => ({ pointerEvents: "all" })));
+AnimatedToast.displayName = "AnimatedToast";
 
 export const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
   width: 300,
   maxWidth: "90%",
   overflow: "hidden",
   whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "inherit",
@@ -78,6 +83,7 @@ export const Toast = styled(Button.withComponent("div"))(({ theme }) => ({
   padding: theme.space[5],
   borderRadius: theme.space[2],
 }));
+Toast.displayName = "Toast";
 
 type ToastVariant = "primary" | "secondary" | "success" | "default" | "info" | "warning" | "danger";
 
