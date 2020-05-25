@@ -1,8 +1,12 @@
-import styled from "../theme/styled";
 import * as React from "react";
-const Svg = styled("svg")`
-  fill: currentColor;
-`;
+import { Box } from "../components";
+
+const Svg = Box.withComponent("svg");
+
+Svg.defaultProps = {
+  fill: "currentColor",
+};
+
 interface ISvg extends React.ComponentProps<typeof Svg> {}
 
 export const Close = React.forwardRef<SVGSVGElement, ISvg>((props, ref) => {

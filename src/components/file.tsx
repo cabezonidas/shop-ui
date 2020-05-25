@@ -1,7 +1,8 @@
 import Input from "./input";
 import styled from "../theme/styled";
+import { BoxProps } from "./box";
 
-export const File = styled(Input)(({ theme }) => ({
+export const File = styled(Input)<BoxProps>(({ theme }) => ({
   paddingTop: theme.space[1],
 }));
 
