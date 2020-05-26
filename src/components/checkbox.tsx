@@ -1,7 +1,14 @@
 import Input from "./input";
 import styled from "../theme/styled";
 
-type CheckboxVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+type CheckboxVariant =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "default"
+  | "info"
+  | "warning"
+  | "danger";
 
 export const Checkbox = styled(Input)<{ variant?: CheckboxVariant }>(
   ({ variant = "default", theme: { colors, space } }) => ({
