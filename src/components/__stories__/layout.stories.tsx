@@ -10,9 +10,11 @@ import {
   Option,
   Button,
   NavLink,
+  FooterLink,
   HeaderLink,
 } from "..";
 import styled from "../../theme/styled";
+import { Whatsapp, Facebook, Instagram, Messenger } from "../..";
 
 storiesOf("Layout", module)
   .add("Manual", () => <Manual />)
@@ -69,7 +71,24 @@ const Responsive = () => {
           </Box>
         </Box>
       }
-      footer={<>This is a footer</>}
+      footer={
+        <Box display="flex">
+          <Box display="grid" gridTemplateColumns="repeat(4, 50px)" width="max-width" ml="auto">
+            <FooterLink href="#3">
+              <Whatsapp />
+            </FooterLink>
+            <FooterLink href="#4">
+              <Instagram />
+            </FooterLink>
+            <FooterLink href="#5">
+              <Facebook />
+            </FooterLink>
+            <FooterLink href="#6">
+              <Messenger />
+            </FooterLink>
+          </Box>
+        </Box>
+      }
       nav={
         <>
           <NavLink href="#1">Link 1</NavLink>
@@ -78,7 +97,7 @@ const Responsive = () => {
       }
       aside={<>This is aside</>}
     >
-      <>Try me on small devices</>
+      <Box>Try me on small devices</Box>
     </ResponsiveLayout>
   );
 };
