@@ -42,6 +42,7 @@ export const FooterLink = styled(Anchor)(({ theme: { colors, space } }) => ({
   whiteSpace: "nowrap",
   heigth: "100%",
   padding: space[3],
+  textAlign: "center",
   "&:hover": {
     background: colors.primary.darkest,
   },
