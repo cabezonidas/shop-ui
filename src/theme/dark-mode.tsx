@@ -13,6 +13,11 @@ export const useDarkMode = () => {
 
 export const DarkModeState: React.FC<{ mode?: "dark" | "light" }> = ({ mode, children }) => {
   const [themeMode, setThemeMode] = React.useState<"dark" | "light">(mode ?? "dark");
+  React.useEffect(() => {
+    if (mode) {
+      setThemeMode(mode);
+    }
+  }, [mode]);
   return (
     <DarkModeContext.Provider value={{ setThemeMode, themeMode }}>
       {children}
