@@ -3,6 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { Form, Label, Input, Box, File, Checkbox, Select, Option, Toggle } from "..";
 import Alert from "../alert";
+import TextArea from "../text-area";
 
 storiesOf("Alerts", module).add("Variants", () => <MyStory />);
 
@@ -26,6 +27,11 @@ const MyStory = () => {
         <Label htmlFor="checkbox">Checkbox</Label>
         <Checkbox id="checkbox" onChange={e => console.log(e)} />
         <Alert variant="info">This is an alert</Alert>
+      </Box>
+      <Box>
+        <Label htmlFor="textarea">Text Area</Label>
+        <TextArea id="textarea" onChange={e => console.log(e)} />
+        <Alert variant={undefined}>This is an undefined alert</Alert>
       </Box>
       <Box>
         <Label htmlFor="file">File</Label>
