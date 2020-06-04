@@ -51,7 +51,6 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
         },
         "&:disabled": {
           color: "light" ? colors.neutral.dark : colors.neutral.light,
-          outlineColor: colors.neutral.medium,
           cursor: "not-allowed",
         },
       } as any;

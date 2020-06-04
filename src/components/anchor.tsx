@@ -1,8 +1,9 @@
 import Box, { BoxProps } from "./box";
 import styled from "../theme/styled";
 
-export const Anchor = styled(Box.withComponent("a"))<BoxProps>(() => ({
+export const Anchor = styled(Box.withComponent("a"))<BoxProps>(({ theme: { colors } }) => ({
   color: "inherit",
+  outlineColor: colors.neutral.medium,
   textDecoration: "none",
   "&:hover": {
     textDecoration: "none",
