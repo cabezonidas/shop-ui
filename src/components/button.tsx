@@ -38,24 +38,16 @@ export const Button = styled(Box.withComponent("button"))<{ variant?: ButtonVari
     const shadowColor = mode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
 
     if (variant === "transparent") {
+      const color = mode === "light" ? colors.neutral.darkest : colors.neutral.lightest;
       return {
         ...shared,
         display: "flex",
         flexWrap: "wrap",
-        color: mode === "light" ? colors.neutral.darkest : colors.neutral.lightest,
+        color,
         p: 0,
-        "&:hover": {
-          color: "light" ? colors.neutral.dark : colors.neutral.light,
-          outlineColor: colors.neutral.medium,
-        },
+        outlineColor: colors.neutral.medium,
         "&:focus": {
-          color: "light" ? colors.neutral.dark : colors.neutral.light,
-          outlineColor: colors.neutral.medium,
           zIndex: 1,
-        },
-        "&:active": {
-          color: "light" ? colors.neutral.dark : colors.neutral.light,
-          outlineColor: colors.neutral.medium,
         },
         "&:disabled": {
           color: "light" ? colors.neutral.dark : colors.neutral.light,

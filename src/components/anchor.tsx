@@ -1,7 +1,7 @@
-import Box from "./box";
+import Box, { BoxProps } from "./box";
 import styled from "../theme/styled";
 
-export const Anchor = styled(Box.withComponent("a"))(() => ({
+export const Anchor = styled(Box.withComponent("a"))<BoxProps>(() => ({
   color: "inherit",
   textDecoration: "none",
   "&:hover": {
@@ -13,6 +13,9 @@ export const Anchor = styled(Box.withComponent("a"))(() => ({
 }));
 
 Anchor.displayName = "Anchor";
+Anchor.defaultProps = {
+  tabIndex: 0,
+};
 
 export default Anchor;
 
