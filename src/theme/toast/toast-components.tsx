@@ -26,18 +26,15 @@ ToastContainer.displayName = "ToastContainer";
 
 export const InnerToast: React.FC<{
   t: IToast;
-  setToasts: React.Dispatch<React.SetStateAction<IToast[]>>;
+  removeToast: (id: number) => void;
   defaultTimeout: number;
 }> = props => {
-  const { t, setToasts, defaultTimeout } = props;
+  const { t, removeToast, defaultTimeout } = props;
   return (
-    <ToastTimeout
-      removeToast={() => setToasts(ts => ts.filter(n => n.id !== t.id))}
-      expiry={timeout(defaultTimeout, t.options)}
-    >
+    <ToastTimeout removeToast={() => removeToast(t.id)} expiry={timeout(defaultTimeout, t.options)}>
       {typeof t.notification === "function"
         ? t.notification({
-            close: () => setToasts(tts => tts.filter(tt => tt.id !== t.id)),
+            close: () => removeToast(t.id),
           })
         : t.notification}
     </ToastTimeout>

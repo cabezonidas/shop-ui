@@ -91,6 +91,8 @@ const Variant = () => {
     notify(e.currentTarget.content.value, { variant, position } as any);
   };
 
+  console.log("Rendering");
+
   return (
     <Shell>
       <Form margin="2" width="350px" display="grid" gridGap="2" onSubmit={handleSubmit}>

@@ -89,20 +89,50 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
   defaultTimeout = 3000,
   stack = 4,
 }) => {
-  const [toasts, setToasts] = React.useState<IToast[]>([]);
+  const toasts = React.useRef<IToast[]>([]);
   const key = React.useRef(0);
 
   const toast = React.useCallback(
     (notification: ToastChildren, options?: IToastOptions) => {
       const newToast = { id: key.current, notification, options };
-      setToasts(t => takeLast([...t, newToast], stack));
+      toasts.current = takeLast([...toasts.current, newToast], stack);
       key.current++;
     },
-    [setToasts, key.current, stack]
+    [key.current, stack]
   );
 
-  const reducedToasts = reduceToasts(toasts);
+  const removeToast = (id: number) => (toasts.current = toasts.current.filter(t => t.id !== id));
 
+  return (
+    <>
+      <ToastPortal {...{ removeToast, defaultTimeout, toasts }} />
+      <ToastContext.Provider value={{ toast }}>{children}</ToastContext.Provider>
+    </>
+  );
+};
+
+const ToastPortal: React.FC<{
+  toasts: React.MutableRefObject<IToast[]>;
+  removeToast: (id: number) => void;
+  defaultTimeout: number;
+}> = ({ removeToast, defaultTimeout, toasts }) => {
+  const [localToasts, setLocalToasts] = React.useState(toasts.current);
+
+  // Not very efficient. This is a temp fix so that toast provider doesn't rerender children after toast updates
+  React.useEffect(() => {
+    let alive = true;
+    const interval = setInterval(() => {
+      if (alive && localToasts !== toasts.current) {
+        setLocalToasts(toasts.current);
+      }
+    }, 150);
+    return () => {
+      clearInterval(interval);
+      alive = false;
+    };
+  }, [localToasts, toasts]);
+
+  const reducedToasts = reduceToasts(toasts.current);
   const topLeft = useTransition(reducedToasts.topLeft, transition("left"));
   const topCenter = useTransition(reducedToasts.topCenter, transition("top"));
   const topRight = useTransition(reducedToasts.topRight, transition("right"));
@@ -110,57 +140,52 @@ export const ToastProvider: React.FC<{ defaultTimeout?: number; stack?: number }
   const bottomCenter = useTransition(reducedToasts.bottomCenter, transition("bottom"));
   const bottomRight = useTransition(reducedToasts.bottomRight, transition("right"));
 
-  return (
-    <ToastContext.Provider value={{ toast }}>
-      {createPortal(
-        <>
-          <ToastContainer top={0} right={0}>
-            {topRight((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-end" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-          <ToastContainer top={0} left={0} right={0}>
-            {topCenter((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-          <ToastContainer top={0} left={0}>
-            {topLeft((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-start" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-          <ToastContainer bottom={0} right={0}>
-            {bottomRight((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-end" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-          <ToastContainer bottom={0} left={0} right={0}>
-            {bottomCenter((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-          <ToastContainer bottom={0} left={0}>
-            {bottomLeft((style, t) => (
-              <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-start" }}>
-                <InnerToast {...{ t, setToasts, defaultTimeout }} />
-              </AnimatedToast>
-            ))}
-          </ToastContainer>
-        </>,
-        document.body
-      )}
-      {children}
-    </ToastContext.Provider>
+  return createPortal(
+    <>
+      <ToastContainer top={0} right={0}>
+        {topRight((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-end" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+      <ToastContainer top={0} left={0} right={0}>
+        {topCenter((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+      <ToastContainer top={0} left={0}>
+        {topLeft((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-start" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+      <ToastContainer bottom={0} right={0}>
+        {bottomRight((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-end" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+      <ToastContainer bottom={0} left={0} right={0}>
+        {bottomCenter((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "center" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+      <ToastContainer bottom={0} left={0}>
+        {bottomLeft((style, t) => (
+          <AnimatedToast key={t.id} style={{ ...style, alignSelf: "flex-start" }}>
+            <InnerToast {...{ t, removeToast, defaultTimeout }} />
+          </AnimatedToast>
+        ))}
+      </ToastContainer>
+    </>,
+    document.body
   );
 };
 
