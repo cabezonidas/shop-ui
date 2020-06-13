@@ -5,65 +5,61 @@ import { Box } from ".";
 import { useTheme } from "../theme";
 import { getLanguage, highlight, highlightAuto } from "highlight.js";
 import MarkdownIt from "markdown-it";
-import * as markdownItAbbr from "markdown-it-abbr";
-import * as markdownItDeflist from "markdown-it-deflist";
-import * as markdownItEmoji from "markdown-it-emoji";
-import * as markdownItDootnote from "markdown-it-footnote";
-import * as markdownItIns from "markdown-it-ins";
-import * as markdownItMark from "markdown-it-mark";
-import * as markdownItSub from "markdown-it-sub";
-import * as markdownItSup from "markdown-it-sup";
-import * as markdownItVideo from "markdown-it-video";
+import markdownItAbbr from "markdown-it-abbr";
+import markdownItDeflist from "markdown-it-deflist";
+import markdownItEmoji from "markdown-it-emoji";
+import markdownItDootnote from "markdown-it-footnote";
+import markdownItIns from "markdown-it-ins";
+import markdownItMark from "markdown-it-mark";
+import markdownItSub from "markdown-it-sub";
+import markdownItSup from "markdown-it-sup";
+import markdownItVideo from "markdown-it-video";
 import "highlight.js/styles/default.css";
 
 interface IPreview extends React.ComponentProps<typeof Box> {
   body: string;
 }
 
-export const Markdown = React.forwardRef<HTMLDivElement, IPreview>(({ body, ...props }, ref) => {
-  const md = React.useMemo(() => {
-    const markdown = MarkdownIt({
-      html: false,
-      xhtmlOut: true,
-      breaks: true,
-      langPrefix: "language-",
-      linkify: true,
-      typographer: true,
-      quotes: "“”‘’",
-      highlight: (str: string, lang: string) => {
-        if (lang && getLanguage(lang)) {
-          try {
-            return highlight(lang, str).value;
-          } catch (__) {
-            return "";
-          }
-        }
-        try {
-          return highlightAuto(str).value;
-        } catch (__) {
-          return "";
-        }
-      },
-    });
-    markdown
-      .use(markdownItAbbr)
-      .use(markdownItDeflist)
-      .use(markdownItEmoji)
-      .use(markdownItDootnote)
-      .use(markdownItIns)
-      .use(markdownItMark)
-      .use(markdownItSub)
-      .use(markdownItSup)
-      // Video plugin not par of CM spec
-      .use(markdownItVideo, {
-        youtube: { width: 640, height: 390 },
-        vimeo: { width: 500, height: 281 },
-        vine: { width: 600, height: 600, embed: "simple" },
-        prezi: { width: 550, height: 400 },
-      });
+const markdown = MarkdownIt({
+  html: false,
+  xhtmlOut: true,
+  breaks: true,
+  langPrefix: "language-",
+  linkify: true,
+  typographer: true,
+  quotes: "“”‘’",
+  highlight: (str: string, lang: string) => {
+    if (lang && getLanguage(lang)) {
+      try {
+        return highlight(lang, str).value;
+      } catch (__) {
+        return "";
+      }
+    }
+    try {
+      return highlightAuto(str).value;
+    } catch (__) {
+      return "";
+    }
+  },
+})
+  .use(markdownItAbbr)
+  .use(markdownItDeflist)
+  .use(markdownItEmoji)
+  .use(markdownItDootnote)
+  .use(markdownItIns)
+  .use(markdownItMark)
+  .use(markdownItSub)
+  .use(markdownItSup)
+  // Video plugin not par of CM spec
+  .use(markdownItVideo, {
+    youtube: { width: 640, height: 390 },
+    vimeo: { width: 500, height: 281 },
+    vine: { width: 600, height: 600, embed: "simple" },
+    prezi: { width: 550, height: 400 },
+  });
 
-    return markdown;
-  }, []);
+export const Markdown = React.forwardRef<HTMLDivElement, IPreview>(({ body, ...props }, ref) => {
   const { colors, mode } = useTheme();
   return (
     <Box
@@ -231,9 +227,12 @@ export const Markdown = React.forwardRef<HTMLDivElement, IPreview>(({ body, ...p
           marginLeft: 0,
           lineHeight: 1.42857143,
         },
+        iframe: {
+          maxWidth: "100%",
+        },
       }}
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: md.render(body) }}
+      dangerouslySetInnerHTML={{ __html: markdown.render(body) }}
       {...props}
     />
   );
