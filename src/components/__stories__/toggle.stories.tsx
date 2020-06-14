@@ -9,6 +9,7 @@ storiesOf("Controls", module).add("Toggle", () => <MyStory />);
 const MyStory = () => {
   const { mode } = useTheme();
   const variants = [
+    "dark-mode",
     "default",
     "primary",
     "secondary",
