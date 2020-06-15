@@ -4,7 +4,7 @@ import { Toggle, Label } from "..";
 import { Box } from "../box";
 import { useTheme } from "../../theme";
 
-storiesOf("Controls", module).add("Toggle", () => <MyStory />);
+storiesOf("Toggle", module).add("Toggle", () => <MyStory />);
 
 const MyStory = () => {
   const { mode } = useTheme();
