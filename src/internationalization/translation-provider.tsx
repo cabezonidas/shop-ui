@@ -34,6 +34,10 @@ export const TranslationProvider: React.FC = ({ children }) => {
       style: "currency",
     });
 
+  React.useEffect(() => {
+    localStorage?.setItem("language", i18n.language);
+  }, [i18n.language]);
+
   const n = (num: number) => num.toLocaleString(i18n.language);
 
   return (

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { FC, Suspense } from "react";
 import { ThemeProvider } from "emotion-theming";
 import { theme } from "./theme";
 import { TranslationProvider } from "../internationalization/translation-provider";
@@ -10,16 +9,23 @@ import { useTheme } from "./use-theme";
 import { ToastProvider } from "./toast/toast";
 import { DarkModeState, DarkModeContext } from "./dark-mode";
 
+const locales = ["es-AR", "en-US"] as ["es-AR", "en-US"];
+
+const initialLanguage =
+  locales.find(l => localStorage?.getItem("language") === l) ||
+  locales.find(l => l.startsWith((window?.navigator?.language ?? "").slice(0, 2))) ||
+  "en-US";
+
 i18next.use(initReactI18next).init({
   resources: {
     "en-US": { translation: {} },
     "es-AR": { translation: {} },
   },
-  lng: "en-US",
-  fallbackLng: "en-US",
+  lng: initialLanguage,
+  fallbackLng: initialLanguage,
 });
 
-export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = props => {
+export const UiProvider: React.FC<{ suspense?: boolean; mode?: "dark" | "light" }> = props => {
   const { children, suspense, mode } = props;
   const provider = (
     <TranslationProvider>
@@ -39,7 +45,7 @@ export const UiProvider: FC<{ suspense?: boolean; mode?: "dark" | "light" }> = p
   if (suspense === false) {
     return provider;
   }
-  return <Suspense fallback={<></>}>{provider}</Suspense>;
+  return <React.Suspense fallback={<></>}>{provider}</React.Suspense>;
 };
 
 export default UiProvider;
