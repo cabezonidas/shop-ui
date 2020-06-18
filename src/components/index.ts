@@ -31,3 +31,4 @@ export * from "./layout";
 export * from "./text-area";
 export * from "./dialog";
 export * from "./markdown";
+export * from "./profile-card";
