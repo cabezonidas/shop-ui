@@ -50,7 +50,7 @@ export const Whatsapp = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) =>
 export const Facebook = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) => {
   return (
     <Svg viewBox="0 0 72 72" width="18" height="18" {...props} ref={ref}>
-      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fillRule="evenodd">
         <g id="Social-Icons---Circle" transform="translate(-152.000000, -43.000000)">
           <g id="Facebook" transform="translate(152.000000, 43.000000)">
             <rect id="Oval" fill="#4460A0" x="0" y="0" width="72" height="72" rx="8" />
@@ -84,9 +84,9 @@ export const Instagram = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) =
         y1="-72.705"
         y2="-84.047"
       >
-        <stop offset="0" stop-color="#fd5" />
-        <stop offset=".5" stop-color="#ff543e" />
-        <stop offset="1" stop-color="#c837ab" />
+        <stop offset="0" stopColor="#fd5" />
+        <stop offset=".5" stopColor="#ff543e" />
+        <stop offset="1" stopColor="#c837ab" />
       </linearGradient>
       <path
         d="m1.5 1.633c-1.886 1.959-1.5 4.04-1.5 10.362 0 5.25-.916 10.513 3.878 11.752 1.497.385 14.761.385 16.256-.002 1.996-.515 3.62-2.134 3.842-4.957.031-.394.031-13.185-.001-13.587-.236-3.007-2.087-4.74-4.526-5.091-.559-.081-.671-.105-3.539-.11-10.173.005-12.403-.448-14.41 1.633z"
