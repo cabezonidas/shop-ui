@@ -1,7 +1,7 @@
 // tslint:disable: jsx-use-translation-function
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Form, Label, Box, Select, Option } from "..";
+import { Form, Label, Box, Select, Option, DateStandard } from "..";
 import { DateTime, Interval } from "luxon";
 import { soonestAvailable } from "../..";
 import { DatePicker } from "../date-picker";
@@ -49,6 +49,10 @@ const MyStory = () => {
         </Select>
       </Box>
       <Box>
+        <Label htmlFor="date-standard">Data Standard</Label>
+        <DateStandard id="date-standard" value={day} onChange={setDay} />
+      </Box>
+      <Box>
         <Label htmlFor="date-input">Day</Label>
         <DatePicker
           id="date-input"
@@ -60,9 +64,9 @@ const MyStory = () => {
         />
       </Box>
       <Box>
-        <Label htmlFor="date-input">Date Time</Label>
+        <Label htmlFor="date-input2">Date Time</Label>
         <DatePicker
-          id="date-input"
+          id="date-input2"
           day={day}
           onDaySelect={setDay}
           allowedIntervals={restrictions ? allowedIntervals : undefined}
@@ -71,9 +75,9 @@ const MyStory = () => {
         />
       </Box>
       <Box>
-        <Label htmlFor="date-input">Time</Label>
+        <Label htmlFor="date-input3">Time</Label>
         <DatePicker
-          id="date-input"
+          id="date-input3"
           day={day}
           onDaySelect={setDay}
           allowedIntervals={restrictions ? allowedIntervals : undefined}
