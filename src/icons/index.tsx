@@ -50,7 +50,7 @@ export const Whatsapp = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) =>
 export const Facebook = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) => {
   return (
     <Svg viewBox="0 0 72 72" width="18" height="18" {...props} ref={ref}>
-      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fillRule="evenodd">
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="Social-Icons---Circle" transform="translate(-152.000000, -43.000000)">
           <g id="Facebook" transform="translate(152.000000, 43.000000)">
             <rect id="Oval" fill="#4460A0" x="0" y="0" width="72" height="72" rx="8" />
