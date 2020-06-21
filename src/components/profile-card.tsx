@@ -3,6 +3,7 @@ import { Box, H2, Anchor } from ".";
 import { DateTime } from "luxon";
 import { Instagram, Facebook, Whatsapp, Linkedin, Email, Messenger, Github } from "../icons";
 import { useTranslation } from "../internationalization";
+import { transform } from "../utils/transform";
 
 interface IAuthorCard extends React.ComponentProps<typeof Box> {
   author: {
@@ -118,9 +119,9 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
       <Box maxWidth="150px" maxHeight="150px">
         {imageUrl && (
           <img
-            style={{ maxWidth: "100%", maxHeight: "100%", borderRadius: "50%" }}
+            style={{ width: 150, height: 150, borderRadius: "50%" }}
             alt={t("ui.profile.img")}
-            src={imageUrl}
+            src={transform(imageUrl, { width: "150px", height: "150px", focus: "face" })}
           />
         )}
       </Box>
