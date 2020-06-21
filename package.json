@@ -45,6 +45,7 @@
     "@types/highlight.js": "^9.12.4",
     "@types/luxon": "^1.24.0",
     "@types/markdown-it": "^10.0.1",
+    "@types/match-sorter": "^4.0.0",
     "@types/node": "^13.1.1",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.0",
@@ -63,6 +64,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-video": "^0.6.3",
+    "match-sorter": "^4.1.0",
     "react-i18next": "^11.2.7",
     "react-spring": "^9.0.0-rc.3",
     "styled-system": "^5.1.4"
