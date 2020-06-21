@@ -15,6 +15,7 @@ import markdownItSub from "markdown-it-sub";
 import markdownItSup from "markdown-it-sup";
 import markdownItVideo from "markdown-it-video";
 import "highlight.js/styles/default.css";
+import { parseMarkdownImages } from "../utils/parse-markdown-images";
 
 interface IPreview extends React.ComponentProps<typeof Box> {
   body: string;
@@ -232,7 +233,7 @@ export const Markdown = React.forwardRef<HTMLDivElement, IPreview>(({ body, ...p
         },
       }}
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: markdown.render(body) }}
+      dangerouslySetInnerHTML={{ __html: parseMarkdownImages(markdown.render(body)) }}
       {...props}
     />
   );
