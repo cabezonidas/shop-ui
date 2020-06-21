@@ -14,7 +14,8 @@
     "skipLibCheck": true,
     "module": "commonjs",
     "declaration": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["jest"]
   },
   "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts"]
 }

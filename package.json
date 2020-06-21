@@ -19,7 +19,7 @@
     "build": "tsc && tsc --build tsconfig.esm.json",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
     "storybook": "start-storybook",
-    "test": "echo \"No tests to run\""
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -69,8 +69,10 @@
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@storybook/react": "^5.2.8",
+    "@types/jest": "^26.0.0",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.2",
+    "jest": "^26.0.1",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.3",
     "prettier": "^1.19.1",
@@ -81,11 +83,15 @@
     "source-map-loader": "^0.2.4",
     "storybook-dark-mode": "^0.4.1",
     "style-loader": "^1.1.2",
+    "ts-jest": "^26.1.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
     "tslint-react": "^4.1.0",
     "tslint-react-hooks": "^2.2.1",
     "typescript": "~3.7.4"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }
