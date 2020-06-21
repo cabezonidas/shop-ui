@@ -33,3 +33,4 @@ export * from "./dialog";
 export * from "./markdown";
 export * from "./profile-card";
 export * from "./date-standard";
+export * from "./input-select";
