@@ -1,5 +1,5 @@
 {
-  "exclude": ["node_modules", "lib-esm", "lib", "**/*.story*", "**/*.spec*"],
+  "exclude": ["node_modules", "lib-esm", "lib", "**/*.story.ts", "**/*.spec.ts", "**/*.test.ts"],
   "include": ["src"],
   "extends": "./tsconfig.json",
   "compilerOptions": {

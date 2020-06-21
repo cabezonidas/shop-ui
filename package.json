@@ -1,6 +1,6 @@
 {
   "name": "@cabezonidas/shop-ui",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "author": "Cabe <sebastian.scd@gmail.com>",
   "homepage": "https://github.com/cabezonidas/shop-utils#readme",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "build": "tsc && tsc --build tsconfig.esm.json",
     "build:watch": "nodemon --watch src -e ts,tsx --exec yarn build",
     "storybook": "start-storybook",
-    "test": "echo \"Suspend jest temporarily\""
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -92,6 +92,9 @@
     "typescript": "~3.7.4"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "modulePaths": [
+      "src/"
+    ]
   }
 }

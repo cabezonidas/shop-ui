@@ -17,5 +17,5 @@
     "strictNullChecks": true,
     "types": ["jest"]
   },
-  "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts"]
+  "exclude": ["node_modules", "lib-esm", "lib", "**/*.spec.ts", "**/*.test.ts"]
 }
