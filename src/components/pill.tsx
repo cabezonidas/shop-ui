@@ -10,9 +10,11 @@ const StyledPill = styled(Button)<{}>(({ theme: { space } }) => ({
   boxShadow: "unset",
 }));
 
+type PillVariant = "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+
 interface IColosablePill extends Omit<React.ComponentProps<typeof PillButton>, "variant"> {
   onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  variant: "primary" | "secondary" | "default" | "info" | "warning" | "danger";
+  variant: PillVariant;
 }
 
 const enUsPill = { ui: { pill: { close: "Close" } } };
@@ -90,3 +92,44 @@ PillButton.defaultProps = {
 Pill.displayName = "Pill";
 
 export default Pill;
+
+type Tag = string | { tag: string; variant: PillVariant };
+interface IPillsBox extends React.ComponentProps<typeof Box> {
+  selectedTag?: string;
+  tags?: Tag[];
+  onTagSelected?: (tag: string) => void;
+  onTagClosed?: (tag: string) => void;
+}
+
+export const PillsBox = React.forwardRef<HTMLDivElement, IPillsBox>((props, ref) => {
+  const { space } = useTheme();
+  const { tags, selectedTag, onTagClosed, onTagSelected, ...boxProps } = props;
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="row"
+      flexWrap="wrap"
+      mr={tags && tags.length > 0 ? `-${space[2]}` : undefined}
+      mb={tags && tags.length > 0 ? `-${space[2]}` : undefined}
+      {...boxProps}
+      ref={ref}
+    >
+      {(tags ?? []).map(t => {
+        const value = typeof t === "string" ? t : t.tag;
+        const variant = typeof t === "string" ? undefined : t.variant;
+        return (
+          <Box key={value} width="max-content" mr={space[2]} mb={space[2]}>
+            <Pill
+              onClick={onTagSelected ? () => onTagSelected(value) : undefined}
+              variant={variant || (selectedTag === value ? "primary" : "default")}
+              onClose={onTagClosed ? () => onTagClosed(value) : undefined}
+            >
+              {value}
+            </Pill>
+          </Box>
+        );
+      })}
+    </Box>
+  );
+});
