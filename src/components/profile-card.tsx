@@ -1,7 +1,16 @@
 import * as React from "react";
 import { Box, H2, Anchor } from ".";
 import { DateTime } from "luxon";
-import { Instagram, Facebook, Whatsapp, Linkedin, Email, Messenger, Github } from "../icons";
+import {
+  Instagram,
+  Facebook,
+  Whatsapp,
+  Linkedin,
+  Email,
+  Messenger,
+  Github,
+  Twitter,
+} from "../icons";
 import { useTranslation } from "../internationalization";
 import { transform } from "../utils/transform";
 
@@ -17,6 +26,7 @@ interface IAuthorCard extends React.ComponentProps<typeof Box> {
     facebook?: string;
     messenger?: string;
     github?: string;
+    twitter?: string;
     description?: Array<{ localeId?: string; text?: string }>;
   };
 }
@@ -34,6 +44,7 @@ const enUsProfile = {
       whatsapp: "Text me on Whatsapp",
       messenger: "Text me on Messenger",
       email: "Email me",
+      twitter: "Twitter",
     },
   },
 };
@@ -50,6 +61,7 @@ const esArProfile = {
       whatsapp: "Escríbame en Whatsapp",
       messenger: "Escríbame en Messenger",
       email: "Escríbame al email",
+      twitter: "Twitter",
     },
   },
 };
@@ -74,6 +86,7 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
     messenger,
     description,
     github,
+    twitter,
   } = author;
 
   const desc =
@@ -87,6 +100,7 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
   const facebookLink = facebook && `https://www.facebook.com/${facebook}`;
   const messengerLink = messenger && `https://www.messenger.com/t/${messenger}`;
   const githubLink = github && `https://github.com/${github}`;
+  const twitterLink = twitter && `https://twitter.com/${twitter}`;
 
   const personalInfo = (() => {
     const res: string[] = [];
@@ -142,10 +156,18 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
               <ContactAnchor href={githubLink}>{github}</ContactAnchor>
             </ContactItem>
           )}
+          {twitter && (
+            <ContactItem>
+              <Twitter />
+              <ContactAnchor aria-label={t("ui.profile.twitter")} href={twitterLink}>
+                {`@${twitter}`}
+              </ContactAnchor>
+            </ContactItem>
+          )}
           {linkedinLink && (
             <ContactItem>
               <Linkedin />
-              <ContactAnchor href={linkedinLink}>{t("ui.profile.linkedin")}</ContactAnchor>
+              <ContactAnchor href={linkedinLink}>{name || t("ui.profile.linkedin")}</ContactAnchor>
             </ContactItem>
           )}
           {whatsappLink && (
