@@ -14,7 +14,8 @@ import {
   HeaderLink,
 } from "..";
 import styled from "../../theme/styled";
-import { Whatsapp, Facebook, Instagram, Messenger } from "../..";
+import { Whatsapp, Facebook, Instagram, Messenger, TradingClubLatam } from "../..";
+import { StarOff, StarOn } from "../../icons";
 
 storiesOf("Layout", module)
   .add("Manual", () => <Manual />)
@@ -64,8 +65,8 @@ const Responsive = () => {
     <ResponsiveLayout
       header={
         <Box display="grid" gridTemplateColumns="1fr auto">
-          <Box>This is a header</Box>
-          <Box>
+          <TradingClubLatam />
+          <Box alignSelf="center">
             <HeaderLink href="#1">Link 1</HeaderLink>
             <HeaderLink href="#2">Link 2</HeaderLink>
           </Box>
@@ -97,7 +98,14 @@ const Responsive = () => {
       }
       aside={<>This is aside</>}
     >
-      <Box>Try me on small devices</Box>
+      <Box>
+        <TradingClubLatam />
+        Try me on small devices
+        <Box>
+          <StarOff />
+          <StarOn />
+        </Box>
+      </Box>
     </ResponsiveLayout>
   );
 };
