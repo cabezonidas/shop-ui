@@ -71,8 +71,9 @@ export const InputSelect = React.forwardRef<HTMLInputElement, IInputSelect>(
 
         <ComboboxPopover
           style={{
-            margin: "10px 0",
-            width: rect ? rect.width - 2 : undefined,
+            minWidth: "100px",
+            width: "max-content",
+            maxWidth: rect ? rect.width - 2 : undefined,
             color: neutral.darkest,
           }}
         >
