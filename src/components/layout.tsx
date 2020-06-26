@@ -40,7 +40,7 @@ export const Layout: React.FC<ILayout> = ({
       </Header>
       <Box display="flex" overflow="hidden" zIndex={0}>
         <Nav
-          bg={darkMode === "dark" ? colors.neutral.dark : colors.secondary.medium}
+          bg={darkMode === "dark" ? colors.neutral.dark : colors.neutral.light}
           color={darkMode === "dark" ? colors.neutral.lightest : colors.neutral.darkest}
           overflow="hidden"
           width={mode === "main-aside" ? "0%" : "100%"}
