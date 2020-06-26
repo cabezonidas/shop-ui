@@ -88,6 +88,16 @@ export interface IColors {
   success: IColorTheme;
 }
 
+export interface IColorsProp {
+  primary?: IColorTheme;
+  secondary?: IColorTheme;
+  neutral?: IColorTheme;
+  info?: IColorTheme;
+  warning?: IColorTheme;
+  danger?: IColorTheme;
+  success?: IColorTheme;
+}
+
 export const colors: IColors = {
   primary,
   secondary,
@@ -96,4 +106,38 @@ export const colors: IColors = {
   warning,
   danger,
   success,
+};
+
+export const colorsDollar: IColors = {
+  neutral,
+  info,
+  danger,
+  success,
+  secondary: {
+    darkest: "#c6c2ae",
+    dark: "#cdc9b8",
+    mediumDark: "#d5d1c2",
+    medium: "#dcd9cc",
+    mediumLight: "#e3e0d6",
+    light: "#eae8e1",
+    lightest: "#f1f0eb",
+  },
+  primary: {
+    darkest: "#0a4c3f",
+    dark: "#09453a",
+    mediumDark: "#083e34",
+    medium: "#07372e",
+    mediumLight: "#063028",
+    light: "#062a23",
+    lightest: "#05231d",
+  },
+  warning: {
+    darkest: "#a86700",
+    dark: "#cc7d00",
+    mediumDark: "#e68e00",
+    medium: "#ffc66a",
+    mediumLight: "#fad7a0",
+    light: "#fdebd0",
+    lightest: "#fef5e7",
+  },
 };
