@@ -27,7 +27,7 @@ export const NavLink = styled(Anchor)(({ theme: { colors, mode, space } }) => ({
   display: "block",
   minWidth: "200px",
   "&:hover": {
-    background: mode === "dark" ? colors.neutral.darkest : colors.secondary.dark,
+    background: mode === "dark" ? colors.neutral.darkest : colors.neutral.mediumLight,
   },
 }));
 NavLink.displayName = "NavLink";
