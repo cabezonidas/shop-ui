@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ThemeProvider } from "emotion-theming";
-import { theme } from "./theme";
+import { theme as defaultTheme } from "./theme";
 import { TranslationProvider } from "../internationalization/translation-provider";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -8,6 +8,7 @@ import { Global, css } from "@emotion/core";
 import { useTheme } from "./use-theme";
 import { ToastProvider } from "./toast/toast";
 import { DarkModeState, DarkModeContext } from "./dark-mode";
+import { IColorsProp, colorsDollar } from "./colors";
 
 const locales = ["es-AR", "en-US"] as ["es-AR", "en-US"];
 
@@ -25,14 +26,30 @@ i18next.use(initReactI18next).init({
   fallbackLng: initialLanguage,
 });
 
-export const UiProvider: React.FC<{ suspense?: boolean; mode?: "dark" | "light" }> = props => {
-  const { children, suspense, mode } = props;
+export const UiProvider: React.FC<{
+  suspense?: boolean;
+  mode?: "dark" | "light";
+  palette?: IColorsProp | "dollar" | "blood";
+}> = props => {
+  const { children, suspense, mode, palette = "dollar" } = props;
+  const combinedTheme = defaultTheme;
+  if (typeof palette === "object") {
+    combinedTheme.colors = { ...combinedTheme.colors, ...palette };
+  }
+  if (palette === "dollar") {
+    combinedTheme.colors = colorsDollar;
+  }
   const provider = (
     <TranslationProvider>
       <DarkModeState mode={mode}>
         <DarkModeContext.Consumer>
           {({ themeMode }) => (
-            <ThemeProvider theme={{ ...theme, mode: themeMode }}>
+            <ThemeProvider
+              theme={{
+                ...combinedTheme,
+                mode: themeMode,
+              }}
+            >
               <GlobalStyle />
               <ToastProvider>{children}</ToastProvider>
             </ThemeProvider>
