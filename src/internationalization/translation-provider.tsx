@@ -23,12 +23,6 @@ const languages: ILanguage[] = [
   { localeId: "en-US", name: "English (USA)" },
 ];
 
-const getInitialLanguage = () =>
-  languages.find(l => window?.localStorage?.getItem("language") === l.localeId)?.localeId ||
-  languages.find(l => l.localeId.startsWith((window?.navigator?.language ?? "").slice(0, 2)))
-    ?.localeId ||
-  "en-US";
-
 export const TranslationProvider: React.FC = ({ children }) => {
   const { t, i18n } = useTranslationNext();
 
@@ -39,14 +33,6 @@ export const TranslationProvider: React.FC = ({ children }) => {
       currencyDisplay: "symbol",
       style: "currency",
     });
-
-  React.useEffect(() => {
-    i18n.changeLanguage(getInitialLanguage());
-  }, []);
-
-  React.useEffect(() => {
-    window?.localStorage?.setItem("language", i18n.language);
-  }, [i18n.language]);
 
   const n = (num: number) => num.toLocaleString(i18n.language);
 
