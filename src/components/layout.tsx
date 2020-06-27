@@ -3,6 +3,7 @@ import { Shell, Header, Main, Aside, Footer, Nav, Box, Button } from ".";
 import { useBreakpoint } from "../hooks";
 import styled from "../theme/styled";
 import { useTheme } from "../theme/use-theme";
+import { IMode } from "highlight.js";
 
 type LayoutMode = "nav" | "nav-main-aside" | "main-aside";
 interface ILayout {
@@ -81,14 +82,24 @@ export const Layout: React.FC<ILayout> = ({
 
 Layout.displayName = "Layout";
 
-export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">> = ({
-  header,
-  nav,
-  aside,
-  footer,
-  children,
-}) => {
-  const [mode, setMode] = React.useState<LayoutMode>("main-aside");
+const ensureMode = (mode?: string) =>
+  (["nav", "nav-main-aside", "main-aside"].find(m => m === mode) ?? "main-aside") as LayoutMode;
+
+export const ResponsiveLayout: React.FC<Omit<ILayout, "shouldCloseNav" | "mode"> & {
+  mode?: LayoutMode | string;
+  onModeChange?: (m: LayoutMode) => void;
+}> = ({ header, nav, aside, footer, children, mode, onModeChange }) => {
+  const [localMode, setMode] = React.useState(ensureMode(mode));
+  React.useEffect(() => {
+    if (mode) {
+      setMode(ensureMode(mode));
+    }
+  }, [mode]);
+  React.useEffect(() => {
+    if (onModeChange) {
+      onModeChange(localMode);
+    }
+  }, [localMode, onModeChange]);
 
   const { isMediumSmall } = useBreakpoint();
 
@@ -96,7 +107,7 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
     if (!isMediumSmall) {
       setMode("main-aside");
     } else {
-      if (mode === "nav") {
+      if (localMode === "nav") {
         setMode("nav-main-aside");
       }
     }
@@ -114,9 +125,9 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
           }
         }}
       >
-        <Top isOpen={mode !== "main-aside"} />
-        <Middle isOpen={mode !== "main-aside"} />
-        <Bottom isOpen={mode !== "main-aside"} />
+        <Top isOpen={localMode !== "main-aside"} />
+        <Middle isOpen={localMode !== "main-aside"} />
+        <Bottom isOpen={localMode !== "main-aside"} />
       </MenuButton>
       <Box alignSelf="center">{header}</Box>
     </Box>
@@ -128,7 +139,7 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
       footer={footer}
       nav={nav}
       aside={aside}
-      mode={mode}
+      mode={localMode}
       shouldCloseNav={() => setMode("main-aside")}
     >
       {children}
