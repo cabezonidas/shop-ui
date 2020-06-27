@@ -1,30 +1,23 @@
 import * as React from "react";
-import { useEffect, useState, forwardRef, ComponentProps } from "react";
 import { Box } from ".";
 
-const useHeight = () => {
-  const [height, setHeight] = useState(
-    window.innerHeight * ((window as any).visualViewport?.scale || 1)
-  );
+export const Shell = React.forwardRef<HTMLDivElement, React.ComponentProps<typeof Box>>(
+  (props, ref) => {
+    const [height, setHeight] = React.useState("100vh");
 
-  useEffect(() => {
-    const onResize = () => {
-      setHeight(window.innerHeight * ((window as any).visualViewport?.scale || 1));
-    };
-
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  });
-
-  return height + "px";
-};
-
-export const Shell = forwardRef<HTMLDivElement, ComponentProps<typeof Box>>((props, ref) => {
-  const height = useHeight();
-  return <Box style={{ height }} {...props} ref={ref} />;
-});
+    React.useEffect(() => {
+      const onResize = () => {
+        setHeight(`${window.innerHeight * ((window as any).visualViewport?.scale || 1)}px`);
+      };
+      onResize();
+      window.addEventListener("resize", onResize);
+      return () => {
+        window.removeEventListener("resize", onResize);
+      };
+    }, []);
+    return <Box style={{ height }} {...props} ref={ref} />;
+  }
+);
 
 Shell.displayName = "Shell";
 
