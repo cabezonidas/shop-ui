@@ -81,16 +81,6 @@ export const Layout: React.FC<ILayout> = ({
 
 Layout.displayName = "Layout";
 
-const getNavState = () => {
-  const state = localStorage?.getItem("nav-state");
-  return ["nav", "nav-main-aside", "main-aside"].find(s => s === state) as LayoutMode | undefined;
-};
-const setNavState = (state: string) => {
-  if (localStorage) {
-    localStorage.setItem("nav-state", state);
-  }
-};
-
 export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">> = ({
   header,
   nav,
@@ -98,7 +88,15 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
   footer,
   children,
 }) => {
-  const [mode, setMode] = React.useState<LayoutMode>(getNavState() ?? "main-aside");
+  const [mode, setMode] = React.useState<LayoutMode>("main-aside");
+
+  React.useEffect(() => {
+    setMode(
+      (["nav", "nav-main-aside", "main-aside"].find(
+        s => s === localStorage?.getItem("nav-state")
+      ) as LayoutMode | undefined) ?? "main-aside"
+    );
+  }, []);
 
   const { isMediumSmall } = useBreakpoint();
 
@@ -113,7 +111,9 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
   }, [isMediumSmall]);
 
   React.useEffect(() => {
-    setNavState(mode);
+    if (localStorage) {
+      localStorage.setItem("nav-state", mode);
+    }
   }, [mode]);
 
   const headerWithBurgerMenu = (
