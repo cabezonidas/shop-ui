@@ -1,5 +1,4 @@
 import * as React from "react";
-import { createPortal } from "react-dom";
 import { useTransition } from "react-spring";
 import { ToastContainer, InnerToast, AnimatedToast } from "./toast-components";
 
@@ -140,7 +139,7 @@ const ToastPortal: React.FC<{
   const bottomCenter = useTransition(reducedToasts.bottomCenter, transition("bottom"));
   const bottomRight = useTransition(reducedToasts.bottomRight, transition("right"));
 
-  return createPortal(
+  return (
     <>
       <ToastContainer top={0} right={0}>
         {topRight((style, t) => (
@@ -184,8 +183,7 @@ const ToastPortal: React.FC<{
           </AnimatedToast>
         ))}
       </ToastContainer>
-    </>,
-    document.body
+    </>
   );
 };
 
