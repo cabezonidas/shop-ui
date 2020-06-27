@@ -8,7 +8,6 @@ import {
   ComboboxOptionText,
   ComboboxProps,
 } from "@reach/combobox";
-import "@reach/combobox/styles.css";
 import styled from "../theme/styled";
 import Input from "./input";
 import matchSorter from "match-sorter";
