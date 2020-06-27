@@ -4,6 +4,9 @@ import { UiProvider } from "../src/theme/ui-provider";
 import { useDarkMode } from "storybook-dark-mode";
 import { addParameters } from "@storybook/react";
 import "../assets/style.css";
+import "@reach/dialog/styles.css";
+import "@reach/combobox/styles.css";
+import "highlight.js/styles/default.css";
 
 const req = require.context("../src", true, /\.stories\.(ts|tsx)$/);
 

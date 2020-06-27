@@ -3,7 +3,6 @@ import { Dialog as ReachDialog } from "@reach/dialog";
 import { useTheme } from "../theme";
 import { Box, Button } from ".";
 import { Close } from "../icons";
-import "@reach/dialog/styles.css";
 import { useTranslation } from "react-i18next";
 
 interface IDialogProps extends React.ComponentProps<typeof ReachDialog> {
