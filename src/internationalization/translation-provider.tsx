@@ -18,13 +18,19 @@ interface II18nContext {
 
 const TranslationContext = React.createContext<II18nContext>(undefined as any);
 
+const languages: ILanguage[] = [
+  { localeId: "es-AR", name: "Español (argentino)" },
+  { localeId: "en-US", name: "English (USA)" },
+];
+
+const getInitialLanguage = () =>
+  languages.find(l => window?.localStorage?.getItem("language") === l.localeId)?.localeId ||
+  languages.find(l => l.localeId.startsWith((window?.navigator?.language ?? "").slice(0, 2)))
+    ?.localeId ||
+  "en-US";
+
 export const TranslationProvider: React.FC = ({ children }) => {
   const { t, i18n } = useTranslationNext();
-
-  const languages: ILanguage[] = [
-    { localeId: "es-AR", name: "Español (argentino)" },
-    { localeId: "en-US", name: "English (USA)" },
-  ];
 
   const c = (num: number, currencyCode = "USD") =>
     (num / 1.0).toLocaleString(i18n.language, {
@@ -35,7 +41,11 @@ export const TranslationProvider: React.FC = ({ children }) => {
     });
 
   React.useEffect(() => {
-    localStorage?.setItem("language", i18n.language);
+    i18n.changeLanguage(getInitialLanguage());
+  }, []);
+
+  React.useEffect(() => {
+    window?.localStorage?.setItem("language", i18n.language);
   }, [i18n.language]);
 
   const n = (num: number) => num.toLocaleString(i18n.language);
