@@ -90,14 +90,6 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
 }) => {
   const [mode, setMode] = React.useState<LayoutMode>("main-aside");
 
-  React.useEffect(() => {
-    setMode(
-      (["nav", "nav-main-aside", "main-aside"].find(
-        s => s === localStorage?.getItem("nav-state")
-      ) as LayoutMode | undefined) ?? "main-aside"
-    );
-  }, []);
-
   const { isMediumSmall } = useBreakpoint();
 
   React.useEffect(() => {
@@ -109,12 +101,6 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "mode" | "shouldCloseNav">
       }
     }
   }, [isMediumSmall]);
-
-  React.useEffect(() => {
-    if (localStorage) {
-      localStorage.setItem("nav-state", mode);
-    }
-  }, [mode]);
 
   const headerWithBurgerMenu = (
     <Box display="grid" gridTemplateColumns="auto 1fr">
