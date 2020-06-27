@@ -15,8 +15,8 @@ i18next.use(initReactI18next).init({
     "en-US": { translation: {} },
     "es-AR": { translation: {} },
   },
-  lng: "en-US",
-  fallbackLng: "en-US",
+  lng: "es-AR",
+  fallbackLng: "es-AR",
 });
 
 export const UiProvider: React.FC<{
