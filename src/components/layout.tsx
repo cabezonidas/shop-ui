@@ -13,7 +13,13 @@ interface ILayout {
   footer?: React.ReactNode;
   mode?: LayoutMode;
   shouldCloseNav?: () => void;
+  onMainScrollBottom?: () => void;
 }
+
+const onScrolledToBottom = (e: React.UIEvent<HTMLElement, UIEvent>, fn?: () => void) =>
+  fn &&
+  e.currentTarget.scrollTop + e.currentTarget.offsetHeight === e.currentTarget.scrollHeight &&
+  fn();
 
 export const Layout: React.FC<ILayout> = ({
   mode = "nav-main-aside",
@@ -23,12 +29,14 @@ export const Layout: React.FC<ILayout> = ({
   footer,
   children,
   shouldCloseNav,
+  onMainScrollBottom,
 }) => {
   const transition = "width 0.3s ease";
   const { colors, mode: darkMode } = useTheme();
 
   const shadowColor = darkMode === "dark" ? colors.neutral.dark : colors.neutral.darkest;
   const boxShadow = `0 1px 2px ${shadowColor}88, 0 1px 1px ${shadowColor}74`;
+
   return (
     <Shell display="grid" gridTemplateRows="auto 1fr auto">
       <Header
@@ -61,6 +69,7 @@ export const Layout: React.FC<ILayout> = ({
           zIndex={0}
           width={mode === "nav" ? "0%" : "100%"}
           style={{ transition }}
+          onScroll={e => onScrolledToBottom(e, onMainScrollBottom)}
         >
           {children}
         </Main>

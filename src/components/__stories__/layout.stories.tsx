@@ -45,6 +45,7 @@ const Manual = () => {
       }
       aside={<>This is aside</>}
       mode={mode}
+      onMainScrollBottom={() => alert("reached bottom!")}
     >
       <Box display="grid" width="max-content" minWidth="200px" height="100%" m="auto">
         <Box alignSelf="center">
@@ -97,6 +98,7 @@ const Responsive = () => {
         </>
       }
       aside={<>This is aside</>}
+      onMainScrollBottom={() => alert("reached bottom!")}
     >
       <Box>
         <TradingClubLatam />
