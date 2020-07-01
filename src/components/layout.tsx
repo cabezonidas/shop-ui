@@ -16,7 +16,10 @@ interface ILayout {
   onMainScrollBottom?: () => void;
 }
 
-const onScrolledToBottom = (e: React.UIEvent<HTMLElement, UIEvent>, fn?: () => void) =>
+const onScrolledToBottom = (
+  e: React.UIEvent<HTMLElement, UIEvent> | React.TouchEvent<HTMLElement>,
+  fn?: () => void
+) =>
   fn &&
   e.currentTarget.scrollTop + e.currentTarget.offsetHeight === e.currentTarget.scrollHeight &&
   fn();
@@ -70,6 +73,7 @@ export const Layout: React.FC<ILayout> = ({
           width={mode === "nav" ? "0%" : "100%"}
           style={{ transition }}
           onScroll={e => onScrolledToBottom(e, onMainScrollBottom)}
+          onTouchMove={e => onScrolledToBottom(e, onMainScrollBottom)}
         >
           {children}
         </Main>
