@@ -97,7 +97,7 @@ const ensureMode = (mode?: string) =>
 export const ResponsiveLayout: React.FC<Omit<ILayout, "shouldCloseNav" | "mode"> & {
   mode?: LayoutMode | string;
   onModeChange?: (m: LayoutMode) => void;
-}> = ({ header, nav, aside, footer, children, mode, onModeChange }) => {
+}> = ({ header, nav, aside, footer, children, mode, onModeChange, onMainScrollBottom }) => {
   const [localMode, setMode] = React.useState(ensureMode(mode));
   React.useEffect(() => {
     if (mode) {
@@ -150,6 +150,7 @@ export const ResponsiveLayout: React.FC<Omit<ILayout, "shouldCloseNav" | "mode">
       aside={aside}
       mode={localMode}
       shouldCloseNav={() => setMode("main-aside")}
+      onMainScrollBottom={onMainScrollBottom}
     >
       {children}
     </Layout>
