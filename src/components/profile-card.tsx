@@ -16,18 +16,18 @@ import { transform } from "../utils/transform";
 
 interface IAuthorCard extends React.ComponentProps<typeof Box> {
   author: {
-    name: string;
-    dob?: number;
-    email?: string;
-    imageUrl?: string;
-    linkedin?: string;
-    whatsapp?: string;
-    instagram?: string;
-    facebook?: string;
-    messenger?: string;
-    github?: string;
-    twitter?: string;
-    description?: Array<{ localeId?: string; text?: string }>;
+    name?: string | null;
+    dob?: number | null;
+    email?: string | null;
+    imageUrl?: string | null;
+    linkedin?: string | null;
+    whatsapp?: string | null;
+    instagram?: string | null;
+    facebook?: string | null;
+    messenger?: string | null;
+    github?: string | null;
+    twitter?: string | null;
+    description?: Array<{ localeId?: string | null; text?: string | null }> | null;
   };
 }
 
@@ -130,10 +130,10 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
       height="max-content"
       gridGap="2"
     >
-      <Box maxWidth="150px" maxHeight="150px">
+      <Box width="160px" height="160px" display="flex" justifyContent="space-around">
         {imageUrl && (
           <img
-            style={{ width: 150, height: 150, borderRadius: "50%" }}
+            style={{ width: 150, height: 150, borderRadius: "50%", alignSelf: "center" }}
             alt={t("ui.profile.img")}
             src={transform(imageUrl, { width: "150px", height: "150px", focus: "face" })}
           />
@@ -156,7 +156,7 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
               <ContactAnchor href={githubLink}>{github}</ContactAnchor>
             </ContactItem>
           )}
-          {twitter && (
+          {twitterLink && (
             <ContactItem>
               <Twitter />
               <ContactAnchor aria-label={t("ui.profile.twitter")} href={twitterLink}>
