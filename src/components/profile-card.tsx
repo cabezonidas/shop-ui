@@ -135,7 +135,7 @@ export const ProfileCard = React.forwardRef<HTMLDivElement, IAuthorCard>((props,
           <img
             style={{ width: 150, height: 150, borderRadius: "50%", alignSelf: "center" }}
             alt={t("ui.profile.img")}
-            src={transform(imageUrl, { width: "150px", height: "150px", focus: "face" })}
+            src={transform(imageUrl, { width: "150px", height: "150px" })}
           />
         )}
       </Box>
