@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box } from "../components";
 
-export * from "./trading-club-latam";
+export * from "./investing-club-latam";
 
 export const Svg = Box.withComponent("svg");
 

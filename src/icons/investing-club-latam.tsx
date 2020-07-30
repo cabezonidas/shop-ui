@@ -3,14 +3,14 @@ import { SvgIcon, Svg } from "..";
 
 // tslint:disable: jsx-use-translation-function
 
-export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) => {
+export const InvestingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props, ref) => {
   const green = "#8fa27a";
   const grey = "#959595";
 
   return (
     <Svg
       viewBox="0 0 110 36"
-      width="82.5px"
+      width="92.5px"
       height="27px"
       preserveAspectRatio="xMidYMid meet"
       style={{ userSelect: "none" }}
@@ -19,7 +19,7 @@ export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props,
     >
       <defs>
         <path id="bij4TQbIG" />
-        <rect width="108" height="1" y="19" rx="2" ry="2" id="iYcHL3YK4" />
+        <rect width="118" height="1" y="19" rx="2" ry="2" id="iYcHL3YK4" />
         <text
           id="iH6X3SP9p"
           x="188.45"
@@ -42,7 +42,7 @@ export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props,
             dominantBaseline="text-before-edge"
             textAnchor="start"
           >
-            TRADING
+            INVESTING
           </tspan>
         </text>
         <style
@@ -54,7 +54,7 @@ export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props,
         />
         <text
           id="a3dyZJRuTJ"
-          x="156.45"
+          x="166.45"
           y="249.44"
           fontSize={24}
           fontFamily="Orienta"
@@ -68,7 +68,7 @@ export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props,
           dominantBaseline="text-before-edge"
         >
           <tspan
-            x="156.45"
+            x="166.45"
             dy="0em"
             alignmentBaseline="before-edge"
             dominantBaseline="text-before-edge"
@@ -93,7 +93,7 @@ export const TradingClubLatam = React.forwardRef<SVGSVGElement, SvgIcon>((props,
           dominantBaseline="text-before-edge"
         >
           <tspan
-            x="165.45"
+            x="174.45"
             dy="0em"
             alignmentBaseline="before-edge"
             dominantBaseline="text-before-edge"
