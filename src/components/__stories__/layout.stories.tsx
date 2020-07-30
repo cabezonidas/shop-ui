@@ -14,7 +14,7 @@ import {
   HeaderLink,
 } from "..";
 import styled from "../../theme/styled";
-import { Whatsapp, Facebook, Instagram, Messenger, TradingClubLatam } from "../..";
+import { Whatsapp, Facebook, Instagram, Messenger, InvestingClubLatam } from "../..";
 import { StarOff, StarOn } from "../../icons";
 
 storiesOf("Layout", module)
@@ -66,7 +66,7 @@ const Responsive = () => {
     <ResponsiveLayout
       header={
         <Box display="grid" gridTemplateColumns="1fr auto">
-          <TradingClubLatam />
+          <InvestingClubLatam />
           <Box alignSelf="center">
             <HeaderLink href="#1">Link 1</HeaderLink>
             <HeaderLink href="#2">Link 2</HeaderLink>
@@ -101,7 +101,7 @@ const Responsive = () => {
       onMainScrollBottom={() => alert("reached bottom!")}
     >
       <Box>
-        <TradingClubLatam />
+        <InvestingClubLatam />
         Try me on small devices
         <Box>
           <StarOff />
