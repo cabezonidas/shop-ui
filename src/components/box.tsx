@@ -6,9 +6,12 @@ import {
   alignItems,
   alignSelf,
   background,
+  boxShadow,
+  border,
   borders,
   bottom,
   color,
+  colorStyle,
   display,
   flex,
   flexBasis,
@@ -19,6 +22,7 @@ import {
   fontSize,
   fontStyle,
   fontWeight,
+  grid,
   gridArea,
   gridAutoColumns,
   gridAutoFlow,
@@ -32,8 +36,10 @@ import {
   gridTemplateColumns,
   gridTemplateRows,
   height,
+  justifyItems,
   justifyContent,
   justifySelf,
+  layout,
   left,
   letterSpacing,
   lineHeight,
@@ -43,10 +49,14 @@ import {
   minWidth,
   order,
   overflow,
+  opacity,
   position,
   right,
+  size,
   space,
   textAlign,
+  textShadow,
+  textStyle,
   top,
   verticalAlign,
   width,
@@ -59,7 +69,11 @@ import {
   BackgroundColorProps,
   BackgroundProps,
   BordersProps,
+  BorderProps,
   BottomProps,
+  BoxShadowProps,
+  ColorProps,
+  ColorStyleProps,
   DisplayProps,
   FlexBasisProps,
   FlexDirectionProps,
@@ -72,6 +86,7 @@ import {
   FontSizeProps,
   FontStyleProps,
   FontWeightProps,
+  GridProps,
   GridAreaProps,
   GridAutoColumnsProps,
   GridAutoFlowProps,
@@ -86,7 +101,9 @@ import {
   GridTemplateRowsProps,
   HeightProps,
   JustifyContentProps,
+  JustifyItemsProps,
   JustifySelfProps,
+  LayoutProps,
   LeftProps,
   LetterSpacingProps,
   LineHeightProps,
@@ -94,12 +111,16 @@ import {
   MaxWidthProps,
   MinHeightProps,
   MinWidthProps,
+  OpacityProps,
   OrderProps,
   OverflowProps,
   PositionProps,
   RightProps,
+  SizeProps,
   SpaceProps,
   TextAlignProps,
+  TextShadowProps,
+  TextStyleProps,
   TopProps,
   VerticalAlignProps,
   WidthProps,
@@ -112,7 +133,11 @@ type StyleBoxProps = AlignContentProps &
   BackgroundColorProps &
   BackgroundProps &
   BordersProps &
+  BorderProps &
   BottomProps &
+  BoxShadowProps &
+  Omit<ColorProps, "color"> &
+  ColorStyleProps &
   DisplayProps &
   FlexBasisProps &
   FlexboxProps &
@@ -125,6 +150,7 @@ type StyleBoxProps = AlignContentProps &
   FontSizeProps &
   FontStyleProps &
   FontWeightProps &
+  GridProps &
   GridAreaProps &
   GridAutoColumnsProps &
   GridAutoFlowProps &
@@ -139,7 +165,9 @@ type StyleBoxProps = AlignContentProps &
   GridTemplateRowsProps &
   HeightProps &
   JustifyContentProps &
+  JustifyItemsProps &
   JustifySelfProps &
+  LayoutProps &
   LeftProps &
   LetterSpacingProps &
   LineHeightProps &
@@ -149,10 +177,14 @@ type StyleBoxProps = AlignContentProps &
   MinWidthProps &
   OrderProps &
   OverflowProps &
+  OpacityProps &
   PositionProps &
   RightProps &
+  SizeProps &
   SpaceProps &
   TextAlignProps &
+  TextShadowProps &
+  TextStyleProps &
   TopProps &
   WidthProps &
   VerticalAlignProps &
@@ -173,9 +205,12 @@ export const Box = styled("div", {
     alignItems,
     alignSelf,
     background,
+    boxShadow,
+    border,
     borders,
     bottom,
     color,
+    colorStyle,
     display,
     flex,
     flexBasis,
@@ -186,6 +221,7 @@ export const Box = styled("div", {
     fontSize,
     fontStyle,
     fontWeight,
+    grid,
     gridArea,
     gridAutoColumns,
     gridAutoFlow,
@@ -199,21 +235,27 @@ export const Box = styled("div", {
     gridTemplateColumns,
     gridTemplateRows,
     height,
+    justifyItems,
     justifyContent,
     justifySelf,
     left,
+    layout,
     letterSpacing,
     lineHeight,
     maxHeight,
     maxWidth,
     minHeight,
     minWidth,
+    opacity,
     order,
     overflow,
     position,
     right,
+    size,
     space,
     textAlign,
+    textShadow,
+    textStyle,
     top,
     verticalAlign,
     width,
