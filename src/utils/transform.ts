@@ -90,6 +90,7 @@ const keys: ITransformation = {
 
 const allowedOrigins = [
   { origin: "https://cabezonidas-shop-photos.s3.amazonaws.com", imagekitId: "syuhz8bmxl" },
+  { origin: "https://img.javascript.kiwi.s3.amazonaws.com", imagekitId: "syuhz8bmxl/test" },
 ];
 
 export const transform = (photoUrl: string, transformation?: ITransformation) => {
