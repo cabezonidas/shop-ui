@@ -86,7 +86,12 @@ export const Layout: React.FC<ILayout> = ({
           {aside}
         </Aside>
       </Box>
-      <Footer bg={colors.primary.mediumDark} color={colors.neutral.lightest}>
+      <Footer
+        maxWidth="100%"
+        overflow="hidden"
+        bg={colors.primary.mediumDark}
+        color={colors.neutral.lightest}
+      >
         {footer}
       </Footer>
     </Shell>
