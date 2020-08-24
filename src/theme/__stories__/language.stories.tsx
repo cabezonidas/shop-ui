@@ -1,9 +1,6 @@
 import * as React from "react";
-import { theme } from "../theme";
-import { Box } from "../..";
-import { IColorTheme } from "../colors";
+import { Box, LanguageButton } from "../..";
 import { storiesOf } from "@storybook/react";
-import contrast from "../../helpers/contrast";
 import { useTranslation } from "../../internationalization";
 import { Label, Select, Option } from "../../components";
 
@@ -16,13 +13,16 @@ const Language = () => {
   i18n.addResourceBundle("es-AR", "translation", { story: { label: "Lenguaje" } }, true, true);
 
   return (
-    <Box>
-      <Label children={t("story.label")} />
-      <Select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
-        {languages.map(l => (
-          <Option key={l.localeId} value={l.localeId} children={l.name} />
-        ))}
-      </Select>
+    <Box display="grid" gridGap="4">
+      <Box>
+        <Label children={t("story.label")} />
+        <Select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
+          {languages.map(l => (
+            <Option key={l.localeId} value={l.localeId} children={l.name} />
+          ))}
+        </Select>
+      </Box>
+      <LanguageButton />
     </Box>
   );
 };
