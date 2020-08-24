@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import * as React from "react";
-import { useTranslation as useTranslationNext } from "react-i18next";
-import { TFunction, i18n as i18nObject } from "i18next";
+import { useTranslation as useTranslationNext, initReactI18next } from "react-i18next";
+import i18next, { TFunction, i18n as i18nObject } from "i18next";
 
-interface ILanguage {
+export interface ILanguage {
   localeId: string;
   name: string;
 }
@@ -18,13 +18,31 @@ interface II18nContext {
 
 const TranslationContext = React.createContext<II18nContext>(undefined as any);
 
-const languages: ILanguage[] = [
+export const defaultLanguages: ILanguage[] = [
   { localeId: "es-AR", name: "Español (argentino)" },
   { localeId: "en-US", name: "English (USA)" },
 ];
 
-export const TranslationProvider: React.FC = ({ children }) => {
+const parseLanguages = (lngs: ILanguage[]) => {
+  return lngs.reduce<{ [key: string]: { translation: object } }>((res, language) => {
+    res[language.localeId] = { translation: {} };
+    return res;
+  }, {});
+};
+
+export const TranslationProvider: React.FC<{ languages: ILanguage[] }> = ({
+  children,
+  languages,
+}) => {
   const { t, i18n } = useTranslationNext();
+
+  React.useEffect(() => {
+    i18next.use(initReactI18next).init({
+      resources: parseLanguages(languages),
+      lng: languages[0]?.localeId,
+      fallbackLng: languages[0]?.localeId,
+    });
+  }, []);
 
   const c = (num: number, currencyCode = "USD") =>
     (num / 1.0).toLocaleString(i18n.language, {
