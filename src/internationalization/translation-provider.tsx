@@ -2,6 +2,7 @@ import { useContext } from "react";
 import * as React from "react";
 import { useTranslation as useTranslationNext, initReactI18next } from "react-i18next";
 import i18next, { TFunction, i18n as i18nObject } from "i18next";
+import { Settings } from "luxon";
 
 export interface ILanguage {
   localeId: string;
@@ -37,12 +38,20 @@ export const TranslationProvider: React.FC<{ languages: ILanguage[] }> = ({
   const { t, i18n } = useTranslationNext();
 
   React.useEffect(() => {
+    const defaultLocale = languages[0]?.localeId;
     i18next.use(initReactI18next).init({
       resources: parseLanguages(languages),
-      lng: languages[0]?.localeId,
-      fallbackLng: languages[0]?.localeId,
+      lng: defaultLocale,
+      fallbackLng: defaultLocale,
     });
+    if (defaultLocale) {
+      Settings.defaultLocale = defaultLocale;
+    }
   }, []);
+
+  React.useEffect(() => {
+    Settings.defaultLocale = i18n.language;
+  }, [i18n.language]);
 
   const c = (num: number, currencyCode = "USD") =>
     (num / 1.0).toLocaleString(i18n.language, {
