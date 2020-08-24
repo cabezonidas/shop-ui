@@ -1,6 +1,6 @@
 {
   "name": "@cabezonidas/shop-ui",
-  "version": "1.0.54",
+  "version": "1.0.55",
   "author": "Cabe <sebastian.scd@gmail.com>",
   "homepage": "https://github.com/cabezonidas/shop-utils#readme",
   "license": "MIT",
@@ -39,8 +39,10 @@
     "@reach/alert": "^0.10.2",
     "@reach/combobox": "^0.10.4",
     "@reach/dialog": "^0.10.1",
+    "@reach/menu-button": "^0.11.0",
     "@reach/popover": "^0.10.2",
     "@reach/utils": "^0.10.2",
+    "@reach/visually-hidden": "^0.11.0",
     "@tippyjs/react": "^4.0.2",
     "@types/highlight.js": "^9.12.4",
     "@types/luxon": "^1.24.0",
