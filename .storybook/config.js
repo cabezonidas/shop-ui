@@ -6,6 +6,7 @@ import { addParameters } from "@storybook/react";
 import "../assets/style.css";
 import "@reach/dialog/styles.css";
 import "@reach/combobox/styles.css";
+import "@reach/menu-button/styles.css";
 import "highlight.js/styles/default.css";
 
 const req = require.context("../src", true, /\.stories\.(ts|tsx)$/);
