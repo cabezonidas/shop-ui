@@ -17,16 +17,8 @@ export const UiProvider: React.FC<{
   mode?: "dark" | "light";
   palette?: IColorsProp | "dollar" | "blood";
   languages?: ILanguage[];
-  language?: string;
 }> = props => {
-  const {
-    children,
-    suspense,
-    mode,
-    palette = "dollar",
-    languages = defaultLanguages,
-    language,
-  } = props;
+  const { children, suspense, mode, palette = "dollar", languages = defaultLanguages } = props;
   const combinedTheme = defaultTheme;
   if (typeof palette === "object") {
     combinedTheme.colors = { ...combinedTheme.colors, ...palette };
@@ -35,7 +27,7 @@ export const UiProvider: React.FC<{
     combinedTheme.colors = colorsDollar;
   }
   const provider = (
-    <TranslationProvider {...{ languages, language }}>
+    <TranslationProvider {...{ languages }}>
       <DarkModeState mode={mode}>
         <DarkModeContext.Consumer>
           {({ themeMode }) => (
