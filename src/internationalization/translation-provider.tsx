@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import * as React from "react";
-import { useTranslation as useTranslationNext, initReactI18next } from "react-i18next";
-import i18next, { TFunction, i18n as i18nObject } from "i18next";
+import { useTranslation as useTranslationNext } from "react-i18next";
+import { TFunction, i18n as i18nObject } from "i18next";
 import { Settings } from "luxon";
 
 export interface ILanguage {
@@ -24,30 +24,10 @@ export const defaultLanguages: ILanguage[] = [
   { localeId: "en-US", name: "English (USA)" },
 ];
 
-const parseLanguages = (lngs: ILanguage[]) => {
-  return lngs.reduce<{ [key: string]: { translation: object } }>((res, language) => {
-    res[language.localeId] = { translation: {} };
-    return res;
-  }, {});
-};
-
 export const TranslationProvider: React.FC<{
   languages: ILanguage[];
-  language?: string;
-}> = ({ children, languages, language }) => {
+}> = ({ children, languages }) => {
   const { t, i18n } = useTranslationNext();
-
-  React.useEffect(() => {
-    const defaultLocale = language ?? languages[0]?.localeId;
-    i18next.use(initReactI18next).init({
-      resources: parseLanguages(languages),
-      lng: defaultLocale,
-      fallbackLng: defaultLocale,
-    });
-    if (defaultLocale) {
-      Settings.defaultLocale = defaultLocale;
-    }
-  }, [languages, language]);
 
   React.useEffect(() => {
     Settings.defaultLocale = i18n.language;
