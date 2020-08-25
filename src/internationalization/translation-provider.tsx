@@ -31,14 +31,14 @@ const parseLanguages = (lngs: ILanguage[]) => {
   }, {});
 };
 
-export const TranslationProvider: React.FC<{ languages: ILanguage[] }> = ({
-  children,
-  languages,
-}) => {
+export const TranslationProvider: React.FC<{
+  languages: ILanguage[];
+  language?: string;
+}> = ({ children, languages, language }) => {
   const { t, i18n } = useTranslationNext();
 
   React.useEffect(() => {
-    const defaultLocale = languages[0]?.localeId;
+    const defaultLocale = language ?? languages[0]?.localeId;
     i18next.use(initReactI18next).init({
       resources: parseLanguages(languages),
       lng: defaultLocale,
@@ -47,7 +47,7 @@ export const TranslationProvider: React.FC<{ languages: ILanguage[] }> = ({
     if (defaultLocale) {
       Settings.defaultLocale = defaultLocale;
     }
-  }, []);
+  }, [languages, language]);
 
   React.useEffect(() => {
     Settings.defaultLocale = i18n.language;
