@@ -49,6 +49,8 @@ const StyledMenuList = styled(MenuList)`
 const StyledMenuItem = styled(MenuItem)`
   &[data-reach-menu-item] {
     padding: 10px;
+    background: ${props => props.theme.colors.neutral.lightest};
+    color: ${props => props.theme.colors.neutral.darkest};
   }
   &[data-reach-menu-item][data-selected] {
     background: ${props => props.theme.colors.primary.dark};
