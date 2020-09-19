@@ -8,9 +8,9 @@ import {
 } from "../internationalization/translation-provider";
 import { Global, css } from "@emotion/core";
 import { useTheme } from "./use-theme";
-import { ToastProvider } from "./toast/toast";
 import { DarkModeState, DarkModeContext } from "./dark-mode";
 import { IColorsProp, colorsDollar } from "./colors";
+import { ToastProvider } from "./toast/toast-provider";
 
 export const UiProvider: React.FC<{
   suspense?: boolean;
