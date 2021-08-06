@@ -18,6 +18,7 @@ const MyStory = () => {
   const [instagram, setinstagram] = React.useState("cabeza_sebastian");
   const [facebook, setfacebook] = React.useState("sebastian.scd");
   const [messenger, setmessenger] = React.useState("sebastian.scd");
+  const [twitter, settwitter] = React.useState("cabezonidas");
   const [description, setdescription] = React.useState<string>(
     "🇳🇿🇦🇷 Software engineer 🤓 If you like this site, check it out on my Github!"
   );
@@ -35,9 +36,22 @@ const MyStory = () => {
       facebook,
       messenger,
       github,
+      twitter,
       description: [{ localeId: "es-AR", text: description }],
     }),
-    [name, dob, email, imageUrl, linkedin, whatsapp, instagram, facebook, description, github]
+    [
+      name,
+      dob,
+      email,
+      imageUrl,
+      linkedin,
+      whatsapp,
+      instagram,
+      facebook,
+      description,
+      github,
+      twitter,
+    ]
   );
 
   return (
@@ -62,6 +76,10 @@ const MyStory = () => {
         <Box>
           <Label htmlFor="imageUrl">imageUrl</Label>
           <Input id="imageUrl" value={imageUrl} onChange={e => setimageUrl(e.target.value)} />
+        </Box>
+        <Box>
+          <Label htmlFor="twitter">twitter</Label>
+          <Input id="twitter" value={twitter} onChange={e => settwitter(e.target.value)} />
         </Box>
         <Box>
           <Label htmlFor="linkedin">linkedin</Label>
